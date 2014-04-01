@@ -3,6 +3,7 @@ using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
+
 using EDSDKLib;
 
 namespace WinFormsUI
@@ -64,7 +65,11 @@ namespace WinFormsUI
 
         private void SDK_ProgressChanged(int Progress)
         {
-            if (Progress == 100) Progress = 0;
+            if (Progress == 100)
+            {
+                Progress = 0;
+                moveImageToFinishedFolder();
+            }
             MainProgressBar.Value = Progress;
         }
 
@@ -188,7 +193,7 @@ namespace WinFormsUI
                     CameraHandler.TakePhoto();
             }
             // copy image from tmp to finished
-            moveImageToFinishedFolder();
+            //moveImageToFinishedFolder();
         }
 
         private void RecordVideoButton_Click(object sender, EventArgs e)
@@ -363,8 +368,30 @@ namespace WinFormsUI
             string image_path = Path.Combine(taskOutputFolder, image_file);
             foreach (FileInfo file in imageTempFolderInfo.GetFiles())
             {
-                file.CopyTo(image_path);
-                file.Delete();
+                if (File.Exists(image_path))
+                {
+                    DialogResult r = MessageBox.Show("是否覆盖上次照相图片文件？",
+                        "图像保存", MessageBoxButtons.YesNo);
+                    if (r == DialogResult.No)
+                        break;
+                }
+
+                try
+                {
+                    file.CopyTo(image_path, true);
+                }
+                catch {
+                    MessageBox.Show("图像保存失败！目录是否可写？");
+                }
+                // whether to delete temp image file?
+                try
+                {
+                    file.Delete();
+                }
+                catch { 
+                    
+                }
+
                 break; // assume only one to copy
             }
         
@@ -373,9 +400,15 @@ namespace WinFormsUI
             System.IO.DirectoryInfo imageTempFolderInfo = new DirectoryInfo(taskImageTempFolder);
             foreach (FileInfo file in imageTempFolderInfo.GetFiles())
             {
-                file.Delete();
+                // throw and error?
+                try
+                {
+                    file.Delete();
+                }
+                catch {
+                    MessageBox.Show("cannot delete temp image "+file.ToString());
+                }
             }
-        
         }
         private void RefreshTasks()
         {
@@ -406,6 +439,16 @@ namespace WinFormsUI
             //MetaInfoBox.Text = text;
             //MetaInfoBox.Refresh();
         }
+
+        private string ConnectToWebService(string url) {
+            string jsonStr="";
+
+
+
+            return jsonStr;
+        }
+
+
         #endregion
 
         private void SettingsGroupBox_Enter(object sender, EventArgs e)
