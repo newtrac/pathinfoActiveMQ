@@ -3,7 +3,10 @@ using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
-
+using System.Collections.Specialized;
+using System.Net.Http;
+using System.Net;
+using Newtonsoft.Json;
 using EDSDKLib;
 
 namespace WinFormsUI
@@ -28,6 +31,7 @@ namespace WinFormsUI
 
         public MainForm()
         {
+            AcquireRecordFromWebService("SP-15-10045");
             InitializeComponent();
             CameraHandler = new SDKHandler();
             CameraHandler.CameraAdded += new SDKHandler.CameraAddedHandler(SDK_CameraAdded);
@@ -440,15 +444,45 @@ namespace WinFormsUI
             //MetaInfoBox.Refresh();
         }
 
-        private string ConnectToWebService(string url) {
+        public static class Http
+        {
+            public static byte[] Post(string uri, NameValueCollection pairs)
+            {
+                byte[] response = null;
+                using (WebClient client = new WebClient())
+                {
+                    response = client.UploadValues(uri, pairs);
+                }
+                return response;
+            }
+        }
+
+        private string ConnectToWebServiceForPathNumber(string pathNumberString) {
             string jsonStr="";
-
-
-
+            var response = Http.Post("http://98.194.38.12:8080/wenzhou/api/pis/accession/getByNo", new NameValueCollection() {
+                { "no", pathNumberString }
+                    });
+            jsonStr = System.Text.Encoding.UTF8.GetString(response);
             return jsonStr;
         }
 
-
+        private Dictionary<string, string> AcquireRecordFromWebService(string pathNumberString) {
+            string jsonStr = ConnectToWebServiceForPathNumber(pathNumberString);
+            //string responseJson = ConnectToWebServiceForPathNumber("SP-15-10045");
+           
+            Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
+            if (dict["result"] == "False")
+                return dict;
+            else {
+                Dictionary<string, string> data_dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(dict["data"]);
+                dict.Remove("data");
+                foreach (var item in data_dict)
+                {
+                    dict[item.Key] = item.Value;
+                }
+                return dict;
+            }
+        }
         #endregion
 
         private void SettingsGroupBox_Enter(object sender, EventArgs e)

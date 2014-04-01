@@ -20,3 +20,4 @@ C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\De
 C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.MainForm.resources
 C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.Properties.Resources.resources
 C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.csproj.GenerateResource.Cache
+C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\bin\Debug\Newtonsoft.Json.dll
