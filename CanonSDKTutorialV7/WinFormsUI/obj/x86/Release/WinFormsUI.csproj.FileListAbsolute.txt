@@ -10,3 +10,6 @@ D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\obj\x86\Release\WinFormsUI.P
 D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\obj\x86\Release\WinFormsUI.csproj.GenerateResource.Cache
 D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\obj\x86\Release\WinFormsUI.exe
 D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\obj\x86\Release\WinFormsUI.pdb
+C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\bin\Release\WinFormsUI.exe.config
+C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\Release\WinFormsUI.exe
+C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\Release\WinFormsUI.pdb

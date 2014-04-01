@@ -3,3 +3,8 @@ D:\softwares\projects\CanonSDKTutorialV7\EDSDKLib\bin\Debug\EDSDKLib.pdb
 D:\softwares\projects\CanonSDKTutorialV7\EDSDKLib\obj\Debug\EDSDKLib.dll
 D:\softwares\projects\CanonSDKTutorialV7\EDSDKLib\obj\Debug\EDSDKLib.pdb
 D:\softwares\projects\CanonSDKTutorialV7\EDSDKLib\obj\Debug\EDSDKLib.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\EDSDKLib\bin\Debug\EDSDKLib.dll
+C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\EDSDKLib\bin\Debug\EDSDKLib.pdb
+C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\EDSDKLib\obj\Debug\EDSDKLib.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\EDSDKLib\obj\Debug\EDSDKLib.dll
+C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\EDSDKLib\obj\Debug\EDSDKLib.pdb

@@ -334,5 +334,10 @@ namespace WinFormsUI
         }
 
         #endregion
+
+        private void SettingsGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
