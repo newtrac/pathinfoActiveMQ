@@ -27,6 +27,7 @@ namespace PathinfoActiveMQClient.Impl
         private SDKHandler CameraHandler;
         private List<Camera> CamList;
         private string ImageSaveFolder;
+        private string ImageSaveName;
         private bool isCameraStarted;
 
         public DefaultClient(String publisherTopic, String listenerTopic)
@@ -138,6 +139,7 @@ namespace PathinfoActiveMQClient.Impl
             DateTime datevalue = (Convert.ToDateTime(sDate.ToString()));
             String year = datevalue.Year.ToString();
             ImageSaveFolder += (year + '\\');
+            ImageSaveName = "gross.jpg";
             //Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "RemotePhoto");
             if (!Directory.Exists(ImageSaveFolder))
             {
@@ -150,6 +152,7 @@ namespace PathinfoActiveMQClient.Impl
             int err = RefreshCamera();
             OpenSession();
             CameraHandler.ImageSaveDirectory = ImageSaveFolder;
+            CameraHandler.ImageSaveName = ImageSaveName;
             System.Threading.Thread.Sleep(500);
             CameraHandler.TakePhoto();
             /*

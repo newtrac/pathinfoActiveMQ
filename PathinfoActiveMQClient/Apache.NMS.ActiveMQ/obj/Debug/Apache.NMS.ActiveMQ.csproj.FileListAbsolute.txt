@@ -6,3 +6,11 @@ D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\bin\Debug\Apach
 D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\obj\Debug\Apache.NMS.ActiveMQ.csprojResolveAssemblyReference.cache
 D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\obj\Debug\Apache.NMS.ActiveMQ.dll
 D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\obj\Debug\Apache.NMS.ActiveMQ.pdb
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\bin\Debug\Apache.NMS.ActiveMQ.dll
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\bin\Debug\Apache.NMS.ActiveMQ.pdb
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\bin\Debug\Apache.NMS.dll
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\bin\Debug\Ionic.Zlib.dll
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\bin\Debug\Apache.NMS.pdb
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\obj\Debug\Apache.NMS.ActiveMQ.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\obj\Debug\Apache.NMS.ActiveMQ.dll
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\obj\Debug\Apache.NMS.ActiveMQ.pdb

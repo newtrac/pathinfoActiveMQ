@@ -8,3 +8,8 @@ D:\softwares\projects\PathinfoActiveMQClient\EDSDKLib\bin\Debug\EDSDKLib.pdb
 D:\softwares\projects\PathinfoActiveMQClient\EDSDKLib\obj\Debug\EDSDKLib.csprojResolveAssemblyReference.cache
 D:\softwares\projects\PathinfoActiveMQClient\EDSDKLib\obj\Debug\EDSDKLib.dll
 D:\softwares\projects\PathinfoActiveMQClient\EDSDKLib\obj\Debug\EDSDKLib.pdb
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\EDSDKLib\bin\Debug\EDSDKLib.dll
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\EDSDKLib\bin\Debug\EDSDKLib.pdb
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\EDSDKLib\obj\Debug\EDSDKLib.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\EDSDKLib\obj\Debug\EDSDKLib.dll
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\EDSDKLib\obj\Debug\EDSDKLib.pdb

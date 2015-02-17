@@ -12,3 +12,17 @@ D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\Pa
 D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\PathinfoActiveMQClient.pdb
 D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\EDSDKLib.dll
 D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\EDSDKLib.pdb
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\PathinfoActiveMQClient.exe.config
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\obj\Debug\PathinfoActiveMQClient.exe
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\obj\Debug\PathinfoActiveMQClient.pdb
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\PathinfoActiveMQClient.exe
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\PathinfoActiveMQClient.pdb
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\Apache.NMS.ActiveMQ.dll
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\Apache.NMS.dll
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\EDSDKLib.dll
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\Ionic.Zlib.dll
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\nunit.framework.dll
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\Apache.NMS.ActiveMQ.pdb
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\Apache.NMS.pdb
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Debug\EDSDKLib.pdb
+C:\Users\Administrator\Documents\GitHub\PathinfoActiveMQClient\PathinfoActiveMQClient\obj\Debug\PathinfoActiveMQClient.csprojResolveAssemblyReference.cache
