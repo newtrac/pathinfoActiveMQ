@@ -11,6 +11,7 @@ namespace PathinfoActiveMQClient.Utils
         public void Log(String message)
         {
             Console.WriteLine("Thread " + Thread.CurrentThread.ManagedThreadId + ": " + message);
+
         }
     }
 }

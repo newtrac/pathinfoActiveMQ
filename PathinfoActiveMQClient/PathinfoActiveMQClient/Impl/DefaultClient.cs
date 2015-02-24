@@ -123,7 +123,11 @@ namespace PathinfoActiveMQClient.Impl
             {
                 logger.Log("Cannot open camera. It may be in use now.");
             }
-            TakeOneCanonPhoto(this.ImageSaveFolder);
+            while (true) { 
+                TakeOneCanonPhoto(this.ImageSaveFolder);
+                System.Threading.Thread.Sleep(500);
+                logger.Log("take one pickture");
+            }
             CloseSession();
             CameraHandler.Dispose();
         }
@@ -135,11 +139,11 @@ namespace PathinfoActiveMQClient.Impl
             CameraHandler.CameraHasShutdown += CameraHandler_CameraHasShutdown;
             
             ImageSaveFolder = "D:\\pis\\image\\gross\\";
+            ImageSaveName = "gross.jpg";
             String sDate = DateTime.Now.ToString();
             DateTime datevalue = (Convert.ToDateTime(sDate.ToString()));
             String year = datevalue.Year.ToString();
             ImageSaveFolder += (year + '\\');
-            ImageSaveName = "gross.jpg";
             //Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "RemotePhoto");
             if (!Directory.Exists(ImageSaveFolder))
             {

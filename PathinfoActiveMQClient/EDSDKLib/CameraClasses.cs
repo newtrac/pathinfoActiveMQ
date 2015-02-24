@@ -66,7 +66,7 @@ namespace EDSDKLib
         public uint Error
         {
             get { return EDSDK.EDS_ERR_OK; }
-            set { if (value != EDSDK.EDS_ERR_OK)
+            set { if (value != EDSDK.EDS_ERR_OK )
                 MessageBox.Show("SDK Error: " + value);
                 //throw new Exception("SDK Error: " + value);
             }
@@ -274,7 +274,7 @@ namespace EDSDKLib
                 case EDSDK.ObjectEvent_DirItemContentChanged:
                     break;
                 case EDSDK.ObjectEvent_DirItemCreated:
-                    if (DownloadVideo) { DownloadImage(inRef, ImageSaveDirectory); DownloadVideo = false; }
+                    if (DownloadVideo) { DownloadImage(inRef, ImageSaveDirectory, ImageSaveName); DownloadVideo = false; }
                     break;
                 case EDSDK.ObjectEvent_DirItemInfoChanged:
                     break;
