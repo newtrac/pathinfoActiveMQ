@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathinfoActiveMQClient", "PathinfoActiveMQClient\PathinfoActiveMQClient.csproj", "{D50753D0-400E-4EAA-B056-189B4A5F2AFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apache.NMS", "Apache.NMS\Apache.NMS.csproj", "{7CB868EC-CF5D-4962-9BDA-1A008996BBC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apache.NMS.ActiveMQ", "Apache.NMS.ActiveMQ\Apache.NMS.ActiveMQ.csproj", "{EE896B4E-FD92-431B-A611-4683051179E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDSDKLib", "EDSDKLib\EDSDKLib.csproj", "{AEB0A485-01FC-4111-818C-E81434A388F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D50753D0-400E-4EAA-B056-189B4A5F2AFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D50753D0-400E-4EAA-B056-189B4A5F2AFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D50753D0-400E-4EAA-B056-189B4A5F2AFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D50753D0-400E-4EAA-B056-189B4A5F2AFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CB868EC-CF5D-4962-9BDA-1A008996BBC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CB868EC-CF5D-4962-9BDA-1A008996BBC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CB868EC-CF5D-4962-9BDA-1A008996BBC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CB868EC-CF5D-4962-9BDA-1A008996BBC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE896B4E-FD92-431B-A611-4683051179E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE896B4E-FD92-431B-A611-4683051179E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE896B4E-FD92-431B-A611-4683051179E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE896B4E-FD92-431B-A611-4683051179E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEB0A485-01FC-4111-818C-E81434A388F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEB0A485-01FC-4111-818C-E81434A388F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEB0A485-01FC-4111-818C-E81434A388F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEB0A485-01FC-4111-818C-E81434A388F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,15 @@
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Release\PathinfoActiveMQClient.exe.config
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Release\PathinfoActiveMQClient.exe
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Release\PathinfoActiveMQClient.pdb
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Release\Apache.NMS.ActiveMQ.dll
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Release\Apache.NMS.dll
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Release\EDSDKLib.dll
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Release\Ionic.Zlib.dll
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Release\nunit.framework.dll
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Release\Apache.NMS.ActiveMQ.pdb
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Release\Apache.NMS.pdb
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Release\EDSDKLib.pdb
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\bin\Release\EDSDKLib.xml
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\obj\Release\PathinfoActiveMQClient.csprojResolveAssemblyReference.cache
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\obj\Release\PathinfoActiveMQClient.exe
+D:\softwares\projects\PathinfoActiveMQClient\PathinfoActiveMQClient\obj\Release\PathinfoActiveMQClient.pdb

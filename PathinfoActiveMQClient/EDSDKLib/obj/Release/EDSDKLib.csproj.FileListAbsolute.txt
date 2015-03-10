@@ -1,0 +1,12 @@
+D:\softwares\projects\CanonSDKTutorialV7\EDSDKLib\bin\Release\EDSDKLib.XML
+D:\softwares\projects\CanonSDKTutorialV7\EDSDKLib\bin\Release\EDSDKLib.dll
+D:\softwares\projects\CanonSDKTutorialV7\EDSDKLib\bin\Release\EDSDKLib.pdb
+D:\softwares\projects\CanonSDKTutorialV7\EDSDKLib\obj\Release\EDSDKLib.dll
+D:\softwares\projects\CanonSDKTutorialV7\EDSDKLib\obj\Release\EDSDKLib.pdb
+D:\softwares\projects\CanonSDKTutorialV7\EDSDKLib\obj\Release\EDSDKLib.csprojResolveAssemblyReference.cache
+D:\softwares\projects\PathinfoActiveMQClient\EDSDKLib\bin\Release\EDSDKLib.XML
+D:\softwares\projects\PathinfoActiveMQClient\EDSDKLib\bin\Release\EDSDKLib.dll
+D:\softwares\projects\PathinfoActiveMQClient\EDSDKLib\bin\Release\EDSDKLib.pdb
+D:\softwares\projects\PathinfoActiveMQClient\EDSDKLib\obj\Release\EDSDKLib.csprojResolveAssemblyReference.cache
+D:\softwares\projects\PathinfoActiveMQClient\EDSDKLib\obj\Release\EDSDKLib.dll
+D:\softwares\projects\PathinfoActiveMQClient\EDSDKLib\obj\Release\EDSDKLib.pdb

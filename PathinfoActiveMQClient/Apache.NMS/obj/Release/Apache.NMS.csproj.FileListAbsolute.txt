@@ -1,0 +1,5 @@
+D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS\bin\Release\Apache.NMS.dll
+D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS\bin\Release\Apache.NMS.pdb
+D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS\obj\Release\Apache.NMS.csprojResolveAssemblyReference.cache
+D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS\obj\Release\Apache.NMS.dll
+D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS\obj\Release\Apache.NMS.pdb

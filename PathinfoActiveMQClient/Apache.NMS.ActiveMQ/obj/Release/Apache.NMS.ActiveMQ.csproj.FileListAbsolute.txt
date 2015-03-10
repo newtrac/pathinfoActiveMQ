@@ -1,0 +1,8 @@
+D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\bin\Release\Apache.NMS.ActiveMQ.dll
+D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\bin\Release\Apache.NMS.ActiveMQ.pdb
+D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\bin\Release\Apache.NMS.dll
+D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\bin\Release\Ionic.Zlib.dll
+D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\bin\Release\Apache.NMS.pdb
+D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\obj\Release\Apache.NMS.ActiveMQ.csprojResolveAssemblyReference.cache
+D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\obj\Release\Apache.NMS.ActiveMQ.dll
+D:\softwares\projects\PathinfoActiveMQClient\Apache.NMS.ActiveMQ\obj\Release\Apache.NMS.ActiveMQ.pdb

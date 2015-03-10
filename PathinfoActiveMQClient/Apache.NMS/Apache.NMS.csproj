@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7CB868EC-CF5D-4962-9BDA-1A008996BBC6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Apache.NMS</RootNamespace>
+    <AssemblyName>Apache.NMS</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IBytesMessage.cs" />
+    <Compile Include="IConnection.cs" />
+    <Compile Include="IConnectionFactory.cs" />
+    <Compile Include="IConnectionMetaData.cs" />
+    <Compile Include="IDestination.cs" />
+    <Compile Include="IllegalStateException.cs" />
+    <Compile Include="IMapMessage.cs" />
+    <Compile Include="IMessage.cs" />
+    <Compile Include="IMessageConsumer.cs" />
+    <Compile Include="IMessageProducer.cs" />
+    <Compile Include="INetTxConnection.cs" />
+    <Compile Include="INetTxConnectionFactory.cs" />
+    <Compile Include="INetTxSession.cs" />
+    <Compile Include="InvalidClientIDException.cs" />
+    <Compile Include="InvalidDestinationException.cs" />
+    <Compile Include="InvalidSelectorException.cs" />
+    <Compile Include="IObjectMessage.cs" />
+    <Compile Include="IPrimitiveMap.cs" />
+    <Compile Include="IQueue.cs" />
+    <Compile Include="IQueueBrowser.cs" />
+    <Compile Include="IRedeliveryPolicy.cs" />
+    <Compile Include="ISession.cs" />
+    <Compile Include="IStartable.cs" />
+    <Compile Include="IStoppable.cs" />
+    <Compile Include="IStreamMessage.cs" />
+    <Compile Include="ITemporaryQueue.cs" />
+    <Compile Include="ITemporaryTopic.cs" />
+    <Compile Include="ITextMessage.cs" />
+    <Compile Include="ITopic.cs" />
+    <Compile Include="ITrace.cs" />
+    <Compile Include="MessageConsumerExtensions.cs" />
+    <Compile Include="MessageEOFException.cs" />
+    <Compile Include="MessageExtensions.cs" />
+    <Compile Include="MessageFormatException.cs" />
+    <Compile Include="MessageNotReadableException.cs" />
+    <Compile Include="MessageNotWriteableException.cs" />
+    <Compile Include="MessageProducerExtensions.cs" />
+    <Compile Include="NMSConnectionException.cs" />
+    <Compile Include="NMSConnectionFactory.cs" />
+    <Compile Include="NMSConstants.cs" />
+    <Compile Include="NMSException.cs" />
+    <Compile Include="NMSSecurityException.cs" />
+    <Compile Include="Policies\RedeliveryPolicy.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceAllocationException.cs" />
+    <Compile Include="SessionExtensions.cs" />
+    <Compile Include="Tracer.cs" />
+    <Compile Include="TransactionInProgressException.cs" />
+    <Compile Include="TransactionRolledBackException.cs" />
+    <Compile Include="Util\Atomic.cs" />
+    <Compile Include="Util\Convert.cs" />
+    <Compile Include="Util\CountDownLatch.cs" />
+    <Compile Include="Util\DateUtils.cs" />
+    <Compile Include="Util\EndianBinaryReader.cs" />
+    <Compile Include="Util\EndianBinaryWriter.cs" />
+    <Compile Include="Util\EndianSupport.cs" />
+    <Compile Include="Util\MessagePropertyIntercepter.cs" />
+    <Compile Include="Util\MessageTransformation.cs" />
+    <Compile Include="Util\NMSExceptionSupport.cs" />
+    <Compile Include="Util\PrimitiveMap.cs" />
+    <Compile Include="Util\PrimitiveMapInterceptor.cs" />
+    <Compile Include="Util\SessionUtils.cs" />
+    <Compile Include="Util\URISupport.cs" />
+    <Compile Include="Util\XmlUtils.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
