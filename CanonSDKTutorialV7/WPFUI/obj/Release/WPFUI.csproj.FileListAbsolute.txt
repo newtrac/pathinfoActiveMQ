@@ -1,0 +1,16 @@
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\bin\Release\WPFUI.exe
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\bin\Release\WPFUI.pdb
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\bin\Release\EDSDKLib.dll
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\bin\Release\EDSDKLib.pdb
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\bin\Release\EDSDKLib.xml
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\obj\Release\WPFUI.csprojResolveAssemblyReference.cache
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\obj\Release\MainWindow.baml
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\obj\Release\MainWindow.g.cs
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\obj\Release\App.g.cs
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\obj\Release\WPFUI_MarkupCompile.cache
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\obj\Release\WPFUI.g.resources
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\obj\Release\WPFUI.Properties.Resources.resources
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\obj\Release\WPFUI.csproj.GenerateResource.Cache
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\obj\Release\WPFUI.exe
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\obj\Release\WPFUI.pdb
+D:\softwares\projects\CanonSDKTutorialV7\WPFUI\bin\Release\WPFUI.exe.config

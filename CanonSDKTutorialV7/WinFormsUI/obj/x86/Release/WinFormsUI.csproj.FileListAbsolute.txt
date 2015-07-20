@@ -1,0 +1,12 @@
+D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\bin\Release\WinFormsUI.exe.config
+D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\bin\Release\WinFormsUI.exe
+D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\bin\Release\WinFormsUI.pdb
+D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\bin\Release\EDSDKLib.dll
+D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\bin\Release\EDSDKLib.pdb
+D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\bin\Release\EDSDKLib.xml
+D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\obj\x86\Release\WinFormsUI.csprojResolveAssemblyReference.cache
+D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\obj\x86\Release\WinFormsUI.MainForm.resources
+D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\obj\x86\Release\WinFormsUI.Properties.Resources.resources
+D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\obj\x86\Release\WinFormsUI.csproj.GenerateResource.Cache
+D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\obj\x86\Release\WinFormsUI.exe
+D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\obj\x86\Release\WinFormsUI.pdb
