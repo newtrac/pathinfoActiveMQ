@@ -15,11 +15,14 @@ namespace WinFormsUI
         List<int> AvList;
         List<int> TvList;
         List<int> ISOList;
+        List<string> taskList = new List<string>();
         List<Camera> CamList;
         Bitmap Evf_Bmp;
         int LVBw, LVBh, w, h;
         float LVBratio, LVration;
-
+        string taskFolder = "C:\\tmp\\LumanImagingTasks\\";
+        string taskOutputFolder = "C:\\tmp\\LumanImagingFinished\\";
+        string taskImageTempFolder = "C:\\tmp\\LumanImagingTemp\\";
         #endregion
 
         public MainForm()
@@ -38,6 +41,19 @@ namespace WinFormsUI
             string image_folder = "C:\\pis\\image\\gross\\" + year_str + "\\" + month_str;
             if(!Directory.Exists(image_folder))
                     Directory.CreateDirectory(image_folder);
+            if (!Directory.Exists(taskOutputFolder))
+                Directory.CreateDirectory(taskOutputFolder);
+            if (!Directory.Exists(taskFolder))
+                Directory.CreateDirectory(taskFolder);
+            if (!Directory.Exists(taskImageTempFolder))
+                Directory.CreateDirectory(taskImageTempFolder);
+            //empty image temp folder
+            System.IO.DirectoryInfo imageTempFolderInfo = new DirectoryInfo(taskImageTempFolder);
+            foreach (FileInfo file in imageTempFolderInfo.GetFiles())
+            {
+                file.Delete();
+            }
+            RefreshTasks();
             SavePathTextBox.Text = image_folder;
             LVBw = LiveViewPicBox.Width;
             LVBh = LiveViewPicBox.Height;
@@ -165,8 +181,10 @@ namespace WinFormsUI
 
         private void TakePhotoButton_Click(object sender, EventArgs e)
         {
-            if (STComputerButton.Checked || STBothButton.Checked) Directory.CreateDirectory(SavePathTextBox.Text);
-            CameraHandler.ImageSaveDirectory = SavePathTextBox.Text;
+            if (STComputerButton.Checked || STBothButton.Checked) 
+                Directory.CreateDirectory(SavePathTextBox.Text);
+            CameraHandler.ImageSaveDirectory = taskImageTempFolder;//SavePathTextBox.Text;
+            
             if ((string)TvCoBox.SelectedItem == "Bulb")
                 CameraHandler.TakePhoto((uint)BulbUpDo.Value);
             else
@@ -329,15 +347,34 @@ namespace WinFormsUI
                 CameraHandler.SetCapacity();
                 SessionButton.Enabled = false;
                 RefreshButton.Enabled = false;
+
                 //SessionButton.Text = "断开相机";
             }
         }
 
+        private void RefreshTasks()
+        {
+            this.taskList.Clear();
+            this.taskListBox.Items.Clear();
+            string[] taskFiles = Directory.GetFiles(this.taskFolder, "*.task");
+            foreach (string taskFile in taskFiles)
+            {
+                string fileName = Path.GetFileName(taskFile);
+                this.taskList.Add(fileName);
+                this.taskListBox.Items.Add(fileName);
+            }
+        }
         #endregion
 
         private void SettingsGroupBox_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void TaskRefreshButton_Click(object sender, EventArgs e)
+        {
+            RefreshTasks();
+            MessageBox.Show("refresh complete!");
         }
     }
 }

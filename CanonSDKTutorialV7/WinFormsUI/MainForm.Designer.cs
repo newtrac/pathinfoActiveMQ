@@ -36,6 +36,8 @@
             this.InitGroupBox = new System.Windows.Forms.GroupBox();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.LiveViewGroupBox = new System.Windows.Forms.GroupBox();
+            this.TaskRefreshButton = new System.Windows.Forms.Button();
+            this.MetaInfoBox = new System.Windows.Forms.ListBox();
             this.SettingsGroupBox = new System.Windows.Forms.GroupBox();
             this.MainProgressBar = new System.Windows.Forms.ProgressBar();
             this.WBCoBox = new System.Windows.Forms.ComboBox();
@@ -57,8 +59,7 @@
             this.STComputerButton = new System.Windows.Forms.RadioButton();
             this.STCameraButton = new System.Windows.Forms.RadioButton();
             this.SaveFolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.MetaInfoBox = new System.Windows.Forms.ListBox();
-            this.TaskRefreshButton = new System.Windows.Forms.Button();
+            this.taskListBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.LiveViewPicBox)).BeginInit();
             this.InitGroupBox.SuspendLayout();
             this.LiveViewGroupBox.SuspendLayout();
@@ -153,6 +154,7 @@
             this.LiveViewGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.LiveViewGroupBox.Controls.Add(this.taskListBox);
             this.LiveViewGroupBox.Controls.Add(this.TaskRefreshButton);
             this.LiveViewGroupBox.Controls.Add(this.MetaInfoBox);
             this.LiveViewGroupBox.Controls.Add(this.LiveViewPicBox);
@@ -163,6 +165,26 @@
             this.LiveViewGroupBox.TabIndex = 10;
             this.LiveViewGroupBox.TabStop = false;
             this.LiveViewGroupBox.Text = "实时图像";
+            // 
+            // TaskRefreshButton
+            // 
+            this.TaskRefreshButton.Location = new System.Drawing.Point(6, 53);
+            this.TaskRefreshButton.Name = "TaskRefreshButton";
+            this.TaskRefreshButton.Size = new System.Drawing.Size(70, 27);
+            this.TaskRefreshButton.TabIndex = 11;
+            this.TaskRefreshButton.Text = "更新任务";
+            this.TaskRefreshButton.UseVisualStyleBackColor = true;
+            this.TaskRefreshButton.Click += new System.EventHandler(this.TaskRefreshButton_Click);
+            // 
+            // MetaInfoBox
+            // 
+            this.MetaInfoBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.MetaInfoBox.FormattingEnabled = true;
+            this.MetaInfoBox.Location = new System.Drawing.Point(216, 22);
+            this.MetaInfoBox.Name = "MetaInfoBox";
+            this.MetaInfoBox.Size = new System.Drawing.Size(364, 95);
+            this.MetaInfoBox.TabIndex = 10;
             // 
             // SettingsGroupBox
             // 
@@ -413,24 +435,14 @@
             // 
             this.SaveFolderBrowser.Description = "存储图像到...";
             // 
-            // MetaInfoBox
+            // taskListBox
             // 
-            this.MetaInfoBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.MetaInfoBox.FormattingEnabled = true;
-            this.MetaInfoBox.Location = new System.Drawing.Point(112, 22);
-            this.MetaInfoBox.Name = "MetaInfoBox";
-            this.MetaInfoBox.Size = new System.Drawing.Size(468, 95);
-            this.MetaInfoBox.TabIndex = 10;
-            // 
-            // TaskRefreshButton
-            // 
-            this.TaskRefreshButton.Location = new System.Drawing.Point(6, 53);
-            this.TaskRefreshButton.Name = "TaskRefreshButton";
-            this.TaskRefreshButton.Size = new System.Drawing.Size(70, 27);
-            this.TaskRefreshButton.TabIndex = 11;
-            this.TaskRefreshButton.Text = "更新任务";
-            this.TaskRefreshButton.UseVisualStyleBackColor = true;
+            this.taskListBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.taskListBox.FormattingEnabled = true;
+            this.taskListBox.Location = new System.Drawing.Point(6, 86);
+            this.taskListBox.Name = "taskListBox";
+            this.taskListBox.Size = new System.Drawing.Size(191, 21);
+            this.taskListBox.TabIndex = 9;
             // 
             // MainForm
             // 
@@ -493,6 +505,7 @@
         private System.Windows.Forms.ProgressBar MainProgressBar;
         private System.Windows.Forms.ListBox MetaInfoBox;
         private System.Windows.Forms.Button TaskRefreshButton;
+        private System.Windows.Forms.ComboBox taskListBox;
     }
 }
 
