@@ -48,11 +48,6 @@ namespace WinFormsUI
             if (!Directory.Exists(taskImageTempFolder))
                 Directory.CreateDirectory(taskImageTempFolder);
             //empty image temp folder
-            System.IO.DirectoryInfo imageTempFolderInfo = new DirectoryInfo(taskImageTempFolder);
-            foreach (FileInfo file in imageTempFolderInfo.GetFiles())
-            {
-                file.Delete();
-            }
             RefreshTasks();
             SavePathTextBox.Text = image_folder;
             LVBw = LiveViewPicBox.Width;
@@ -192,6 +187,8 @@ namespace WinFormsUI
                 //for (int i = 0; i < 5;i++ )
                     CameraHandler.TakePhoto();
             }
+            // copy image from tmp to finished
+            moveImageToFinishedFolder();
         }
 
         private void RecordVideoButton_Click(object sender, EventArgs e)
@@ -352,6 +349,34 @@ namespace WinFormsUI
             }
         }
 
+        private void moveImageToFinishedFolder() {
+            System.IO.DirectoryInfo imageTempFolderInfo = new DirectoryInfo(taskImageTempFolder);
+            if (taskListBox.SelectedIndex < 0)
+            {
+                //MessageBox.Show("Please select a task first!");
+                CleanupImageTempFolder();
+                return;
+            } 
+            string task_file = taskListBox.SelectedItem.ToString();
+            string base_name = Path.GetFileNameWithoutExtension(task_file);
+            string image_file = base_name + ".jpg";
+            string image_path = Path.Combine(taskOutputFolder, image_file);
+            foreach (FileInfo file in imageTempFolderInfo.GetFiles())
+            {
+                file.CopyTo(image_path);
+                file.Delete();
+                break; // assume only one to copy
+            }
+        
+        }
+        private void CleanupImageTempFolder() {
+            System.IO.DirectoryInfo imageTempFolderInfo = new DirectoryInfo(taskImageTempFolder);
+            foreach (FileInfo file in imageTempFolderInfo.GetFiles())
+            {
+                file.Delete();
+            }
+        
+        }
         private void RefreshTasks()
         {
             this.taskList.Clear();
@@ -363,6 +388,23 @@ namespace WinFormsUI
                 this.taskList.Add(fileName);
                 this.taskListBox.Items.Add(fileName);
             }
+            if (taskListBox.Items.Count > 0)
+                taskListBox.SelectedIndex = 0;
+            LoadTaskInfoToBox();
+            CleanupImageTempFolder();
+        }
+
+        private void LoadTaskInfoToBox()
+        { 
+            if (taskListBox.Items.Count <= 0){
+                return;
+            }
+            string taskFile = taskListBox.SelectedItem.ToString();
+            string taskFilePath = Path.Combine(taskFolder, taskFile);
+            string text = System.IO.File.ReadAllText(taskFilePath);
+            label6.Text = text;
+            //MetaInfoBox.Text = text;
+            //MetaInfoBox.Refresh();
         }
         #endregion
 
@@ -375,6 +417,11 @@ namespace WinFormsUI
         {
             RefreshTasks();
             MessageBox.Show("refresh complete!");
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -36,8 +36,8 @@
             this.InitGroupBox = new System.Windows.Forms.GroupBox();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.LiveViewGroupBox = new System.Windows.Forms.GroupBox();
+            this.taskListBox = new System.Windows.Forms.ComboBox();
             this.TaskRefreshButton = new System.Windows.Forms.Button();
-            this.MetaInfoBox = new System.Windows.Forms.ListBox();
             this.SettingsGroupBox = new System.Windows.Forms.GroupBox();
             this.MainProgressBar = new System.Windows.Forms.ProgressBar();
             this.WBCoBox = new System.Windows.Forms.ComboBox();
@@ -59,7 +59,23 @@
             this.STComputerButton = new System.Windows.Forms.RadioButton();
             this.STCameraButton = new System.Windows.Forms.RadioButton();
             this.SaveFolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.taskListBox = new System.Windows.Forms.ComboBox();
+            this.listBoxPathologyNum = new System.Windows.Forms.ListBox();
+            this.labelPathologyNum = new System.Windows.Forms.Label();
+            this.labelName = new System.Windows.Forms.Label();
+            this.listBoxName = new System.Windows.Forms.ListBox();
+            this.listBoxGender = new System.Windows.Forms.ListBox();
+            this.labelGender = new System.Windows.Forms.Label();
+            this.listBoxAge = new System.Windows.Forms.ListBox();
+            this.labelAge = new System.Windows.Forms.Label();
+            this.listBoxRegisterNum = new System.Windows.Forms.ListBox();
+            this.labelRegisterNum = new System.Windows.Forms.Label();
+            this.labelOperator = new System.Windows.Forms.Label();
+            this.listBoxOperator = new System.Windows.Forms.ListBox();
+            this.labelFileName = new System.Windows.Forms.Label();
+            this.labelPicDescription = new System.Windows.Forms.Label();
+            this.listBoxFilename = new System.Windows.Forms.ListBox();
+            this.listBoxPicDesciption = new System.Windows.Forms.ListBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.LiveViewPicBox)).BeginInit();
             this.InitGroupBox.SuspendLayout();
             this.LiveViewGroupBox.SuspendLayout();
@@ -74,9 +90,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LiveViewPicBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.LiveViewPicBox.Location = new System.Drawing.Point(8, 135);
+            this.LiveViewPicBox.Location = new System.Drawing.Point(8, 27);
             this.LiveViewPicBox.Name = "LiveViewPicBox";
-            this.LiveViewPicBox.Size = new System.Drawing.Size(572, 376);
+            this.LiveViewPicBox.Size = new System.Drawing.Size(572, 357);
             this.LiveViewPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.LiveViewPicBox.TabIndex = 1;
             this.LiveViewPicBox.TabStop = false;
@@ -85,7 +101,7 @@
             // 
             // LiveViewButton
             // 
-            this.LiveViewButton.Location = new System.Drawing.Point(8, 20);
+            this.LiveViewButton.Location = new System.Drawing.Point(664, 176);
             this.LiveViewButton.Name = "LiveViewButton";
             this.LiveViewButton.Size = new System.Drawing.Size(70, 22);
             this.LiveViewButton.TabIndex = 2;
@@ -154,59 +170,49 @@
             this.LiveViewGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.LiveViewGroupBox.Controls.Add(this.taskListBox);
-            this.LiveViewGroupBox.Controls.Add(this.TaskRefreshButton);
-            this.LiveViewGroupBox.Controls.Add(this.MetaInfoBox);
             this.LiveViewGroupBox.Controls.Add(this.LiveViewPicBox);
-            this.LiveViewGroupBox.Controls.Add(this.LiveViewButton);
-            this.LiveViewGroupBox.Location = new System.Drawing.Point(12, 12);
+            this.LiveViewGroupBox.Location = new System.Drawing.Point(12, 139);
             this.LiveViewGroupBox.Name = "LiveViewGroupBox";
-            this.LiveViewGroupBox.Size = new System.Drawing.Size(646, 550);
+            this.LiveViewGroupBox.Size = new System.Drawing.Size(646, 423);
             this.LiveViewGroupBox.TabIndex = 10;
             this.LiveViewGroupBox.TabStop = false;
             this.LiveViewGroupBox.Text = "实时图像";
             // 
+            // taskListBox
+            // 
+            this.taskListBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.taskListBox.FormattingEnabled = true;
+            this.taskListBox.Location = new System.Drawing.Point(740, 527);
+            this.taskListBox.Name = "taskListBox";
+            this.taskListBox.Size = new System.Drawing.Size(191, 21);
+            this.taskListBox.TabIndex = 9;
+            // 
             // TaskRefreshButton
             // 
-            this.TaskRefreshButton.Location = new System.Drawing.Point(6, 53);
+            this.TaskRefreshButton.Location = new System.Drawing.Point(664, 523);
             this.TaskRefreshButton.Name = "TaskRefreshButton";
             this.TaskRefreshButton.Size = new System.Drawing.Size(70, 27);
             this.TaskRefreshButton.TabIndex = 11;
-            this.TaskRefreshButton.Text = "更新任务";
+            this.TaskRefreshButton.Text = "更新";
             this.TaskRefreshButton.UseVisualStyleBackColor = true;
             this.TaskRefreshButton.Click += new System.EventHandler(this.TaskRefreshButton_Click);
             // 
-            // MetaInfoBox
-            // 
-            this.MetaInfoBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.MetaInfoBox.FormattingEnabled = true;
-            this.MetaInfoBox.Location = new System.Drawing.Point(216, 22);
-            this.MetaInfoBox.Name = "MetaInfoBox";
-            this.MetaInfoBox.Size = new System.Drawing.Size(364, 95);
-            this.MetaInfoBox.TabIndex = 10;
-            // 
             // SettingsGroupBox
             // 
-            this.SettingsGroupBox.Controls.Add(this.MainProgressBar);
             this.SettingsGroupBox.Controls.Add(this.WBCoBox);
-            this.SettingsGroupBox.Controls.Add(this.SavePathTextBox);
-            this.SettingsGroupBox.Controls.Add(this.BrowseButton);
             this.SettingsGroupBox.Controls.Add(this.label4);
             this.SettingsGroupBox.Controls.Add(this.label3);
             this.SettingsGroupBox.Controls.Add(this.label2);
             this.SettingsGroupBox.Controls.Add(this.label5);
             this.SettingsGroupBox.Controls.Add(this.label1);
-            this.SettingsGroupBox.Controls.Add(this.RecordVideoButton);
-            this.SettingsGroupBox.Controls.Add(this.TakePhotoButton);
             this.SettingsGroupBox.Controls.Add(this.BulbUpDo);
             this.SettingsGroupBox.Controls.Add(this.ISOCoBox);
             this.SettingsGroupBox.Controls.Add(this.TvCoBox);
             this.SettingsGroupBox.Controls.Add(this.AvCoBox);
             this.SettingsGroupBox.Location = new System.Drawing.Point(664, 209);
-            this.SettingsGroupBox.MinimumSize = new System.Drawing.Size(300, 158);
+            this.SettingsGroupBox.MinimumSize = new System.Drawing.Size(300, 100);
             this.SettingsGroupBox.Name = "SettingsGroupBox";
-            this.SettingsGroupBox.Size = new System.Drawing.Size(313, 185);
+            this.SettingsGroupBox.Size = new System.Drawing.Size(313, 101);
             this.SettingsGroupBox.TabIndex = 11;
             this.SettingsGroupBox.TabStop = false;
             this.SettingsGroupBox.Text = "设置";
@@ -214,7 +220,7 @@
             // 
             // MainProgressBar
             // 
-            this.MainProgressBar.Location = new System.Drawing.Point(6, 100);
+            this.MainProgressBar.Location = new System.Drawing.Point(822, 496);
             this.MainProgressBar.Name = "MainProgressBar";
             this.MainProgressBar.Size = new System.Drawing.Size(130, 20);
             this.MainProgressBar.TabIndex = 8;
@@ -240,16 +246,16 @@
             // 
             // SavePathTextBox
             // 
-            this.SavePathTextBox.Location = new System.Drawing.Point(6, 126);
+            this.SavePathTextBox.Location = new System.Drawing.Point(670, 406);
             this.SavePathTextBox.Name = "SavePathTextBox";
-            this.SavePathTextBox.Size = new System.Drawing.Size(282, 20);
+            this.SavePathTextBox.Size = new System.Drawing.Size(230, 20);
             this.SavePathTextBox.TabIndex = 6;
             // 
             // BrowseButton
             // 
-            this.BrowseButton.Location = new System.Drawing.Point(6, 152);
+            this.BrowseButton.Location = new System.Drawing.Point(909, 407);
             this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(99, 23);
+            this.BrowseButton.Size = new System.Drawing.Size(68, 19);
             this.BrowseButton.TabIndex = 5;
             this.BrowseButton.Text = "浏览";
             this.BrowseButton.UseVisualStyleBackColor = true;
@@ -308,9 +314,9 @@
             // RecordVideoButton
             // 
             this.RecordVideoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RecordVideoButton.Location = new System.Drawing.Point(217, 72);
+            this.RecordVideoButton.Location = new System.Drawing.Point(740, 494);
             this.RecordVideoButton.Name = "RecordVideoButton";
-            this.RecordVideoButton.Size = new System.Drawing.Size(71, 48);
+            this.RecordVideoButton.Size = new System.Drawing.Size(71, 23);
             this.RecordVideoButton.TabIndex = 2;
             this.RecordVideoButton.Text = "录像";
             this.RecordVideoButton.UseVisualStyleBackColor = true;
@@ -320,9 +326,9 @@
             // TakePhotoButton
             // 
             this.TakePhotoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TakePhotoButton.Location = new System.Drawing.Point(142, 72);
+            this.TakePhotoButton.Location = new System.Drawing.Point(663, 493);
             this.TakePhotoButton.Name = "TakePhotoButton";
-            this.TakePhotoButton.Size = new System.Drawing.Size(71, 48);
+            this.TakePhotoButton.Size = new System.Drawing.Size(71, 24);
             this.TakePhotoButton.TabIndex = 2;
             this.TakePhotoButton.Text = "拍照";
             this.TakePhotoButton.UseVisualStyleBackColor = true;
@@ -435,20 +441,207 @@
             // 
             this.SaveFolderBrowser.Description = "存储图像到...";
             // 
-            // taskListBox
+            // listBoxPathologyNum
             // 
-            this.taskListBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.taskListBox.FormattingEnabled = true;
-            this.taskListBox.Location = new System.Drawing.Point(6, 86);
-            this.taskListBox.Name = "taskListBox";
-            this.taskListBox.Size = new System.Drawing.Size(191, 21);
-            this.taskListBox.TabIndex = 9;
+            this.listBoxPathologyNum.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listBoxPathologyNum.FormattingEnabled = true;
+            this.listBoxPathologyNum.Location = new System.Drawing.Point(70, 19);
+            this.listBoxPathologyNum.Name = "listBoxPathologyNum";
+            this.listBoxPathologyNum.Size = new System.Drawing.Size(72, 17);
+            this.listBoxPathologyNum.TabIndex = 12;
+            // 
+            // labelPathologyNum
+            // 
+            this.labelPathologyNum.AutoSize = true;
+            this.labelPathologyNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPathologyNum.Location = new System.Drawing.Point(17, 20);
+            this.labelPathologyNum.Name = "labelPathologyNum";
+            this.labelPathologyNum.Size = new System.Drawing.Size(53, 16);
+            this.labelPathologyNum.TabIndex = 10;
+            this.labelPathologyNum.Text = "病理号";
+            this.labelPathologyNum.Click += new System.EventHandler(this.label6_Click);
+            // 
+            // labelName
+            // 
+            this.labelName.AutoSize = true;
+            this.labelName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelName.Location = new System.Drawing.Point(148, 19);
+            this.labelName.Name = "labelName";
+            this.labelName.Size = new System.Drawing.Size(38, 16);
+            this.labelName.TabIndex = 13;
+            this.labelName.Text = "姓名";
+            // 
+            // listBoxName
+            // 
+            this.listBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listBoxName.FormattingEnabled = true;
+            this.listBoxName.Location = new System.Drawing.Point(182, 18);
+            this.listBoxName.Name = "listBoxName";
+            this.listBoxName.Size = new System.Drawing.Size(72, 17);
+            this.listBoxName.TabIndex = 14;
+            // 
+            // listBoxGender
+            // 
+            this.listBoxGender.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listBoxGender.FormattingEnabled = true;
+            this.listBoxGender.Location = new System.Drawing.Point(303, 18);
+            this.listBoxGender.Name = "listBoxGender";
+            this.listBoxGender.Size = new System.Drawing.Size(72, 17);
+            this.listBoxGender.TabIndex = 15;
+            // 
+            // labelGender
+            // 
+            this.labelGender.AutoSize = true;
+            this.labelGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelGender.Location = new System.Drawing.Point(261, 18);
+            this.labelGender.Name = "labelGender";
+            this.labelGender.Size = new System.Drawing.Size(38, 16);
+            this.labelGender.TabIndex = 16;
+            this.labelGender.Text = "性别";
+            // 
+            // listBoxAge
+            // 
+            this.listBoxAge.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listBoxAge.FormattingEnabled = true;
+            this.listBoxAge.Location = new System.Drawing.Point(420, 18);
+            this.listBoxAge.Name = "listBoxAge";
+            this.listBoxAge.Size = new System.Drawing.Size(52, 17);
+            this.listBoxAge.TabIndex = 17;
+            // 
+            // labelAge
+            // 
+            this.labelAge.AutoSize = true;
+            this.labelAge.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelAge.Location = new System.Drawing.Point(381, 18);
+            this.labelAge.Name = "labelAge";
+            this.labelAge.Size = new System.Drawing.Size(38, 16);
+            this.labelAge.TabIndex = 18;
+            this.labelAge.Text = "年龄";
+            // 
+            // listBoxRegisterNum
+            // 
+            this.listBoxRegisterNum.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listBoxRegisterNum.FormattingEnabled = true;
+            this.listBoxRegisterNum.Location = new System.Drawing.Point(591, 19);
+            this.listBoxRegisterNum.Name = "listBoxRegisterNum";
+            this.listBoxRegisterNum.Size = new System.Drawing.Size(52, 17);
+            this.listBoxRegisterNum.TabIndex = 19;
+            // 
+            // labelRegisterNum
+            // 
+            this.labelRegisterNum.AutoSize = true;
+            this.labelRegisterNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelRegisterNum.Location = new System.Drawing.Point(480, 19);
+            this.labelRegisterNum.Name = "labelRegisterNum";
+            this.labelRegisterNum.Size = new System.Drawing.Size(102, 16);
+            this.labelRegisterNum.TabIndex = 20;
+            this.labelRegisterNum.Text = "门诊号/住院号";
+            // 
+            // labelOperator
+            // 
+            this.labelOperator.AutoSize = true;
+            this.labelOperator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelOperator.Location = new System.Drawing.Point(669, 436);
+            this.labelOperator.Name = "labelOperator";
+            this.labelOperator.Size = new System.Drawing.Size(68, 16);
+            this.labelOperator.TabIndex = 21;
+            this.labelOperator.Text = "操作人员";
+            // 
+            // listBoxOperator
+            // 
+            this.listBoxOperator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listBoxOperator.FormattingEnabled = true;
+            this.listBoxOperator.Location = new System.Drawing.Point(743, 436);
+            this.listBoxOperator.Name = "listBoxOperator";
+            this.listBoxOperator.Size = new System.Drawing.Size(209, 17);
+            this.listBoxOperator.TabIndex = 22;
+            // 
+            // labelFileName
+            // 
+            this.labelFileName.AutoSize = true;
+            this.labelFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFileName.Location = new System.Drawing.Point(670, 332);
+            this.labelFileName.Name = "labelFileName";
+            this.labelFileName.Size = new System.Drawing.Size(53, 16);
+            this.labelFileName.TabIndex = 23;
+            this.labelFileName.Text = "文件名";
+            // 
+            // labelPicDescription
+            // 
+            this.labelPicDescription.AutoSize = true;
+            this.labelPicDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPicDescription.Location = new System.Drawing.Point(670, 363);
+            this.labelPicDescription.Name = "labelPicDescription";
+            this.labelPicDescription.Size = new System.Drawing.Size(68, 16);
+            this.labelPicDescription.TabIndex = 24;
+            this.labelPicDescription.Text = "图片描述";
+            // 
+            // listBoxFilename
+            // 
+            this.listBoxFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listBoxFilename.FormattingEnabled = true;
+            this.listBoxFilename.Location = new System.Drawing.Point(760, 331);
+            this.listBoxFilename.Name = "listBoxFilename";
+            this.listBoxFilename.Size = new System.Drawing.Size(209, 17);
+            this.listBoxFilename.TabIndex = 25;
+            // 
+            // listBoxPicDesciption
+            // 
+            this.listBoxPicDesciption.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listBoxPicDesciption.FormattingEnabled = true;
+            this.listBoxPicDesciption.Location = new System.Drawing.Point(761, 362);
+            this.listBoxPicDesciption.Name = "listBoxPicDesciption";
+            this.listBoxPicDesciption.Size = new System.Drawing.Size(209, 17);
+            this.listBoxPicDesciption.TabIndex = 26;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(17, 65);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(68, 16);
+            this.label6.TabIndex = 27;
+            this.label6.Text = "任务信息";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 600);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.listBoxPicDesciption);
+            this.Controls.Add(this.listBoxFilename);
+            this.Controls.Add(this.labelPicDescription);
+            this.Controls.Add(this.labelFileName);
+            this.Controls.Add(this.MainProgressBar);
+            this.Controls.Add(this.listBoxOperator);
+            this.Controls.Add(this.labelOperator);
+            this.Controls.Add(this.SavePathTextBox);
+            this.Controls.Add(this.labelRegisterNum);
+            this.Controls.Add(this.BrowseButton);
+            this.Controls.Add(this.listBoxRegisterNum);
+            this.Controls.Add(this.labelAge);
+            this.Controls.Add(this.listBoxAge);
+            this.Controls.Add(this.labelGender);
+            this.Controls.Add(this.listBoxGender);
+            this.Controls.Add(this.listBoxName);
+            this.Controls.Add(this.RecordVideoButton);
+            this.Controls.Add(this.labelName);
+            this.Controls.Add(this.TakePhotoButton);
+            this.Controls.Add(this.labelPathologyNum);
+            this.Controls.Add(this.listBoxPathologyNum);
+            this.Controls.Add(this.TaskRefreshButton);
+            this.Controls.Add(this.taskListBox);
+            this.Controls.Add(this.LiveViewButton);
             this.Controls.Add(this.SettingsGroupBox);
             this.Controls.Add(this.LiveViewGroupBox);
             this.Controls.Add(this.InitGroupBox);
@@ -469,6 +662,7 @@
             this.SaveToGroupBox.ResumeLayout(false);
             this.SaveToGroupBox.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -503,9 +697,25 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button RecordVideoButton;
         private System.Windows.Forms.ProgressBar MainProgressBar;
-        private System.Windows.Forms.ListBox MetaInfoBox;
         private System.Windows.Forms.Button TaskRefreshButton;
         private System.Windows.Forms.ComboBox taskListBox;
+        private System.Windows.Forms.ListBox listBoxPathologyNum;
+        private System.Windows.Forms.Label labelPathologyNum;
+        private System.Windows.Forms.Label labelName;
+        private System.Windows.Forms.ListBox listBoxName;
+        private System.Windows.Forms.ListBox listBoxGender;
+        private System.Windows.Forms.Label labelGender;
+        private System.Windows.Forms.ListBox listBoxAge;
+        private System.Windows.Forms.Label labelAge;
+        private System.Windows.Forms.ListBox listBoxRegisterNum;
+        private System.Windows.Forms.Label labelRegisterNum;
+        private System.Windows.Forms.Label labelOperator;
+        private System.Windows.Forms.ListBox listBoxOperator;
+        private System.Windows.Forms.Label labelFileName;
+        private System.Windows.Forms.Label labelPicDescription;
+        private System.Windows.Forms.ListBox listBoxFilename;
+        private System.Windows.Forms.ListBox listBoxPicDesciption;
+        private System.Windows.Forms.Label label6;
     }
 }
 
