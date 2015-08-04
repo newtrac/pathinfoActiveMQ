@@ -39,43 +39,42 @@
             this.taskListBox = new System.Windows.Forms.ComboBox();
             this.TaskRefreshButton = new System.Windows.Forms.Button();
             this.SettingsGroupBox = new System.Windows.Forms.GroupBox();
-            this.MainProgressBar = new System.Windows.Forms.ProgressBar();
             this.WBCoBox = new System.Windows.Forms.ComboBox();
-            this.SavePathTextBox = new System.Windows.Forms.TextBox();
-            this.BrowseButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.RecordVideoButton = new System.Windows.Forms.Button();
-            this.TakePhotoButton = new System.Windows.Forms.Button();
             this.BulbUpDo = new System.Windows.Forms.NumericUpDown();
             this.ISOCoBox = new System.Windows.Forms.ComboBox();
             this.TvCoBox = new System.Windows.Forms.ComboBox();
             this.AvCoBox = new System.Windows.Forms.ComboBox();
+            this.MainProgressBar = new System.Windows.Forms.ProgressBar();
+            this.SavePathTextBox = new System.Windows.Forms.TextBox();
+            this.BrowseButton = new System.Windows.Forms.Button();
+            this.TakePhotoButton = new System.Windows.Forms.Button();
             this.SaveToGroupBox = new System.Windows.Forms.GroupBox();
             this.STBothButton = new System.Windows.Forms.RadioButton();
             this.STComputerButton = new System.Windows.Forms.RadioButton();
             this.STCameraButton = new System.Windows.Forms.RadioButton();
             this.SaveFolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.listBoxPathologyNum = new System.Windows.Forms.ListBox();
             this.labelPathologyNum = new System.Windows.Forms.Label();
             this.labelName = new System.Windows.Forms.Label();
-            this.listBoxName = new System.Windows.Forms.ListBox();
-            this.listBoxGender = new System.Windows.Forms.ListBox();
             this.labelGender = new System.Windows.Forms.Label();
-            this.listBoxAge = new System.Windows.Forms.ListBox();
             this.labelAge = new System.Windows.Forms.Label();
-            this.listBoxRegisterNum = new System.Windows.Forms.ListBox();
             this.labelRegisterNum = new System.Windows.Forms.Label();
             this.labelOperator = new System.Windows.Forms.Label();
-            this.listBoxOperator = new System.Windows.Forms.ListBox();
             this.labelFileName = new System.Windows.Forms.Label();
             this.labelPicDescription = new System.Windows.Forms.Label();
-            this.listBoxFilename = new System.Windows.Forms.ListBox();
-            this.listBoxPicDesciption = new System.Windows.Forms.ListBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.accessionNumberBox = new System.Windows.Forms.TextBox();
+            this.patientNameBox = new System.Windows.Forms.TextBox();
+            this.patientGenderBox = new System.Windows.Forms.TextBox();
+            this.patientAgeBox = new System.Windows.Forms.TextBox();
+            this.inPatientNumberBox = new System.Windows.Forms.TextBox();
+            this.imageFileNameBox = new System.Windows.Forms.TextBox();
+            this.imageDescriptionBox = new System.Windows.Forms.TextBox();
+            this.operatorNameBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.LiveViewPicBox)).BeginInit();
             this.InitGroupBox.SuspendLayout();
             this.LiveViewGroupBox.SuspendLayout();
@@ -92,7 +91,7 @@
             this.LiveViewPicBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LiveViewPicBox.Location = new System.Drawing.Point(8, 27);
             this.LiveViewPicBox.Name = "LiveViewPicBox";
-            this.LiveViewPicBox.Size = new System.Drawing.Size(572, 357);
+            this.LiveViewPicBox.Size = new System.Drawing.Size(611, 405);
             this.LiveViewPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.LiveViewPicBox.TabIndex = 1;
             this.LiveViewPicBox.TabStop = false;
@@ -171,9 +170,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LiveViewGroupBox.Controls.Add(this.LiveViewPicBox);
-            this.LiveViewGroupBox.Location = new System.Drawing.Point(12, 139);
+            this.LiveViewGroupBox.Location = new System.Drawing.Point(12, 91);
             this.LiveViewGroupBox.Name = "LiveViewGroupBox";
-            this.LiveViewGroupBox.Size = new System.Drawing.Size(646, 423);
+            this.LiveViewGroupBox.Size = new System.Drawing.Size(646, 471);
             this.LiveViewGroupBox.TabIndex = 10;
             this.LiveViewGroupBox.TabStop = false;
             this.LiveViewGroupBox.Text = "实时图像";
@@ -218,13 +217,6 @@
             this.SettingsGroupBox.Text = "设置";
             this.SettingsGroupBox.Enter += new System.EventHandler(this.SettingsGroupBox_Enter);
             // 
-            // MainProgressBar
-            // 
-            this.MainProgressBar.Location = new System.Drawing.Point(822, 496);
-            this.MainProgressBar.Name = "MainProgressBar";
-            this.MainProgressBar.Size = new System.Drawing.Size(130, 20);
-            this.MainProgressBar.TabIndex = 8;
-            // 
             // WBCoBox
             // 
             this.WBCoBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -243,23 +235,6 @@
             this.WBCoBox.Size = new System.Drawing.Size(110, 21);
             this.WBCoBox.TabIndex = 7;
             this.WBCoBox.SelectedIndexChanged += new System.EventHandler(this.WBCoBox_SelectedIndexChanged);
-            // 
-            // SavePathTextBox
-            // 
-            this.SavePathTextBox.Location = new System.Drawing.Point(670, 406);
-            this.SavePathTextBox.Name = "SavePathTextBox";
-            this.SavePathTextBox.Size = new System.Drawing.Size(230, 20);
-            this.SavePathTextBox.TabIndex = 6;
-            // 
-            // BrowseButton
-            // 
-            this.BrowseButton.Location = new System.Drawing.Point(909, 407);
-            this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(68, 19);
-            this.BrowseButton.TabIndex = 5;
-            this.BrowseButton.Text = "浏览";
-            this.BrowseButton.UseVisualStyleBackColor = true;
-            this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
             // 
             // label4
             // 
@@ -310,29 +285,6 @@
             this.label1.Size = new System.Drawing.Size(24, 16);
             this.label1.TabIndex = 3;
             this.label1.Text = "Av";
-            // 
-            // RecordVideoButton
-            // 
-            this.RecordVideoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RecordVideoButton.Location = new System.Drawing.Point(740, 494);
-            this.RecordVideoButton.Name = "RecordVideoButton";
-            this.RecordVideoButton.Size = new System.Drawing.Size(71, 23);
-            this.RecordVideoButton.TabIndex = 2;
-            this.RecordVideoButton.Text = "录像";
-            this.RecordVideoButton.UseVisualStyleBackColor = true;
-            this.RecordVideoButton.Visible = false;
-            this.RecordVideoButton.Click += new System.EventHandler(this.RecordVideoButton_Click);
-            // 
-            // TakePhotoButton
-            // 
-            this.TakePhotoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TakePhotoButton.Location = new System.Drawing.Point(663, 493);
-            this.TakePhotoButton.Name = "TakePhotoButton";
-            this.TakePhotoButton.Size = new System.Drawing.Size(71, 24);
-            this.TakePhotoButton.TabIndex = 2;
-            this.TakePhotoButton.Text = "拍照";
-            this.TakePhotoButton.UseVisualStyleBackColor = true;
-            this.TakePhotoButton.Click += new System.EventHandler(this.TakePhotoButton_Click);
             // 
             // BulbUpDo
             // 
@@ -385,6 +337,41 @@
             this.AvCoBox.Size = new System.Drawing.Size(94, 21);
             this.AvCoBox.TabIndex = 0;
             this.AvCoBox.SelectedIndexChanged += new System.EventHandler(this.AvCoBox_SelectedIndexChanged);
+            // 
+            // MainProgressBar
+            // 
+            this.MainProgressBar.Location = new System.Drawing.Point(822, 496);
+            this.MainProgressBar.Name = "MainProgressBar";
+            this.MainProgressBar.Size = new System.Drawing.Size(130, 20);
+            this.MainProgressBar.TabIndex = 8;
+            // 
+            // SavePathTextBox
+            // 
+            this.SavePathTextBox.Location = new System.Drawing.Point(670, 406);
+            this.SavePathTextBox.Name = "SavePathTextBox";
+            this.SavePathTextBox.Size = new System.Drawing.Size(230, 20);
+            this.SavePathTextBox.TabIndex = 6;
+            // 
+            // BrowseButton
+            // 
+            this.BrowseButton.Location = new System.Drawing.Point(905, 404);
+            this.BrowseButton.Name = "BrowseButton";
+            this.BrowseButton.Size = new System.Drawing.Size(68, 23);
+            this.BrowseButton.TabIndex = 5;
+            this.BrowseButton.Text = "浏览";
+            this.BrowseButton.UseVisualStyleBackColor = true;
+            this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
+            // 
+            // TakePhotoButton
+            // 
+            this.TakePhotoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TakePhotoButton.Location = new System.Drawing.Point(663, 493);
+            this.TakePhotoButton.Name = "TakePhotoButton";
+            this.TakePhotoButton.Size = new System.Drawing.Size(71, 24);
+            this.TakePhotoButton.TabIndex = 2;
+            this.TakePhotoButton.Text = "拍照";
+            this.TakePhotoButton.UseVisualStyleBackColor = true;
+            this.TakePhotoButton.Click += new System.EventHandler(this.TakePhotoButton_Click);
             // 
             // SaveToGroupBox
             // 
@@ -441,16 +428,6 @@
             // 
             this.SaveFolderBrowser.Description = "存储图像到...";
             // 
-            // listBoxPathologyNum
-            // 
-            this.listBoxPathologyNum.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listBoxPathologyNum.FormattingEnabled = true;
-            this.listBoxPathologyNum.Location = new System.Drawing.Point(70, 19);
-            this.listBoxPathologyNum.Name = "listBoxPathologyNum";
-            this.listBoxPathologyNum.Size = new System.Drawing.Size(72, 17);
-            this.listBoxPathologyNum.TabIndex = 12;
-            // 
             // labelPathologyNum
             // 
             this.labelPathologyNum.AutoSize = true;
@@ -460,83 +437,42 @@
             this.labelPathologyNum.Size = new System.Drawing.Size(53, 16);
             this.labelPathologyNum.TabIndex = 10;
             this.labelPathologyNum.Text = "病理号";
-            this.labelPathologyNum.Click += new System.EventHandler(this.label6_Click);
             // 
             // labelName
             // 
             this.labelName.AutoSize = true;
             this.labelName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelName.Location = new System.Drawing.Point(148, 19);
+            this.labelName.Location = new System.Drawing.Point(173, 19);
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(38, 16);
             this.labelName.TabIndex = 13;
             this.labelName.Text = "姓名";
             // 
-            // listBoxName
-            // 
-            this.listBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listBoxName.FormattingEnabled = true;
-            this.listBoxName.Location = new System.Drawing.Point(182, 18);
-            this.listBoxName.Name = "listBoxName";
-            this.listBoxName.Size = new System.Drawing.Size(72, 17);
-            this.listBoxName.TabIndex = 14;
-            // 
-            // listBoxGender
-            // 
-            this.listBoxGender.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listBoxGender.FormattingEnabled = true;
-            this.listBoxGender.Location = new System.Drawing.Point(303, 18);
-            this.listBoxGender.Name = "listBoxGender";
-            this.listBoxGender.Size = new System.Drawing.Size(72, 17);
-            this.listBoxGender.TabIndex = 15;
-            // 
             // labelGender
             // 
             this.labelGender.AutoSize = true;
             this.labelGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelGender.Location = new System.Drawing.Point(261, 18);
+            this.labelGender.Location = new System.Drawing.Point(296, 18);
             this.labelGender.Name = "labelGender";
             this.labelGender.Size = new System.Drawing.Size(38, 16);
             this.labelGender.TabIndex = 16;
             this.labelGender.Text = "性别";
             // 
-            // listBoxAge
-            // 
-            this.listBoxAge.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listBoxAge.FormattingEnabled = true;
-            this.listBoxAge.Location = new System.Drawing.Point(420, 18);
-            this.listBoxAge.Name = "listBoxAge";
-            this.listBoxAge.Size = new System.Drawing.Size(52, 17);
-            this.listBoxAge.TabIndex = 17;
-            // 
             // labelAge
             // 
             this.labelAge.AutoSize = true;
             this.labelAge.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAge.Location = new System.Drawing.Point(381, 18);
+            this.labelAge.Location = new System.Drawing.Point(379, 18);
             this.labelAge.Name = "labelAge";
             this.labelAge.Size = new System.Drawing.Size(38, 16);
             this.labelAge.TabIndex = 18;
             this.labelAge.Text = "年龄";
             // 
-            // listBoxRegisterNum
-            // 
-            this.listBoxRegisterNum.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listBoxRegisterNum.FormattingEnabled = true;
-            this.listBoxRegisterNum.Location = new System.Drawing.Point(591, 19);
-            this.listBoxRegisterNum.Name = "listBoxRegisterNum";
-            this.listBoxRegisterNum.Size = new System.Drawing.Size(52, 17);
-            this.listBoxRegisterNum.TabIndex = 19;
-            // 
             // labelRegisterNum
             // 
             this.labelRegisterNum.AutoSize = true;
             this.labelRegisterNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelRegisterNum.Location = new System.Drawing.Point(480, 19);
+            this.labelRegisterNum.Location = new System.Drawing.Point(453, 16);
             this.labelRegisterNum.Name = "labelRegisterNum";
             this.labelRegisterNum.Size = new System.Drawing.Size(102, 16);
             this.labelRegisterNum.TabIndex = 20;
@@ -546,21 +482,11 @@
             // 
             this.labelOperator.AutoSize = true;
             this.labelOperator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelOperator.Location = new System.Drawing.Point(669, 436);
+            this.labelOperator.Location = new System.Drawing.Point(669, 438);
             this.labelOperator.Name = "labelOperator";
             this.labelOperator.Size = new System.Drawing.Size(68, 16);
             this.labelOperator.TabIndex = 21;
             this.labelOperator.Text = "操作人员";
-            // 
-            // listBoxOperator
-            // 
-            this.listBoxOperator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listBoxOperator.FormattingEnabled = true;
-            this.listBoxOperator.Location = new System.Drawing.Point(743, 436);
-            this.listBoxOperator.Name = "listBoxOperator";
-            this.listBoxOperator.Size = new System.Drawing.Size(209, 17);
-            this.listBoxOperator.TabIndex = 22;
             // 
             // labelFileName
             // 
@@ -582,26 +508,6 @@
             this.labelPicDescription.TabIndex = 24;
             this.labelPicDescription.Text = "图片描述";
             // 
-            // listBoxFilename
-            // 
-            this.listBoxFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listBoxFilename.FormattingEnabled = true;
-            this.listBoxFilename.Location = new System.Drawing.Point(760, 331);
-            this.listBoxFilename.Name = "listBoxFilename";
-            this.listBoxFilename.Size = new System.Drawing.Size(209, 17);
-            this.listBoxFilename.TabIndex = 25;
-            // 
-            // listBoxPicDesciption
-            // 
-            this.listBoxPicDesciption.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listBoxPicDesciption.FormattingEnabled = true;
-            this.listBoxPicDesciption.Location = new System.Drawing.Point(761, 362);
-            this.listBoxPicDesciption.Name = "listBoxPicDesciption";
-            this.listBoxPicDesciption.Size = new System.Drawing.Size(209, 17);
-            this.listBoxPicDesciption.TabIndex = 26;
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -612,33 +518,93 @@
             this.label6.TabIndex = 27;
             this.label6.Text = "任务信息";
             // 
+            // accessionNumberBox
+            // 
+            this.accessionNumberBox.Location = new System.Drawing.Point(68, 18);
+            this.accessionNumberBox.Name = "accessionNumberBox";
+            this.accessionNumberBox.Size = new System.Drawing.Size(99, 20);
+            this.accessionNumberBox.TabIndex = 28;
+            this.accessionNumberBox.TextChanged += new System.EventHandler(this.accessionNumberBox_TextChanged);
+            // 
+            // patientNameBox
+            // 
+            this.patientNameBox.Enabled = false;
+            this.patientNameBox.Location = new System.Drawing.Point(211, 17);
+            this.patientNameBox.Name = "patientNameBox";
+            this.patientNameBox.Size = new System.Drawing.Size(80, 20);
+            this.patientNameBox.TabIndex = 29;
+            // 
+            // patientGenderBox
+            // 
+            this.patientGenderBox.Enabled = false;
+            this.patientGenderBox.Location = new System.Drawing.Point(335, 16);
+            this.patientGenderBox.Name = "patientGenderBox";
+            this.patientGenderBox.Size = new System.Drawing.Size(41, 20);
+            this.patientGenderBox.TabIndex = 30;
+            // 
+            // patientAgeBox
+            // 
+            this.patientAgeBox.Enabled = false;
+            this.patientAgeBox.Location = new System.Drawing.Point(414, 16);
+            this.patientAgeBox.Name = "patientAgeBox";
+            this.patientAgeBox.Size = new System.Drawing.Size(33, 20);
+            this.patientAgeBox.TabIndex = 31;
+            // 
+            // inPatientNumberBox
+            // 
+            this.inPatientNumberBox.Enabled = false;
+            this.inPatientNumberBox.Location = new System.Drawing.Point(559, 15);
+            this.inPatientNumberBox.Name = "inPatientNumberBox";
+            this.inPatientNumberBox.Size = new System.Drawing.Size(72, 20);
+            this.inPatientNumberBox.TabIndex = 32;
+            // 
+            // imageFileNameBox
+            // 
+            this.imageFileNameBox.Location = new System.Drawing.Point(760, 328);
+            this.imageFileNameBox.Name = "imageFileNameBox";
+            this.imageFileNameBox.Size = new System.Drawing.Size(210, 20);
+            this.imageFileNameBox.TabIndex = 33;
+            // 
+            // imageDescriptionBox
+            // 
+            this.imageDescriptionBox.Location = new System.Drawing.Point(760, 359);
+            this.imageDescriptionBox.Name = "imageDescriptionBox";
+            this.imageDescriptionBox.Size = new System.Drawing.Size(210, 20);
+            this.imageDescriptionBox.TabIndex = 34;
+            // 
+            // operatorNameBox
+            // 
+            this.operatorNameBox.Location = new System.Drawing.Point(760, 437);
+            this.operatorNameBox.Name = "operatorNameBox";
+            this.operatorNameBox.Size = new System.Drawing.Size(210, 20);
+            this.operatorNameBox.TabIndex = 35;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 600);
+            this.Controls.Add(this.operatorNameBox);
+            this.Controls.Add(this.imageDescriptionBox);
+            this.Controls.Add(this.imageFileNameBox);
+            this.Controls.Add(this.inPatientNumberBox);
+            this.Controls.Add(this.patientAgeBox);
+            this.Controls.Add(this.patientGenderBox);
+            this.Controls.Add(this.patientNameBox);
+            this.Controls.Add(this.accessionNumberBox);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.listBoxPicDesciption);
-            this.Controls.Add(this.listBoxFilename);
             this.Controls.Add(this.labelPicDescription);
             this.Controls.Add(this.labelFileName);
             this.Controls.Add(this.MainProgressBar);
-            this.Controls.Add(this.listBoxOperator);
             this.Controls.Add(this.labelOperator);
             this.Controls.Add(this.SavePathTextBox);
             this.Controls.Add(this.labelRegisterNum);
             this.Controls.Add(this.BrowseButton);
-            this.Controls.Add(this.listBoxRegisterNum);
             this.Controls.Add(this.labelAge);
-            this.Controls.Add(this.listBoxAge);
             this.Controls.Add(this.labelGender);
-            this.Controls.Add(this.listBoxGender);
-            this.Controls.Add(this.listBoxName);
-            this.Controls.Add(this.RecordVideoButton);
             this.Controls.Add(this.labelName);
             this.Controls.Add(this.TakePhotoButton);
             this.Controls.Add(this.labelPathologyNum);
-            this.Controls.Add(this.listBoxPathologyNum);
             this.Controls.Add(this.TaskRefreshButton);
             this.Controls.Add(this.taskListBox);
             this.Controls.Add(this.LiveViewButton);
@@ -695,27 +661,26 @@
         private System.Windows.Forms.Button RefreshButton;
         private System.Windows.Forms.ComboBox WBCoBox;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button RecordVideoButton;
         private System.Windows.Forms.ProgressBar MainProgressBar;
         private System.Windows.Forms.Button TaskRefreshButton;
         private System.Windows.Forms.ComboBox taskListBox;
-        private System.Windows.Forms.ListBox listBoxPathologyNum;
         private System.Windows.Forms.Label labelPathologyNum;
         private System.Windows.Forms.Label labelName;
-        private System.Windows.Forms.ListBox listBoxName;
-        private System.Windows.Forms.ListBox listBoxGender;
         private System.Windows.Forms.Label labelGender;
-        private System.Windows.Forms.ListBox listBoxAge;
         private System.Windows.Forms.Label labelAge;
-        private System.Windows.Forms.ListBox listBoxRegisterNum;
         private System.Windows.Forms.Label labelRegisterNum;
         private System.Windows.Forms.Label labelOperator;
-        private System.Windows.Forms.ListBox listBoxOperator;
         private System.Windows.Forms.Label labelFileName;
         private System.Windows.Forms.Label labelPicDescription;
-        private System.Windows.Forms.ListBox listBoxFilename;
-        private System.Windows.Forms.ListBox listBoxPicDesciption;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox accessionNumberBox;
+        private System.Windows.Forms.TextBox patientNameBox;
+        private System.Windows.Forms.TextBox patientGenderBox;
+        private System.Windows.Forms.TextBox patientAgeBox;
+        private System.Windows.Forms.TextBox inPatientNumberBox;
+        private System.Windows.Forms.TextBox imageFileNameBox;
+        private System.Windows.Forms.TextBox imageDescriptionBox;
+        private System.Windows.Forms.TextBox operatorNameBox;
     }
 }
 

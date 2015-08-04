@@ -7,6 +7,7 @@ using System.Collections.Specialized;
 using System.Net.Http;
 using System.Net;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using EDSDKLib;
 
 namespace WinFormsUI
@@ -27,11 +28,13 @@ namespace WinFormsUI
         string taskFolder = "C:\\tmp\\LumanImagingTasks\\";
         string taskOutputFolder = "C:\\tmp\\LumanImagingFinished\\";
         string taskImageTempFolder = "C:\\tmp\\LumanImagingTemp\\";
+        bool recordReadyFlag = false;
+        bool cameraConnectFlag = false;
         #endregion
 
         public MainForm()
         {
-            AcquireRecordFromWebService("SP-15-10045");
+            AcquireRecordFromWebService("SP-15-4155");
             InitializeComponent();
             CameraHandler = new SDKHandler();
             CameraHandler.CameraAdded += new SDKHandler.CameraAddedHandler(SDK_CameraAdded);
@@ -40,7 +43,7 @@ namespace WinFormsUI
             CameraHandler.CameraHasShutdown += SDK_CameraHasShutdown;
             
            // SavePathTextBox.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "RemotePhoto");
-            DateTime dt;
+           // DateTime dt;
             string year_str = DateTime.Now.ToString("yyyy");
             string month_str = DateTime.Now.ToString("MM");
             string image_folder = "C:\\pis\\image\\gross\\" + year_str + "\\" + month_str;
@@ -58,6 +61,7 @@ namespace WinFormsUI
             LVBw = LiveViewPicBox.Width;
             LVBh = LiveViewPicBox.Height;
             RefreshCamera();
+            TakePhotoButton.Enabled = recordReadyFlag;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -210,12 +214,12 @@ namespace WinFormsUI
                     CameraHandler.StartFilming(SavePathTextBox.Text);
                 }
                 else CameraHandler.StartFilming();
-                RecordVideoButton.Text = "停止录像";
+                //RecordVideoButton.Text = "停止录像";
             }
             else
             {
                 CameraHandler.StopFilming();
-                RecordVideoButton.Text = "录像";
+                //RecordVideoButton.Text = "录像";
             }
         }
 
@@ -348,6 +352,9 @@ namespace WinFormsUI
                 }
                 SettingsGroupBox.Enabled = true;
                 LiveViewGroupBox.Enabled = true;
+                cameraConnectFlag = true;
+                if (recordReadyFlag)
+                    TakePhotoButton.Enabled = true;
                 //added to initialize save-to options at session opening
                 CameraHandler.SetSetting(EDSDK.PropID_SaveTo, (uint)EDSDK.EdsSaveTo.Both);
                 CameraHandler.SetCapacity();
@@ -366,10 +373,10 @@ namespace WinFormsUI
                 CleanupImageTempFolder();
                 return;
             } 
-            string task_file = taskListBox.SelectedItem.ToString();
-            string base_name = Path.GetFileNameWithoutExtension(task_file);
-            string image_file = base_name + ".jpg";
-            string image_path = Path.Combine(taskOutputFolder, image_file);
+            //string task_file = taskListBox.SelectedItem.ToString();
+            //string base_name = Path.GetFileNameWithoutExtension(task_file);
+            //string image_file = base_name + ".jpg";
+            string image_path = getImageFileStandardName(); //Path.Combine(taskOutputFolder, image_file);
             foreach (FileInfo file in imageTempFolderInfo.GetFiles())
             {
                 if (File.Exists(image_path))
@@ -468,20 +475,47 @@ namespace WinFormsUI
 
         private Dictionary<string, string> AcquireRecordFromWebService(string pathNumberString) {
             string jsonStr = ConnectToWebServiceForPathNumber(pathNumberString);
-            //string responseJson = ConnectToWebServiceForPathNumber("SP-15-10045");
-           
-            Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
-            if (dict["result"] == "False")
-                return dict;
-            else {
-                Dictionary<string, string> data_dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(dict["data"]);
-                dict.Remove("data");
-                foreach (var item in data_dict)
-                {
-                    dict[item.Key] = item.Value;
-                }
-                return dict;
+            
+            var d = JObject.Parse(jsonStr);
+            Dictionary<string, string> record = new Dictionary<string,string>();
+            if (d["result"].ToObject<bool>()) {
+                record = d["data"].ToObject<Dictionary<string, string>>();
+                record["PathNumber"] = pathNumberString;
             }
+
+            return record;
+           
+        }
+
+        //update control buttons when recordReadyFlag changed
+        private void updateRecordReadyControls()
+        {
+            if (recordReadyFlag)
+            {
+                if (cameraConnectFlag) { 
+                    TakePhotoButton.Enabled = true;
+                }
+                imageFileNameBox.Text = getImageFileStandardName();
+            }
+            else
+            {
+                TakePhotoButton.Enabled = false;
+                imageFileNameBox.Text = "";
+                
+            }
+            imageFileNameBox.Show();
+        }
+
+        private string getImageFileStandardName() {
+            string imageName;
+            string sp = accessionNumberBox.Text.Substring(0, 2);
+            string yearStr = DateTime.Now.ToString("yyyy");
+            string typeCode = "g";
+            int lastHypenIndex =  accessionNumberBox.Text.LastIndexOf("-");
+            string accessionNumber = accessionNumberBox.Text.Substring(lastHypenIndex + 1);
+            string seqNumber = "01";
+            imageName = sp + yearStr + "-" + accessionNumber + typeCode + seqNumber+".jpg";
+            return imageName;
         }
         #endregion
 
@@ -496,9 +530,32 @@ namespace WinFormsUI
             MessageBox.Show("refresh complete!");
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
 
+        private void accessionNumberBox_TextChanged(object sender, EventArgs e)
+        {
+            string text = accessionNumberBox.Text;
+            Dictionary<string, string> record = AcquireRecordFromWebService(text);
+            if (record.Count <= 0)
+            { 
+                patientNameBox.Text = "";
+                patientGenderBox.Text = "";
+                patientAgeBox.Text = "";
+                inPatientNumberBox.Text = "";
+                recordReadyFlag = false;
+            }
+            else
+            {//update following edit boxes
+                patientGenderBox.Text = record["gendar"];
+                patientNameBox.Text = record["name"];
+                patientAgeBox.Text = record["age"];
+                inPatientNumberBox.Text = record["inPatientNo"]+"-"+record["outPatientNo"];
+                recordReadyFlag = true;
+            }
+            patientGenderBox.Show();
+            patientNameBox.Show();
+            inPatientNumberBox.Show();
+            patientAgeBox.Show();
+            updateRecordReadyControls();
         }
     }
 }
