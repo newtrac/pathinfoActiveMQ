@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -77,6 +78,10 @@ namespace WinFormsUI
             {
                 Progress = 0;
                 moveImageToFinishedFolder();
+               // string image_path = getImageFileStandardName();
+                string image_file = getImageFileStandardName(); //
+                string image_path = Path.Combine(taskOutputFolder, image_file);
+                getImageProperties(image_path);
             }
             MainProgressBar.Value = Progress;
         }
@@ -376,7 +381,9 @@ namespace WinFormsUI
             //string task_file = taskListBox.SelectedItem.ToString();
             //string base_name = Path.GetFileNameWithoutExtension(task_file);
             //string image_file = base_name + ".jpg";
-            string image_path = getImageFileStandardName(); //Path.Combine(taskOutputFolder, image_file);
+            string image_file = getImageFileStandardName(); //
+            string image_path = Path.Combine(taskOutputFolder, image_file);
+            
             foreach (FileInfo file in imageTempFolderInfo.GetFiles())
             {
                 if (File.Exists(image_path))
@@ -394,9 +401,11 @@ namespace WinFormsUI
                 catch {
                     MessageBox.Show("图像保存失败！目录是否可写？");
                 }
+                
                 // whether to delete temp image file?
                 try
                 {
+                    
                     file.Delete();
                 }
                 catch { 
@@ -517,6 +526,56 @@ namespace WinFormsUI
             imageName = sp + yearStr + "-" + accessionNumber + typeCode + seqNumber+".jpg";
             return imageName;
         }
+
+
+        private Dictionary<string, string> getPISDictionary(Dictionary<string, string> dictData) { 
+            Dictionary<string, string> pis = new Dictionary<string,string>();
+            
+
+            return pis;
+        }
+
+        private Dictionary<string, string> getImageProperties(string imagePath) { 
+            Dictionary<string, string> imagePropertyDict = new Dictionary<string,string>();
+            FileInfo f = new FileInfo(imagePath);
+            FileStream fs = new FileStream(f.FullName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            Image pim = Image.FromStream(fs, false, false);
+            Bitmap photo = new Bitmap(imagePath);
+            PropertyItem[] props = photo.PropertyItems;
+            foreach (PropertyItem prop in props)
+            {
+                MessageBox.Show(prop.Id.ToString());
+            }
+            
+            return imagePropertyDict;
+        }
+
+        private Dictionary<string, string> getCameraSettings() { 
+            Dictionary<string, string> cameraSettingsDict = new Dictionary<string,string>();
+        
+            return cameraSettingsDict;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         #endregion
 
         private void SettingsGroupBox_Enter(object sender, EventArgs e)
