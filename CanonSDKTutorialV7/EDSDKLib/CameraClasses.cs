@@ -62,7 +62,17 @@ namespace EDSDKLib
         {
             get { return EDSDK.EDS_ERR_OK; }
             set { if (value != EDSDK.EDS_ERR_OK)
-                MessageBox.Show("SDK Error: " + value);
+                switch (value) { 
+                    case 0x8D01:
+                        MessageBox.Show("SDK Error: 对焦失败");
+                        break;
+                    case 0x0081:
+                        MessageBox.Show("SDK Error: 相机无响应");
+                        break;
+                    default:
+                        MessageBox.Show("SDK Error: " + value);
+                        break;
+                }
                 //throw new Exception("SDK Error: " + value);
             }
         }

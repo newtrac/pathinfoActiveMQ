@@ -3,6 +3,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using System.Text;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net.Http;
@@ -29,13 +30,17 @@ namespace WinFormsUI
         string taskFolder = "C:\\tmp\\LumanImagingTasks\\";
         string taskOutputFolder = "C:\\tmp\\LumanImagingFinished\\";
         string taskImageTempFolder = "C:\\tmp\\LumanImagingTemp\\";
+        string imageOutputFolder = "";
+        string accessionIDWebService = "";
+        string operatorWebService = "";
         bool recordReadyFlag = false;
         bool cameraConnectFlag = false;
         #endregion
 
         public MainForm()
         {
-            AcquireRecordFromWebService("SP-15-4155");
+            //AcquireRecordFromWebService("SP-15-4155");
+            initFromConfig();
             InitializeComponent();
             CameraHandler = new SDKHandler();
             CameraHandler.CameraAdded += new SDKHandler.CameraAddedHandler(SDK_CameraAdded);
@@ -47,9 +52,10 @@ namespace WinFormsUI
            // DateTime dt;
             string year_str = DateTime.Now.ToString("yyyy");
             string month_str = DateTime.Now.ToString("MM");
-            string image_folder = "C:\\pis\\image\\gross\\" + year_str + "\\" + month_str;
-            if(!Directory.Exists(image_folder))
-                    Directory.CreateDirectory(image_folder);
+            //string image_folder = "C:\\pis\\image\\gross\\" + year_str + "\\" + month_str;
+            imageOutputFolder = Path.Combine(taskOutputFolder, year_str, month_str);
+            if(!Directory.Exists(imageOutputFolder))
+                Directory.CreateDirectory(imageOutputFolder);
             if (!Directory.Exists(taskOutputFolder))
                 Directory.CreateDirectory(taskOutputFolder);
             if (!Directory.Exists(taskFolder))
@@ -58,7 +64,7 @@ namespace WinFormsUI
                 Directory.CreateDirectory(taskImageTempFolder);
             //empty image temp folder
             RefreshTasks();
-            SavePathTextBox.Text = image_folder;
+            SavePathTextBox.Text = imageOutputFolder;
             LVBw = LiveViewPicBox.Width;
             LVBh = LiveViewPicBox.Height;
             RefreshCamera();
@@ -77,11 +83,14 @@ namespace WinFormsUI
             if (Progress == 100)
             {
                 Progress = 0;
-                moveImageToFinishedFolder();
-               // string image_path = getImageFileStandardName();
-                string image_file = getImageFileStandardName(); //
-                string image_path = Path.Combine(taskOutputFolder, image_file);
-                getImageProperties(image_path);
+                if (!moveImageToFinishedFolder())
+                    return;
+               
+                //string image_file = getImageFileStandardName(); //
+                string image_file = imageFileNameBox.Text;
+                string image_path = Path.Combine(imageOutputFolder, image_file);
+                outputPISDataToFinishedFolder(image_path);
+                
             }
             MainProgressBar.Value = Progress;
         }
@@ -294,6 +303,27 @@ namespace WinFormsUI
 
         #region Subroutines
 
+        private void initFromConfig() {
+            const string configFile = "config.json";
+            if (File.Exists(configFile) == false)
+                return;
+            string jsonStr = System.IO.File.ReadAllText(configFile);
+            var d = JObject.Parse(jsonStr);
+
+            Dictionary<string, string> configDict = d.ToObject<Dictionary<string, string>>();
+            if (configDict.ContainsKey("imageCaptureTempFolder"))
+                taskImageTempFolder = configDict["imageCaptureTempFolder"];
+            if (configDict.ContainsKey("imageDestinationParentFolder"))
+                taskOutputFolder = configDict["imageDestinationParentFolder"];
+            if (configDict.ContainsKey("accessionIDWebService"))
+                accessionIDWebService = configDict["accessionIDWebService"];
+            if (configDict.ContainsKey("operatorWebService"))
+                operatorWebService = configDict["operatorWebService"];
+            if (configDict.ContainsKey("taskFolder"))
+                taskFolder = configDict["taskFolder"];
+
+        }
+
         private void CloseSession()
         {
             CameraHandler.CloseSession();
@@ -357,6 +387,7 @@ namespace WinFormsUI
                 }
                 SettingsGroupBox.Enabled = true;
                 LiveViewGroupBox.Enabled = true;
+                LiveViewButton.Enabled = true;
                 cameraConnectFlag = true;
                 if (recordReadyFlag)
                     TakePhotoButton.Enabled = true;
@@ -365,24 +396,24 @@ namespace WinFormsUI
                 CameraHandler.SetCapacity();
                 SessionButton.Enabled = false;
                 RefreshButton.Enabled = false;
-
+                
                 //SessionButton.Text = "断开相机";
             }
         }
 
-        private void moveImageToFinishedFolder() {
+        private bool moveImageToFinishedFolder() {
             System.IO.DirectoryInfo imageTempFolderInfo = new DirectoryInfo(taskImageTempFolder);
             if (taskListBox.SelectedIndex < 0)
             {
                 //MessageBox.Show("Please select a task first!");
                 CleanupImageTempFolder();
-                return;
+                return false;
             } 
             //string task_file = taskListBox.SelectedItem.ToString();
             //string base_name = Path.GetFileNameWithoutExtension(task_file);
             //string image_file = base_name + ".jpg";
-            string image_file = getImageFileStandardName(); //
-            string image_path = Path.Combine(taskOutputFolder, image_file);
+            string image_file = imageFileNameBox.Text; //
+            string image_path = Path.Combine(imageOutputFolder, image_file);
             
             foreach (FileInfo file in imageTempFolderInfo.GetFiles())
             {
@@ -400,6 +431,7 @@ namespace WinFormsUI
                 }
                 catch {
                     MessageBox.Show("图像保存失败！目录是否可写？");
+                    return false;
                 }
                 
                 // whether to delete temp image file?
@@ -409,12 +441,13 @@ namespace WinFormsUI
                     file.Delete();
                 }
                 catch { 
-                    
+                   
                 }
 
                 break; // assume only one to copy
+               
             }
-        
+            return true;
         }
         private void CleanupImageTempFolder() {
             System.IO.DirectoryInfo imageTempFolderInfo = new DirectoryInfo(taskImageTempFolder);
@@ -475,7 +508,7 @@ namespace WinFormsUI
 
         private string ConnectToWebServiceForPathNumber(string pathNumberString) {
             string jsonStr="";
-            var response = Http.Post("http://98.194.38.12:8080/wenzhou/api/pis/accession/getByNo", new NameValueCollection() {
+            var response = Http.Post(accessionIDWebService, new NameValueCollection() {
                 { "no", pathNumberString }
                     });
             jsonStr = System.Text.Encoding.UTF8.GetString(response);
@@ -501,7 +534,7 @@ namespace WinFormsUI
         {
             if (recordReadyFlag)
             {
-                if (cameraConnectFlag) { 
+                if (cameraConnectFlag) {  //both camera and accession_id record are ready
                     TakePhotoButton.Enabled = true;
                 }
                 imageFileNameBox.Text = getImageFileStandardName();
@@ -510,7 +543,6 @@ namespace WinFormsUI
             {
                 TakePhotoButton.Enabled = false;
                 imageFileNameBox.Text = "";
-                
             }
             imageFileNameBox.Show();
         }
@@ -518,7 +550,7 @@ namespace WinFormsUI
         private string getImageFileStandardName() {
             string imageName;
             string sp = accessionNumberBox.Text.Substring(0, 2);
-            string yearStr = DateTime.Now.ToString("yyyy");
+            string yearStr = "20" + accessionNumberBox.Text.Substring(3, 2);
             string typeCode = "g";
             int lastHypenIndex =  accessionNumberBox.Text.LastIndexOf("-");
             string accessionNumber = accessionNumberBox.Text.Substring(lastHypenIndex + 1);
@@ -527,13 +559,27 @@ namespace WinFormsUI
             return imageName;
         }
 
-
-        private Dictionary<string, string> getPISDictionary(Dictionary<string, string> dictData) { 
-            Dictionary<string, string> pis = new Dictionary<string,string>();
+        private void outputPISDataToFinishedFolder(string image_path){
+            Dictionary<string, string> pisDict = getPISDictionary(image_path);
             
+        }
 
+        private Dictionary<string, string> getPISDictionary(string image_path) { 
+            Dictionary<string, string> pis = new Dictionary<string,string>();
+            Dictionary<string, string> im_d = getImageProperties(image_path);
+            Dictionary<string, string> camera_dict = getCameraSettings();
             return pis;
         }
+
+        private Dictionary<string, string> getMISCDictionary() { 
+            Dictionary<string, string> misc_dict = new Dictionary<string,string>();
+            misc_dict["image_category"] = "gross";
+            misc_dict["included_in_report"] = "";
+            misc_dict["accession_id"] = accessionNumberBox.Text;
+            misc_dict["operator"] = operatorComboBox.Text;
+
+            return misc_dict;
+        } 
 
         private Dictionary<string, string> getImageProperties(string imagePath) { 
             Dictionary<string, string> imagePropertyDict = new Dictionary<string,string>();
@@ -542,17 +588,37 @@ namespace WinFormsUI
             Image pim = Image.FromStream(fs, false, false);
             Bitmap photo = new Bitmap(imagePath);
             PropertyItem[] props = photo.PropertyItems;
-            foreach (PropertyItem prop in props)
-            {
-                MessageBox.Show(prop.Id.ToString());
-            }
+            ASCIIEncoding encodings = new ASCIIEncoding();
+            //byte[] make =  props..Single(x => x.Id == 0x0100).Value;
+            int count = 0;
+            imagePropertyDict["id"] = Path.GetFileNameWithoutExtension(Path.GetFileName(imagePath));
+            imagePropertyDict["image_width"] = pim.Width.ToString();
+            imagePropertyDict["image_height"] = pim.Height.ToString();
+            imagePropertyDict["resolution"] = pim.HorizontalResolution.ToString();
+            imagePropertyDict["image_type"] = "JPEG";
+            imagePropertyDict["file_name"] = Path.GetFileName(imagePath);
+            imagePropertyDict["pixel_numbers"] = (pim.Width*pim.Height).ToString();
+            imagePropertyDict["path"] = imagePath;
+            imagePropertyDict["color_depth"] = "3";
+            string createDateTime = encodings.GetString(pim.GetPropertyItem(0x0132).Value);
+            //imagePropertyDict["createDate"] = props.GetValue()
+            string createDate = createDateTime.Substring(0, 10);
+            imagePropertyDict["create_date"] = createDate;
+            imagePropertyDict["acquisition_date"] = createDate;
+            string createTime = createDateTime.Substring(11);
+            imagePropertyDict["acquisition_time"] = createTime;
+            imagePropertyDict["camera_name"] = encodings.GetString(pim.GetPropertyItem(0x0110).Value);
             
             return imagePropertyDict;
         }
 
         private Dictionary<string, string> getCameraSettings() { 
             Dictionary<string, string> cameraSettingsDict = new Dictionary<string,string>();
-        
+            cameraSettingsDict["setting_av"] = AvCoBox.Text;
+            cameraSettingsDict["setting_wb"] = WBCoBox.Text;
+            cameraSettingsDict["setting_tv"] = TvCoBox.Text;
+            cameraSettingsDict["setting_bulbs"] = BulbUpDo.Value.ToString();
+            cameraSettingsDict["setting_ISO"] = ISOCoBox.Text;
             return cameraSettingsDict;
         }
 

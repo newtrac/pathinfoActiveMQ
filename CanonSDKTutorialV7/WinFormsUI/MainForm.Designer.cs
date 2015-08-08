@@ -74,7 +74,7 @@
             this.inPatientNumberBox = new System.Windows.Forms.TextBox();
             this.imageFileNameBox = new System.Windows.Forms.TextBox();
             this.imageDescriptionBox = new System.Windows.Forms.TextBox();
-            this.operatorNameBox = new System.Windows.Forms.TextBox();
+            this.operatorComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.LiveViewPicBox)).BeginInit();
             this.InitGroupBox.SuspendLayout();
             this.LiveViewGroupBox.SuspendLayout();
@@ -100,6 +100,7 @@
             // 
             // LiveViewButton
             // 
+            this.LiveViewButton.Enabled = false;
             this.LiveViewButton.Location = new System.Drawing.Point(664, 176);
             this.LiveViewButton.Name = "LiveViewButton";
             this.LiveViewButton.Size = new System.Drawing.Size(70, 22);
@@ -183,7 +184,7 @@
             this.taskListBox.FormattingEnabled = true;
             this.taskListBox.Location = new System.Drawing.Point(740, 527);
             this.taskListBox.Name = "taskListBox";
-            this.taskListBox.Size = new System.Drawing.Size(191, 21);
+            this.taskListBox.Size = new System.Drawing.Size(212, 21);
             this.taskListBox.TabIndex = 9;
             // 
             // TaskRefreshButton
@@ -340,9 +341,9 @@
             // 
             // MainProgressBar
             // 
-            this.MainProgressBar.Location = new System.Drawing.Point(822, 496);
+            this.MainProgressBar.Location = new System.Drawing.Point(740, 496);
             this.MainProgressBar.Name = "MainProgressBar";
-            this.MainProgressBar.Size = new System.Drawing.Size(130, 20);
+            this.MainProgressBar.Size = new System.Drawing.Size(212, 20);
             this.MainProgressBar.TabIndex = 8;
             // 
             // SavePathTextBox
@@ -482,7 +483,7 @@
             // 
             this.labelOperator.AutoSize = true;
             this.labelOperator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelOperator.Location = new System.Drawing.Point(669, 438);
+            this.labelOperator.Location = new System.Drawing.Point(669, 440);
             this.labelOperator.Name = "labelOperator";
             this.labelOperator.Size = new System.Drawing.Size(68, 16);
             this.labelOperator.TabIndex = 21;
@@ -572,19 +573,21 @@
             this.imageDescriptionBox.Size = new System.Drawing.Size(210, 20);
             this.imageDescriptionBox.TabIndex = 34;
             // 
-            // operatorNameBox
+            // operatorComboBox
             // 
-            this.operatorNameBox.Location = new System.Drawing.Point(760, 437);
-            this.operatorNameBox.Name = "operatorNameBox";
-            this.operatorNameBox.Size = new System.Drawing.Size(210, 20);
-            this.operatorNameBox.TabIndex = 35;
+            this.operatorComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.operatorComboBox.FormattingEnabled = true;
+            this.operatorComboBox.Location = new System.Drawing.Point(761, 439);
+            this.operatorComboBox.Name = "operatorComboBox";
+            this.operatorComboBox.Size = new System.Drawing.Size(210, 21);
+            this.operatorComboBox.TabIndex = 37;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 600);
-            this.Controls.Add(this.operatorNameBox);
+            this.Controls.Add(this.operatorComboBox);
             this.Controls.Add(this.imageDescriptionBox);
             this.Controls.Add(this.imageFileNameBox);
             this.Controls.Add(this.inPatientNumberBox);
@@ -680,7 +683,7 @@
         private System.Windows.Forms.TextBox inPatientNumberBox;
         private System.Windows.Forms.TextBox imageFileNameBox;
         private System.Windows.Forms.TextBox imageDescriptionBox;
-        private System.Windows.Forms.TextBox operatorNameBox;
+        private System.Windows.Forms.ComboBox operatorComboBox;
     }
 }
 
