@@ -66,15 +66,16 @@
             this.labelOperator = new System.Windows.Forms.Label();
             this.labelFileName = new System.Windows.Forms.Label();
             this.labelPicDescription = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.accessionNumberBox = new System.Windows.Forms.TextBox();
             this.patientNameBox = new System.Windows.Forms.TextBox();
-            this.patientGenderBox = new System.Windows.Forms.TextBox();
             this.patientAgeBox = new System.Windows.Forms.TextBox();
             this.inPatientNumberBox = new System.Windows.Forms.TextBox();
             this.imageFileNameBox = new System.Windows.Forms.TextBox();
             this.imageDescriptionBox = new System.Windows.Forms.TextBox();
             this.operatorComboBox = new System.Windows.Forms.ComboBox();
+            this.labelCaptureDoctor = new System.Windows.Forms.Label();
+            this.captureDoctorComboBox = new System.Windows.Forms.ComboBox();
+            this.patientGenderListBox = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.LiveViewPicBox)).BeginInit();
             this.InitGroupBox.SuspendLayout();
             this.LiveViewGroupBox.SuspendLayout();
@@ -182,14 +183,14 @@
             // 
             this.taskListBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.taskListBox.FormattingEnabled = true;
-            this.taskListBox.Location = new System.Drawing.Point(740, 527);
+            this.taskListBox.Location = new System.Drawing.Point(740, 534);
             this.taskListBox.Name = "taskListBox";
             this.taskListBox.Size = new System.Drawing.Size(212, 21);
             this.taskListBox.TabIndex = 9;
             // 
             // TaskRefreshButton
             // 
-            this.TaskRefreshButton.Location = new System.Drawing.Point(664, 523);
+            this.TaskRefreshButton.Location = new System.Drawing.Point(664, 531);
             this.TaskRefreshButton.Name = "TaskRefreshButton";
             this.TaskRefreshButton.Size = new System.Drawing.Size(70, 27);
             this.TaskRefreshButton.TabIndex = 11;
@@ -341,7 +342,7 @@
             // 
             // MainProgressBar
             // 
-            this.MainProgressBar.Location = new System.Drawing.Point(740, 496);
+            this.MainProgressBar.Location = new System.Drawing.Point(740, 502);
             this.MainProgressBar.Name = "MainProgressBar";
             this.MainProgressBar.Size = new System.Drawing.Size(212, 20);
             this.MainProgressBar.TabIndex = 8;
@@ -366,7 +367,7 @@
             // TakePhotoButton
             // 
             this.TakePhotoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TakePhotoButton.Location = new System.Drawing.Point(663, 493);
+            this.TakePhotoButton.Location = new System.Drawing.Point(663, 500);
             this.TakePhotoButton.Name = "TakePhotoButton";
             this.TakePhotoButton.Size = new System.Drawing.Size(71, 24);
             this.TakePhotoButton.TabIndex = 2;
@@ -483,11 +484,11 @@
             // 
             this.labelOperator.AutoSize = true;
             this.labelOperator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelOperator.Location = new System.Drawing.Point(669, 440);
+            this.labelOperator.Location = new System.Drawing.Point(669, 464);
             this.labelOperator.Name = "labelOperator";
-            this.labelOperator.Size = new System.Drawing.Size(68, 16);
+            this.labelOperator.Size = new System.Drawing.Size(83, 16);
             this.labelOperator.TabIndex = 21;
-            this.labelOperator.Text = "操作人员";
+            this.labelOperator.Text = "采图技术员";
             // 
             // labelFileName
             // 
@@ -509,16 +510,6 @@
             this.labelPicDescription.TabIndex = 24;
             this.labelPicDescription.Text = "图片描述";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(17, 65);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(68, 16);
-            this.label6.TabIndex = 27;
-            this.label6.Text = "任务信息";
-            // 
             // accessionNumberBox
             // 
             this.accessionNumberBox.Location = new System.Drawing.Point(68, 18);
@@ -529,23 +520,13 @@
             // 
             // patientNameBox
             // 
-            this.patientNameBox.Enabled = false;
             this.patientNameBox.Location = new System.Drawing.Point(211, 17);
             this.patientNameBox.Name = "patientNameBox";
             this.patientNameBox.Size = new System.Drawing.Size(80, 20);
             this.patientNameBox.TabIndex = 29;
             // 
-            // patientGenderBox
-            // 
-            this.patientGenderBox.Enabled = false;
-            this.patientGenderBox.Location = new System.Drawing.Point(335, 16);
-            this.patientGenderBox.Name = "patientGenderBox";
-            this.patientGenderBox.Size = new System.Drawing.Size(41, 20);
-            this.patientGenderBox.TabIndex = 30;
-            // 
             // patientAgeBox
             // 
-            this.patientAgeBox.Enabled = false;
             this.patientAgeBox.Location = new System.Drawing.Point(414, 16);
             this.patientAgeBox.Name = "patientAgeBox";
             this.patientAgeBox.Size = new System.Drawing.Size(33, 20);
@@ -553,7 +534,6 @@
             // 
             // inPatientNumberBox
             // 
-            this.inPatientNumberBox.Enabled = false;
             this.inPatientNumberBox.Location = new System.Drawing.Point(559, 15);
             this.inPatientNumberBox.Name = "inPatientNumberBox";
             this.inPatientNumberBox.Size = new System.Drawing.Size(72, 20);
@@ -577,25 +557,54 @@
             // 
             this.operatorComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.operatorComboBox.FormattingEnabled = true;
-            this.operatorComboBox.Location = new System.Drawing.Point(761, 439);
+            this.operatorComboBox.Location = new System.Drawing.Point(761, 463);
             this.operatorComboBox.Name = "operatorComboBox";
             this.operatorComboBox.Size = new System.Drawing.Size(210, 21);
             this.operatorComboBox.TabIndex = 37;
+            // 
+            // labelCaptureDoctor
+            // 
+            this.labelCaptureDoctor.AutoSize = true;
+            this.labelCaptureDoctor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCaptureDoctor.Location = new System.Drawing.Point(669, 438);
+            this.labelCaptureDoctor.Name = "labelCaptureDoctor";
+            this.labelCaptureDoctor.Size = new System.Drawing.Size(68, 16);
+            this.labelCaptureDoctor.TabIndex = 38;
+            this.labelCaptureDoctor.Text = "采图医生";
+            this.labelCaptureDoctor.Click += new System.EventHandler(this.label6_Click);
+            // 
+            // captureDoctorComboBox
+            // 
+            this.captureDoctorComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.captureDoctorComboBox.FormattingEnabled = true;
+            this.captureDoctorComboBox.Location = new System.Drawing.Point(762, 436);
+            this.captureDoctorComboBox.Name = "captureDoctorComboBox";
+            this.captureDoctorComboBox.Size = new System.Drawing.Size(210, 21);
+            this.captureDoctorComboBox.TabIndex = 39;
+            // 
+            // patientGenderListBox
+            // 
+            this.patientGenderListBox.FormattingEnabled = true;
+            this.patientGenderListBox.Location = new System.Drawing.Point(331, 17);
+            this.patientGenderListBox.Name = "patientGenderListBox";
+            this.patientGenderListBox.Size = new System.Drawing.Size(50, 30);
+            this.patientGenderListBox.TabIndex = 40;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 600);
+            this.Controls.Add(this.patientGenderListBox);
+            this.Controls.Add(this.captureDoctorComboBox);
+            this.Controls.Add(this.labelCaptureDoctor);
             this.Controls.Add(this.operatorComboBox);
             this.Controls.Add(this.imageDescriptionBox);
             this.Controls.Add(this.imageFileNameBox);
             this.Controls.Add(this.inPatientNumberBox);
             this.Controls.Add(this.patientAgeBox);
-            this.Controls.Add(this.patientGenderBox);
             this.Controls.Add(this.patientNameBox);
             this.Controls.Add(this.accessionNumberBox);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.labelPicDescription);
             this.Controls.Add(this.labelFileName);
             this.Controls.Add(this.MainProgressBar);
@@ -675,15 +684,16 @@
         private System.Windows.Forms.Label labelOperator;
         private System.Windows.Forms.Label labelFileName;
         private System.Windows.Forms.Label labelPicDescription;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox accessionNumberBox;
         private System.Windows.Forms.TextBox patientNameBox;
-        private System.Windows.Forms.TextBox patientGenderBox;
         private System.Windows.Forms.TextBox patientAgeBox;
         private System.Windows.Forms.TextBox inPatientNumberBox;
         private System.Windows.Forms.TextBox imageFileNameBox;
         private System.Windows.Forms.TextBox imageDescriptionBox;
         private System.Windows.Forms.ComboBox operatorComboBox;
+        private System.Windows.Forms.Label labelCaptureDoctor;
+        private System.Windows.Forms.ComboBox captureDoctorComboBox;
+        private System.Windows.Forms.ListBox patientGenderListBox;
     }
 }
 

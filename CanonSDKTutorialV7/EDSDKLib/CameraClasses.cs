@@ -194,7 +194,8 @@ namespace EDSDKLib
         /// <param name="newCamera">The camera which will be used</param>
         public void OpenSession(Camera newCamera)
         {
-            if (CameraSessionOpen) CloseSession();
+            if (CameraSessionOpen)
+                 CloseSession();
             if (newCamera != null)
             {
                 MainCamera = newCamera;

@@ -39,9 +39,11 @@ namespace WinFormsUI
 
         public MainForm()
         {
-            //AcquireRecordFromWebService("SP-15-4155");
+            //AcquirePatientRecordFromWebService("SP-15-4155");
             initFromConfig();
+            
             InitializeComponent();
+            initControlsExtra();
             CameraHandler = new SDKHandler();
             CameraHandler.CameraAdded += new SDKHandler.CameraAddedHandler(SDK_CameraAdded);
             CameraHandler.LiveViewUpdated += new SDKHandler.StreamUpdate(SDK_LiveViewUpdated);
@@ -64,11 +66,16 @@ namespace WinFormsUI
                 Directory.CreateDirectory(taskImageTempFolder);
             //empty image temp folder
             RefreshTasks();
+            
             SavePathTextBox.Text = imageOutputFolder;
             LVBw = LiveViewPicBox.Width;
             LVBh = LiveViewPicBox.Height;
             RefreshCamera();
             TakePhotoButton.Enabled = recordReadyFlag;
+        }
+
+        private void initControlsExtra() {
+            initGenderListBox();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -132,8 +139,10 @@ namespace WinFormsUI
 
         private void SessionButton_Click(object sender, EventArgs e)
         {
-            if (CameraHandler.CameraSessionOpen) CloseSession();
-            else OpenSession();
+            if (CameraHandler.CameraSessionOpen) 
+                CloseSession();
+            else 
+                OpenSession();
         }
 
         private void RefreshButton_Click(object sender, EventArgs e)
@@ -401,6 +410,14 @@ namespace WinFormsUI
             }
         }
 
+        private void initGenderListBox(){
+            List<string> _items = new List<string>(); 
+	    _items.Add("男"); // <-- Add these
+	    _items.Add("女");
+	    _items.Add("未知");
+        patientGenderListBox.DataSource = _items;
+        }
+
         private bool moveImageToFinishedFolder() {
             System.IO.DirectoryInfo imageTempFolderInfo = new DirectoryInfo(taskImageTempFolder);
             if (taskListBox.SelectedIndex < 0)
@@ -463,7 +480,40 @@ namespace WinFormsUI
                 }
             }
         }
-        private void RefreshTasks()
+
+        private Dictionary<string, string> loadImagingTask()
+        {
+            string[] taskFiles = Directory.GetFiles(this.taskFolder, "*.json");
+            Dictionary<string, string> taskDict;
+            string taskFile = loadTaskFile();
+            if (taskFile.Length > 0)
+            {
+                string text = System.IO.File.ReadAllText(taskFile);
+                var d = JObject.Parse(text);
+                taskDict = d.ToObject<Dictionary<string, string>>();
+                updateWithRecord(taskDict);
+                CleanupImageTempFolder();
+            }
+            else {
+                taskDict = new Dictionary<string, string>();
+            }
+          
+            return taskDict;
+        }
+
+        private string loadTaskFile() { 
+            string[] taskFiles = Directory.GetFiles(this.taskFolder, "*.json");
+            if(taskFiles.Length > 0 )
+                return taskFiles[0];
+            else
+                return "";
+        }
+
+        private void RefreshTasks() {
+            Dictionary<string, string> taskDict = loadImagingTask();
+
+        }
+        private void RefreshTasksDeprecated()
         {
             this.taskList.Clear();
             this.taskListBox.Items.Clear();
@@ -488,7 +538,7 @@ namespace WinFormsUI
             string taskFile = taskListBox.SelectedItem.ToString();
             string taskFilePath = Path.Combine(taskFolder, taskFile);
             string text = System.IO.File.ReadAllText(taskFilePath);
-            label6.Text = text;
+            //labelCaptureDoctor.Text = text;
             //MetaInfoBox.Text = text;
             //MetaInfoBox.Refresh();
         }
@@ -515,7 +565,7 @@ namespace WinFormsUI
             return jsonStr;
         }
 
-        private Dictionary<string, string> AcquireRecordFromWebService(string pathNumberString) {
+        private Dictionary<string, string> AcquirePatientRecordFromWebService(string pathNumberString) {
             string jsonStr = ConnectToWebServiceForPathNumber(pathNumberString);
             
             var d = JObject.Parse(jsonStr);
@@ -529,7 +579,37 @@ namespace WinFormsUI
            
         }
 
+        private string ConnectToWebServiceForText(string webService)
+        {
+            //string str = "";
+            var response = Http.Post(webService, new NameValueCollection() {
+                { "no", "doctorList" }
+                    });
+            string jsonStr = System.Text.Encoding.UTF8.GetString(response);
+            return jsonStr;
+        }
+        private Dictionary<string, string> AcquireStringDictFromWebService(string webService)
+        {
+            string jsonStr = ConnectToWebServiceForText(webService);
+            var d = JObject.Parse(jsonStr);
+            Dictionary<string, string> record = d.ToObject<Dictionary<string, string>>();
+            return record;
+
+        }
+
         //update control buttons when recordReadyFlag changed
+        private void updateImageFileNameBox(){
+            try
+            {
+                imageFileNameBox.Text = getImageFileStandardName();
+            }
+            catch
+            {
+                imageFileNameBox.Text = "";
+            }
+        
+        }
+        
         private void updateRecordReadyControls()
         {
             if (recordReadyFlag)
@@ -537,7 +617,7 @@ namespace WinFormsUI
                 if (cameraConnectFlag) {  //both camera and accession_id record are ready
                     TakePhotoButton.Enabled = true;
                 }
-                imageFileNameBox.Text = getImageFileStandardName();
+                updateImageFileNameBox();
             }
             else
             {
@@ -559,16 +639,24 @@ namespace WinFormsUI
             return imageName;
         }
 
-        private void outputPISDataToFinishedFolder(string image_path){
-            Dictionary<string, string> pisDict = getPISDictionary(image_path);
-            
+        private void outputPISDataToFinishedFolder(string imagePath){
+            Dictionary<string, string> pisDict = getPISDictionary(imagePath);
+            string imageFolder = Path.GetDirectoryName(imagePath);
         }
 
-        private Dictionary<string, string> getPISDictionary(string image_path) { 
+        private Dictionary<string, string> getPISDictionary(string imagePath) { 
             Dictionary<string, string> pis = new Dictionary<string,string>();
-            Dictionary<string, string> im_d = getImageProperties(image_path);
+            Dictionary<string, string> im_d = getImageProperties(imagePath);
             Dictionary<string, string> camera_dict = getCameraSettings();
-            return pis;
+            foreach (KeyValuePair<string, string> entry in im_d)
+            {
+                pis.Add(entry.Key, entry.Value);
+            }
+            foreach (KeyValuePair<string, string> entry in camera_dict)
+            {
+                pis.Add(entry.Key, entry.Value);
+            }           
+           return pis;
         }
 
         private Dictionary<string, string> getMISCDictionary() { 
@@ -628,20 +716,6 @@ namespace WinFormsUI
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         #endregion
 
         private void SettingsGroupBox_Enter(object sender, EventArgs e)
@@ -655,32 +729,60 @@ namespace WinFormsUI
             MessageBox.Show("refresh complete!");
         }
 
-
-        private void accessionNumberBox_TextChanged(object sender, EventArgs e)
-        {
-            string text = accessionNumberBox.Text;
-            Dictionary<string, string> record = AcquireRecordFromWebService(text);
-            if (record.Count <= 0)
-            { 
+        private void updateWithRecord(Dictionary<string, string> record){
+            string genderString;
+             if (record.Count <= 0)
+            {
+                //accessionNumberBox.Text = "";
                 patientNameBox.Text = "";
-                patientGenderBox.Text = "";
+                genderString = "";
                 patientAgeBox.Text = "";
                 inPatientNumberBox.Text = "";
                 recordReadyFlag = false;
             }
             else
             {//update following edit boxes
-                patientGenderBox.Text = record["gendar"];
+                accessionNumberBox.Text = record["accessionNo"];
+                genderString = record["gendar"];
                 patientNameBox.Text = record["name"];
                 patientAgeBox.Text = record["age"];
                 inPatientNumberBox.Text = record["inPatientNo"]+"-"+record["outPatientNo"];
                 recordReadyFlag = true;
             }
-            patientGenderBox.Show();
+            updateGenderBoxWithString(genderString);
+            patientGenderListBox.Show();
             patientNameBox.Show();
             inPatientNumberBox.Show();
             patientAgeBox.Show();
             updateRecordReadyControls();
+        }
+        private void updateGenderBoxWithString(string genderString){
+            if (genderString.Length == 0) {
+                patientGenderListBox.SelectedIndex = 2; // unknown    
+            }
+            for(int i = 0;i<patientGenderListBox.Items.Count; i++){
+                if(patientGenderListBox.Items[i].ToString() == genderString)
+                    patientGenderListBox.SelectedIndex = i;
+            }
+            
+        }
+
+        private void accessionNumberBox_TextChanged(object sender, EventArgs e)
+        {
+            string text = accessionNumberBox.Text;
+            Dictionary<string, string> record = AcquirePatientRecordFromWebService(text);
+            // first check record
+            
+                updateWithRecord(record);
+           
+                // second check accession number only
+                updateImageFileNameBox();
+            
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,0 +1,8 @@
+{
+"accessionIDWebService":"http://98.194.38.12:8080/wenzhou/api/pis/accession/getByNo",
+"operatorWebService": "http://98.194.38.12:8080/pathinfo/api/sys/user/tech",
+"imageDoctorWebService": "http://98.194.38.12:8080/pathinfo/api/sys/user/path",
+"taskFolder":" C:\\pis_local\\image\\gross\\task\\",
+"imageDestinationParentFolder":"C:\\pis\\image\\gross\\",
+"imageCaptureTempFolder":"C:\\tmp\\LumanImagingTemp\\"
+}
