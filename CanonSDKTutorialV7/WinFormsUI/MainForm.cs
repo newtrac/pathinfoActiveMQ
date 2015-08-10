@@ -32,6 +32,7 @@ namespace WinFormsUI
         string taskImageTempFolder = "C:\\tmp\\LumanImagingTemp\\";
         string imageOutputFolder = "";
         string accessionIDWebService = "";
+        string imageDoctorWebService = "";
         string operatorWebService = "";
         bool recordReadyFlag = false;
         bool cameraConnectFlag = false;
@@ -40,9 +41,10 @@ namespace WinFormsUI
         public MainForm()
         {
             //AcquirePatientRecordFromWebService("SP-15-4155");
+            InitializeComponent();
             initFromConfig();
             
-            InitializeComponent();
+            
             initControlsExtra();
             CameraHandler = new SDKHandler();
             CameraHandler.CameraAdded += new SDKHandler.CameraAddedHandler(SDK_CameraAdded);
@@ -328,9 +330,13 @@ namespace WinFormsUI
                 accessionIDWebService = configDict["accessionIDWebService"];
             if (configDict.ContainsKey("operatorWebService"))
                 operatorWebService = configDict["operatorWebService"];
+            if (configDict.ContainsKey("imageDoctorWebService"))
+                imageDoctorWebService = configDict["imageDoctorWebService"];
             if (configDict.ContainsKey("taskFolder"))
                 taskFolder = configDict["taskFolder"];
 
+            updateImageDoctorList();
+            updateOperatorList();
         }
 
         private void CloseSession()
@@ -579,22 +585,37 @@ namespace WinFormsUI
            
         }
 
-        private string ConnectToWebServiceForText(string webService)
+        private string ConnectToWebServiceForText(string webUrl)
         {
-            //string str = "";
-            var response = Http.Post(webService, new NameValueCollection() {
-                { "no", "doctorList" }
-                    });
-            string jsonStr = System.Text.Encoding.UTF8.GetString(response);
-            return jsonStr;
+            HttpWebRequest request = WebRequest.Create(webUrl) as HttpWebRequest;
+            request.Method = "GET";
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            WebHeaderCollection header = response.Headers;
+            string responseText;
+            var encoding = ASCIIEncoding.UTF8;
+            using (var reader = new System.IO.StreamReader(response.GetResponseStream(), encoding))
+            {
+                responseText = reader.ReadToEnd();
+            }
+            
+            return responseText;
         }
-        private Dictionary<string, string> AcquireStringDictFromWebService(string webService)
+
+        private List<string> AcquireStringListFromWebService(string webService)
         {
             string jsonStr = ConnectToWebServiceForText(webService);
             var d = JObject.Parse(jsonStr);
-            Dictionary<string, string> record = d.ToObject<Dictionary<string, string>>();
-            return record;
+            List<string> record  = new List<string>();
+            
+            if (d["result"].ToObject<bool>())
+            {
+                List<Dictionary<string, string>> dt = d["data"].ToObject<List<Dictionary<string, string>>>();
+                foreach(Dictionary<string, string> item in dt){
+                    record.Add(item["name"]);
+                }
+            }
 
+            return record;
         }
 
         //update control buttons when recordReadyFlag changed
@@ -610,6 +631,21 @@ namespace WinFormsUI
         
         }
         
+        private void updateImageDoctorList(){
+            List<string> doctorList = AcquireStringListFromWebService(imageDoctorWebService);
+            string[] doctorArray = doctorList.ToArray();
+            captureDoctorComboBox.DataSource = doctorArray;
+           
+            return;
+        }
+
+        private void updateOperatorList() {
+            List<string> operatorList = AcquireStringListFromWebService(operatorWebService);
+            string[] operatorArray = operatorList.ToArray();
+            operatorComboBox.DataSource = operatorArray;
+        
+        }
+
         private void updateRecordReadyControls()
         {
             if (recordReadyFlag)
@@ -743,7 +779,7 @@ namespace WinFormsUI
             else
             {//update following edit boxes
                 accessionNumberBox.Text = record["accessionNo"];
-                genderString = record["gendar"];
+                genderString = record["gender"];
                 patientNameBox.Text = record["name"];
                 patientAgeBox.Text = record["age"];
                 inPatientNumberBox.Text = record["inPatientNo"]+"-"+record["outPatientNo"];
