@@ -36,7 +36,6 @@
             this.InitGroupBox = new System.Windows.Forms.GroupBox();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.LiveViewGroupBox = new System.Windows.Forms.GroupBox();
-            this.taskListBox = new System.Windows.Forms.ComboBox();
             this.TaskRefreshButton = new System.Windows.Forms.Button();
             this.SettingsGroupBox = new System.Windows.Forms.GroupBox();
             this.WBCoBox = new System.Windows.Forms.ComboBox();
@@ -179,18 +178,9 @@
             this.LiveViewGroupBox.TabStop = false;
             this.LiveViewGroupBox.Text = "实时图像";
             // 
-            // taskListBox
-            // 
-            this.taskListBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.taskListBox.FormattingEnabled = true;
-            this.taskListBox.Location = new System.Drawing.Point(740, 534);
-            this.taskListBox.Name = "taskListBox";
-            this.taskListBox.Size = new System.Drawing.Size(212, 21);
-            this.taskListBox.TabIndex = 9;
-            // 
             // TaskRefreshButton
             // 
-            this.TaskRefreshButton.Location = new System.Drawing.Point(664, 531);
+            this.TaskRefreshButton.Location = new System.Drawing.Point(20, 47);
             this.TaskRefreshButton.Name = "TaskRefreshButton";
             this.TaskRefreshButton.Size = new System.Drawing.Size(70, 27);
             this.TaskRefreshButton.TabIndex = 11;
@@ -618,7 +608,6 @@
             this.Controls.Add(this.TakePhotoButton);
             this.Controls.Add(this.labelPathologyNum);
             this.Controls.Add(this.TaskRefreshButton);
-            this.Controls.Add(this.taskListBox);
             this.Controls.Add(this.LiveViewButton);
             this.Controls.Add(this.SettingsGroupBox);
             this.Controls.Add(this.LiveViewGroupBox);
@@ -675,7 +664,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ProgressBar MainProgressBar;
         private System.Windows.Forms.Button TaskRefreshButton;
-        private System.Windows.Forms.ComboBox taskListBox;
         private System.Windows.Forms.Label labelPathologyNum;
         private System.Windows.Forms.Label labelName;
         private System.Windows.Forms.Label labelGender;

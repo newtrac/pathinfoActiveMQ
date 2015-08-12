@@ -592,6 +592,7 @@ namespace EDSDKLib
                 DownloadData(ObjectPointer, streamRef);
                 //release stream
                 Error = EDSDK.EdsRelease(streamRef);
+                //Error = EDSDK.EdsRelease(ObjectPointer);
             }
         }
 

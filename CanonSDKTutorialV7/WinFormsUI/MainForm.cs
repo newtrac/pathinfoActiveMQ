@@ -51,8 +51,8 @@ namespace WinFormsUI
             CameraHandler.LiveViewUpdated += new SDKHandler.StreamUpdate(SDK_LiveViewUpdated);
             CameraHandler.ProgressChanged += new SDKHandler.ProgressHandler(SDK_ProgressChanged);
             CameraHandler.CameraHasShutdown += SDK_CameraHasShutdown;
-            
-           // SavePathTextBox.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "RemotePhoto");
+            //SDKHandler.
+            // SavePathTextBox.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "RemotePhoto");
            // DateTime dt;
             string year_str = DateTime.Now.ToString("yyyy");
             string month_str = DateTime.Now.ToString("MM");
@@ -73,7 +73,7 @@ namespace WinFormsUI
             LVBw = LiveViewPicBox.Width;
             LVBh = LiveViewPicBox.Height;
             RefreshCamera();
-            TakePhotoButton.Enabled = recordReadyFlag;
+           // TakePhotoButton.Enabled = recordReadyFlag;
         }
 
         private void initControlsExtra() {
@@ -93,8 +93,10 @@ namespace WinFormsUI
             {
                 Progress = 0;
                 if (!moveImageToFinishedFolder())
+                {
+                    MainProgressBar.Value = Progress;
                     return;
-               
+                }
                 //string image_file = getImageFileStandardName(); //
                 string image_file = imageFileNameBox.Text;
                 string image_path = Path.Combine(imageOutputFolder, image_file);
@@ -214,6 +216,7 @@ namespace WinFormsUI
 
         private void TakePhotoButton_Click(object sender, EventArgs e)
         {
+            
             if (STComputerButton.Checked || STBothButton.Checked) 
                 Directory.CreateDirectory(SavePathTextBox.Text);
             CameraHandler.ImageSaveDirectory = taskImageTempFolder;//SavePathTextBox.Text;
@@ -223,6 +226,7 @@ namespace WinFormsUI
             else
             {
                 //for (int i = 0; i < 5;i++ )
+                CleanupImageTempFolder();
                     CameraHandler.TakePhoto();
             }
             // copy image from tmp to finished
@@ -426,12 +430,12 @@ namespace WinFormsUI
 
         private bool moveImageToFinishedFolder() {
             System.IO.DirectoryInfo imageTempFolderInfo = new DirectoryInfo(taskImageTempFolder);
-            if (taskListBox.SelectedIndex < 0)
-            {
+            //if (taskListBox.SelectedIndex < 0)
+            //{
                 //MessageBox.Show("Please select a task first!");
-                CleanupImageTempFolder();
-                return false;
-            } 
+            //    CleanupImageTempFolder();
+            //    return false;
+            //} 
             //string task_file = taskListBox.SelectedItem.ToString();
             //string base_name = Path.GetFileNameWithoutExtension(task_file);
             //string image_file = base_name + ".jpg";
@@ -445,27 +449,21 @@ namespace WinFormsUI
                     DialogResult r = MessageBox.Show("是否覆盖上次照相图片文件？",
                         "图像保存", MessageBoxButtons.YesNo);
                     if (r == DialogResult.No)
-                        break;
+                        return  false;
                 }
 
                 try
                 {
                     file.CopyTo(image_path, true);
+                    
                 }
-                catch {
-                    MessageBox.Show("图像保存失败！目录是否可写？");
+                catch(Exception e) {
+                    MessageBox.Show(e.ToString()+" 图像保存失败！目标图像被其它程序锁定？");
                     return false;
                 }
                 
                 // whether to delete temp image file?
-                try
-                {
-                    
-                    file.Delete();
-                }
-                catch { 
-                   
-                }
+                
 
                 break; // assume only one to copy
                
@@ -476,14 +474,16 @@ namespace WinFormsUI
             System.IO.DirectoryInfo imageTempFolderInfo = new DirectoryInfo(taskImageTempFolder);
             foreach (FileInfo file in imageTempFolderInfo.GetFiles())
             {
-                // throw and error?
                 try
                 {
                     file.Delete();
                 }
-                catch {
-                    MessageBox.Show("cannot delete temp image "+file.ToString());
+                catch (Exception e)
+                {
+                    MessageBox.Show("无法删除零时图像文件：" + e.ToString());
                 }
+                // throw and error?
+               
             }
         }
 
@@ -497,13 +497,13 @@ namespace WinFormsUI
                 string text = System.IO.File.ReadAllText(taskFile);
                 var d = JObject.Parse(text);
                 taskDict = d.ToObject<Dictionary<string, string>>();
-                updateWithRecord(taskDict);
-                CleanupImageTempFolder();
+                
             }
             else {
                 taskDict = new Dictionary<string, string>();
             }
-          
+            updateWithRecord(taskDict);
+            CleanupImageTempFolder();
             return taskDict;
         }
 
@@ -519,35 +519,7 @@ namespace WinFormsUI
             Dictionary<string, string> taskDict = loadImagingTask();
 
         }
-        private void RefreshTasksDeprecated()
-        {
-            this.taskList.Clear();
-            this.taskListBox.Items.Clear();
-            string[] taskFiles = Directory.GetFiles(this.taskFolder, "*.task");
-            foreach (string taskFile in taskFiles)
-            {
-                string fileName = Path.GetFileName(taskFile);
-                this.taskList.Add(fileName);
-                this.taskListBox.Items.Add(fileName);
-            }
-            if (taskListBox.Items.Count > 0)
-                taskListBox.SelectedIndex = 0;
-            LoadTaskInfoToBox();
-            CleanupImageTempFolder();
-        }
-
-        private void LoadTaskInfoToBox()
-        { 
-            if (taskListBox.Items.Count <= 0){
-                return;
-            }
-            string taskFile = taskListBox.SelectedItem.ToString();
-            string taskFilePath = Path.Combine(taskFolder, taskFile);
-            string text = System.IO.File.ReadAllText(taskFilePath);
-            //labelCaptureDoctor.Text = text;
-            //MetaInfoBox.Text = text;
-            //MetaInfoBox.Refresh();
-        }
+       
 
         public static class Http
         {
@@ -650,8 +622,12 @@ namespace WinFormsUI
         {
             if (recordReadyFlag)
             {
-                if (cameraConnectFlag) {  //both camera and accession_id record are ready
+                if (cameraConnectFlag)
+                {  //both camera and accession_id record are ready
                     TakePhotoButton.Enabled = true;
+                }
+                else {
+                    TakePhotoButton.Enabled = false;
                 }
                 updateImageFileNameBox();
             }
@@ -678,12 +654,30 @@ namespace WinFormsUI
         private void outputPISDataToFinishedFolder(string imagePath){
             Dictionary<string, string> pisDict = getPISDictionary(imagePath);
             string imageFolder = Path.GetDirectoryName(imagePath);
+            string imageFile = Path.GetFileName(imagePath);
+            string baseName = Path.GetFileNameWithoutExtension(imageFile);
+            string txtFile = baseName + ".txt";
+            string txtPath = Path.Combine(imageFolder, txtFile);
+            //if (File.Exists(txtPath)) {
+            //    MessageBox.Show(txtPath + " will be overwritten!");
+            //}
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(txtPath))
+            {
+                foreach (string key in pisDict.Keys)
+                {
+                    string line = key + "\t\t\t\t\t" + pisDict[key];
+                    file.WriteLine(line);
+
+                }
+                file.Close();
+            }
         }
 
         private Dictionary<string, string> getPISDictionary(string imagePath) { 
             Dictionary<string, string> pis = new Dictionary<string,string>();
             Dictionary<string, string> im_d = getImageProperties(imagePath);
             Dictionary<string, string> camera_dict = getCameraSettings();
+            Dictionary<string, string> misc_dict = getMISCDictionary();
             foreach (KeyValuePair<string, string> entry in im_d)
             {
                 pis.Add(entry.Key, entry.Value);
@@ -691,7 +685,11 @@ namespace WinFormsUI
             foreach (KeyValuePair<string, string> entry in camera_dict)
             {
                 pis.Add(entry.Key, entry.Value);
-            }           
+            }
+            foreach (KeyValuePair<string, string> entry in misc_dict)
+            {
+                pis.Add(entry.Key, entry.Value);
+            } 
            return pis;
         }
 
@@ -701,7 +699,7 @@ namespace WinFormsUI
             misc_dict["included_in_report"] = "";
             misc_dict["accession_id"] = accessionNumberBox.Text;
             misc_dict["operator"] = operatorComboBox.Text;
-
+            misc_dict["image_description"] = imageDescriptionBox.Text;
             return misc_dict;
         } 
 
@@ -732,7 +730,7 @@ namespace WinFormsUI
             string createTime = createDateTime.Substring(11);
             imagePropertyDict["acquisition_time"] = createTime;
             imagePropertyDict["camera_name"] = encodings.GetString(pim.GetPropertyItem(0x0110).Value);
-            
+            fs.Close();
             return imagePropertyDict;
         }
 
@@ -762,7 +760,7 @@ namespace WinFormsUI
         private void TaskRefreshButton_Click(object sender, EventArgs e)
         {
             RefreshTasks();
-            MessageBox.Show("refresh complete!");
+            //MessageBox.Show("refresh complete!");
         }
 
         private void updateWithRecord(Dictionary<string, string> record){
@@ -774,6 +772,7 @@ namespace WinFormsUI
                 genderString = "";
                 patientAgeBox.Text = "";
                 inPatientNumberBox.Text = "";
+                //accessionNumberBox.Text = "";
                 recordReadyFlag = false;
             }
             else
