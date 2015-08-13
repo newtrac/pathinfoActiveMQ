@@ -67,6 +67,7 @@ namespace WinFormsUI
             if (!Directory.Exists(taskImageTempFolder))
                 Directory.CreateDirectory(taskImageTempFolder);
             //empty image temp folder
+            CleanupImageTempFolder();
             RefreshTasks();
             
             SavePathTextBox.Text = imageOutputFolder;
@@ -101,7 +102,7 @@ namespace WinFormsUI
                 string image_file = imageFileNameBox.Text;
                 string image_path = Path.Combine(imageOutputFolder, image_file);
                 outputPISDataToFinishedFolder(image_path);
-                
+                outputTaskFile(image_path);
             }
             MainProgressBar.Value = Progress;
         }
@@ -226,7 +227,7 @@ namespace WinFormsUI
             else
             {
                 //for (int i = 0; i < 5;i++ )
-                CleanupImageTempFolder();
+               // CleanupImageTempFolder();
                     CameraHandler.TakePhoto();
             }
             // copy image from tmp to finished
@@ -444,17 +445,25 @@ namespace WinFormsUI
             
             foreach (FileInfo file in imageTempFolderInfo.GetFiles())
             {
-                if (File.Exists(image_path))
+                FileInfo destFile = new FileInfo(image_path);
+                if (destFile.Exists)
                 {
                     DialogResult r = MessageBox.Show("是否覆盖上次照相图片文件？",
                         "图像保存", MessageBoxButtons.YesNo);
                     if (r == DialogResult.No)
                         return  false;
+                    //in case not writable
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    
+                    destFile.Delete();
                 }
 
                 try
                 {
-                    file.CopyTo(image_path, true);
+
+                    File.Copy(file.FullName, image_path, true);
+                    //file.CopyTo(image_path, true);
                     
                 }
                 catch(Exception e) {
@@ -503,7 +512,7 @@ namespace WinFormsUI
                 taskDict = new Dictionary<string, string>();
             }
             updateWithRecord(taskDict);
-            CleanupImageTempFolder();
+           
             return taskDict;
         }
 
@@ -519,14 +528,22 @@ namespace WinFormsUI
             Dictionary<string, string> taskDict = loadImagingTask();
 
         }
-       
 
+        private class MyWebClient : WebClient
+        {
+            protected override WebRequest GetWebRequest(Uri uri)
+            {
+                WebRequest w = base.GetWebRequest(uri);
+                w.Timeout = 2000;
+                return w;
+            }
+        }
         public static class Http
         {
             public static byte[] Post(string uri, NameValueCollection pairs)
             {
                 byte[] response = null;
-                using (WebClient client = new WebClient())
+                using (MyWebClient client = new MyWebClient())
                 {
                     response = client.UploadValues(uri, pairs);
                 }
@@ -534,11 +551,20 @@ namespace WinFormsUI
             }
         }
 
+
         private string ConnectToWebServiceForPathNumber(string pathNumberString) {
             string jsonStr="";
-            var response = Http.Post(accessionIDWebService, new NameValueCollection() {
+            byte[] response;
+            try
+            {
+                response = Http.Post(accessionIDWebService, new NameValueCollection() {
                 { "no", pathNumberString }
                     });
+            }
+            catch {
+                MessageBox.Show("无法连接服务器:" + accessionIDWebService);
+                return jsonStr;
+            }
             jsonStr = System.Text.Encoding.UTF8.GetString(response);
             return jsonStr;
         }
@@ -559,11 +585,20 @@ namespace WinFormsUI
 
         private string ConnectToWebServiceForText(string webUrl)
         {
+            string responseText="";
             HttpWebRequest request = WebRequest.Create(webUrl) as HttpWebRequest;
             request.Method = "GET";
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            request.Timeout = 2000;
+            HttpWebResponse response;
+            try
+            {
+                response = (HttpWebResponse)request.GetResponse();
+            }
+            catch { // error connecting to server
+                return responseText;
+            }
             WebHeaderCollection header = response.Headers;
-            string responseText;
+            
             var encoding = ASCIIEncoding.UTF8;
             using (var reader = new System.IO.StreamReader(response.GetResponseStream(), encoding))
             {
@@ -575,19 +610,28 @@ namespace WinFormsUI
 
         private List<string> AcquireStringListFromWebService(string webService)
         {
+            List<string> record = new List<string>();
             string jsonStr = ConnectToWebServiceForText(webService);
-            var d = JObject.Parse(jsonStr);
-            List<string> record  = new List<string>();
-            
-            if (d["result"].ToObject<bool>())
+            if (jsonStr.Length == 0)
+                return record;
+            try
             {
-                List<Dictionary<string, string>> dt = d["data"].ToObject<List<Dictionary<string, string>>>();
-                foreach(Dictionary<string, string> item in dt){
-                    record.Add(item["name"]);
+                var d = JObject.Parse(jsonStr);
+                if (d["result"].ToObject<bool>())
+                {
+                    List<Dictionary<string, string>> dt = d["data"].ToObject<List<Dictionary<string, string>>>();
+                    foreach (Dictionary<string, string> item in dt)
+                    {
+                        record.Add(item["name"]);
+                    }
                 }
-            }
 
-            return record;
+                return record;
+            }
+            catch {
+                MessageBox.Show("连接服务器出错:"+webService);
+                return record;
+            }
         }
 
         //update control buttons when recordReadyFlag changed
@@ -607,7 +651,7 @@ namespace WinFormsUI
             List<string> doctorList = AcquireStringListFromWebService(imageDoctorWebService);
             string[] doctorArray = doctorList.ToArray();
             captureDoctorComboBox.DataSource = doctorArray;
-           
+            captureDoctorComboBox.SelectedIndex = -1;
             return;
         }
 
@@ -615,6 +659,7 @@ namespace WinFormsUI
             List<string> operatorList = AcquireStringListFromWebService(operatorWebService);
             string[] operatorArray = operatorList.ToArray();
             operatorComboBox.DataSource = operatorArray;
+            operatorComboBox.SelectedIndex = -1;
         
         }
 
@@ -649,6 +694,35 @@ namespace WinFormsUI
             string seqNumber = "01";
             imageName = sp + yearStr + "-" + accessionNumber + typeCode + seqNumber+".jpg";
             return imageName;
+        }
+
+        private void outputTaskFile(string imagePath) {
+            string imageFolder = Path.GetDirectoryName(imagePath);
+            string imageFile = Path.GetFileName(imagePath);
+            string baseName = Path.GetFileNameWithoutExtension(imageFile);
+            string taskFile = baseName + "_task.json";
+            string taskPath = Path.Combine(imageFolder, taskFile);
+            FileInfo destFile = new FileInfo(taskPath);
+            if (destFile.Exists)
+            {
+                //in case not writable
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                destFile.Delete();
+            }
+            string taskJsonFile = loadTaskFile();
+            try
+            {
+
+                File.Copy(taskJsonFile, taskPath, true);
+                //file.CopyTo(image_path, true);
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString() + " 任务文件移动失败！"+taskJsonFile);
+                
+            }
         }
 
         private void outputPISDataToFinishedFolder(string imagePath){
@@ -698,7 +772,11 @@ namespace WinFormsUI
             misc_dict["image_category"] = "gross";
             misc_dict["included_in_report"] = "";
             misc_dict["accession_id"] = accessionNumberBox.Text;
-            misc_dict["operator"] = operatorComboBox.Text;
+            misc_dict["specimen_id"] = accessionNumberBox.Text;
+            if (captureDoctorComboBox.Text.Length > 0)
+                misc_dict["operator"] = captureDoctorComboBox.Text;
+            else
+                misc_dict["operator"] = operatorComboBox.Text;
             misc_dict["image_description"] = imageDescriptionBox.Text;
             return misc_dict;
         } 

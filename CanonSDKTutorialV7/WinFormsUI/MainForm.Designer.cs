@@ -545,7 +545,6 @@
             // 
             // operatorComboBox
             // 
-            this.operatorComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.operatorComboBox.FormattingEnabled = true;
             this.operatorComboBox.Location = new System.Drawing.Point(761, 463);
             this.operatorComboBox.Name = "operatorComboBox";
@@ -565,7 +564,6 @@
             // 
             // captureDoctorComboBox
             // 
-            this.captureDoctorComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.captureDoctorComboBox.FormattingEnabled = true;
             this.captureDoctorComboBox.Location = new System.Drawing.Point(762, 436);
             this.captureDoctorComboBox.Name = "captureDoctorComboBox";
