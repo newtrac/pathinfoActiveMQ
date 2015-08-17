@@ -91,7 +91,7 @@
             this.LiveViewPicBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LiveViewPicBox.Location = new System.Drawing.Point(8, 27);
             this.LiveViewPicBox.Name = "LiveViewPicBox";
-            this.LiveViewPicBox.Size = new System.Drawing.Size(611, 405);
+            this.LiveViewPicBox.Size = new System.Drawing.Size(603, 405);
             this.LiveViewPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.LiveViewPicBox.TabIndex = 1;
             this.LiveViewPicBox.TabStop = false;
@@ -173,7 +173,7 @@
             this.LiveViewGroupBox.Controls.Add(this.LiveViewPicBox);
             this.LiveViewGroupBox.Location = new System.Drawing.Point(12, 91);
             this.LiveViewGroupBox.Name = "LiveViewGroupBox";
-            this.LiveViewGroupBox.Size = new System.Drawing.Size(646, 471);
+            this.LiveViewGroupBox.Size = new System.Drawing.Size(638, 471);
             this.LiveViewGroupBox.TabIndex = 10;
             this.LiveViewGroupBox.TabStop = false;
             this.LiveViewGroupBox.Text = "实时图像";
@@ -582,7 +582,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1028, 600);
+            this.ClientSize = new System.Drawing.Size(1020, 600);
             this.Controls.Add(this.patientGenderListBox);
             this.Controls.Add(this.captureDoctorComboBox);
             this.Controls.Add(this.labelCaptureDoctor);
@@ -611,6 +611,7 @@
             this.Controls.Add(this.LiveViewGroupBox);
             this.Controls.Add(this.InitGroupBox);
             this.Controls.Add(this.SaveToGroupBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(880, 638);
