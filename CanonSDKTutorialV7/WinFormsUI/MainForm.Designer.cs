@@ -48,6 +48,7 @@
             this.ISOCoBox = new System.Windows.Forms.ComboBox();
             this.TvCoBox = new System.Windows.Forms.ComboBox();
             this.AvCoBox = new System.Windows.Forms.ComboBox();
+            this.RecordVideoButton = new System.Windows.Forms.Button();
             this.MainProgressBar = new System.Windows.Forms.ProgressBar();
             this.SavePathTextBox = new System.Windows.Forms.TextBox();
             this.BrowseButton = new System.Windows.Forms.Button();
@@ -330,6 +331,17 @@
             this.AvCoBox.TabIndex = 0;
             this.AvCoBox.SelectedIndexChanged += new System.EventHandler(this.AvCoBox_SelectedIndexChanged);
             // 
+            // RecordVideoButton
+            // 
+            this.RecordVideoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RecordVideoButton.Location = new System.Drawing.Point(663, 534);
+            this.RecordVideoButton.Name = "RecordVideoButton";
+            this.RecordVideoButton.Size = new System.Drawing.Size(71, 22);
+            this.RecordVideoButton.TabIndex = 2;
+            this.RecordVideoButton.Text = "录像";
+            this.RecordVideoButton.UseVisualStyleBackColor = true;
+            this.RecordVideoButton.Click += new System.EventHandler(this.RecordVideoButton_Click);
+            // 
             // MainProgressBar
             // 
             this.MainProgressBar.Location = new System.Drawing.Point(740, 502);
@@ -583,6 +595,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1020, 600);
+            this.Controls.Add(this.RecordVideoButton);
             this.Controls.Add(this.patientGenderListBox);
             this.Controls.Add(this.captureDoctorComboBox);
             this.Controls.Add(this.labelCaptureDoctor);
@@ -681,6 +694,8 @@
         private System.Windows.Forms.Label labelCaptureDoctor;
         private System.Windows.Forms.ComboBox captureDoctorComboBox;
         private System.Windows.Forms.ListBox patientGenderListBox;
+        private System.Windows.Forms.Button RecordVideoButton;
+
     }
 }
 

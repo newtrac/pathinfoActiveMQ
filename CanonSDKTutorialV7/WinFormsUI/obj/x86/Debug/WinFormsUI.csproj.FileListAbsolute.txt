@@ -10,14 +10,14 @@ D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.Mai
 D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.Properties.Resources.resources
 D:\softwares\projects\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.csproj.GenerateResource.Cache
 C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\bin\Debug\WinFormsUI.exe.config
-C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.exe
-C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.pdb
 C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\bin\Debug\WinFormsUI.exe
 C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\bin\Debug\WinFormsUI.pdb
 C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\bin\Debug\EDSDKLib.dll
+C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\bin\Debug\EDSDKLib.pdb
 C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.MainForm.resources
 C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.Properties.Resources.resources
 C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.csproj.GenerateResource.Cache
-C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.exe
+C:\Users\Administrator\Documents\GitHub\CanonSDKTutorialV7\WinFormsUI\obj\x86\Debug\WinFormsUI.pdb

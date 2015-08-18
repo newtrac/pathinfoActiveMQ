@@ -1072,6 +1072,12 @@ namespace EDSDKLib
         {
             if (!IsFilming)
             {
+                if (GetSetting(EDSDK.PropID_Record) != EDSDK.AEMode_Movie)// EDSDK.AEMode_Movie
+                {
+                   // throw new InvalidOperationException("Camera is not in film mode");
+                    MessageBox.Show("相机不在摄像档位上!");
+                    return;
+                }
                 //to restore the current setting after recording
                 PrevSaveTo = GetSetting(EDSDK.PropID_SaveTo);
                 //when recording videos, it has to be saved on the camera internal memory

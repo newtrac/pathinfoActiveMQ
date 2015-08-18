@@ -240,16 +240,19 @@ namespace WinFormsUI
             {
                 if (STComputerButton.Checked || STBothButton.Checked)
                 {
-                    Directory.CreateDirectory(SavePathTextBox.Text);
-                    CameraHandler.StartFilming(SavePathTextBox.Text);
+                    //Directory.CreateDirectory(taskImageTempFolder);
+                    CameraHandler.StartFilming(taskImageTempFolder);
                 }
-                else CameraHandler.StartFilming();
-                //RecordVideoButton.Text = "停止录像";
+                else 
+                    CameraHandler.StartFilming();
+                if(CameraHandler.IsFilming)
+                    RecordVideoButton.Text = "停止录像";
             }
             else
             {
                 CameraHandler.StopFilming();
-                //RecordVideoButton.Text = "录像";
+                if (!CameraHandler.IsFilming)
+                    RecordVideoButton.Text = "录像";
             }
         }
 
@@ -534,7 +537,7 @@ namespace WinFormsUI
             protected override WebRequest GetWebRequest(Uri uri)
             {
                 WebRequest w = base.GetWebRequest(uri);
-                w.Timeout = 2000;
+                w.Timeout = 4000;
                 return w;
             }
         }
@@ -588,7 +591,7 @@ namespace WinFormsUI
             string responseText="";
             HttpWebRequest request = WebRequest.Create(webUrl) as HttpWebRequest;
             request.Method = "GET";
-            request.Timeout = 2000;
+            request.Timeout = 4000;
             HttpWebResponse response;
             try
             {
