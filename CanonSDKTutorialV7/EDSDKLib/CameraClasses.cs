@@ -66,6 +66,9 @@ namespace EDSDKLib
                     case 0x8D01:
                         MessageBox.Show("SDK Error: 对焦失败");
                         break;
+                    case EDSDK.EDS_ERR_TAKE_PICTURE_CARD_NG:
+                        MessageBox.Show("照相失败？是否在manual档？");
+                        break;
                     case 0x0081:
                         MessageBox.Show("SDK Error: 相机无响应");
                         break;
@@ -1072,7 +1075,8 @@ namespace EDSDKLib
         {
             if (!IsFilming)
             {
-                if (GetSetting(EDSDK.PropID_Record) != EDSDK.AEMode_Movie)// EDSDK.AEMode_Movie
+                uint k = GetSetting(EDSDK.PropID_Record);
+                if (k != 3)// EDSDK.AEMode_Movie
                 {
                    // throw new InvalidOperationException("Camera is not in film mode");
                     MessageBox.Show("相机不在摄像档位上!");

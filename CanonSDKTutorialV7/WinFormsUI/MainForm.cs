@@ -34,6 +34,7 @@ namespace WinFormsUI
         string accessionIDWebService = "";
         string imageDoctorWebService = "";
         string operatorWebService = "";
+        string dataContent = "image";
         bool recordReadyFlag = false;
         bool cameraConnectFlag = false;
         #endregion
@@ -93,12 +94,13 @@ namespace WinFormsUI
             if (Progress == 100)
             {
                 Progress = 0;
-                if (!moveImageToFinishedFolder())
+                if (!moveImageToFinishedFolder() || dataContent.CompareTo("video") == 0)
                 {
                     MainProgressBar.Value = Progress;
                     return;
                 }
                 //string image_file = getImageFileStandardName(); //
+                
                 string image_file = imageFileNameBox.Text;
                 string image_path = Path.Combine(imageOutputFolder, image_file);
                 outputPISDataToFinishedFolder(image_path);
@@ -221,7 +223,7 @@ namespace WinFormsUI
             if (STComputerButton.Checked || STBothButton.Checked) 
                 Directory.CreateDirectory(SavePathTextBox.Text);
             CameraHandler.ImageSaveDirectory = taskImageTempFolder;//SavePathTextBox.Text;
-            
+            dataContent = "image";
             if ((string)TvCoBox.SelectedItem == "Bulb")
                 CameraHandler.TakePhoto((uint)BulbUpDo.Value);
             else
@@ -238,6 +240,7 @@ namespace WinFormsUI
         {
             if (!CameraHandler.IsFilming)
             {
+                dataContent = "video";
                 if (STComputerButton.Checked || STBothButton.Checked)
                 {
                     //Directory.CreateDirectory(taskImageTempFolder);
@@ -412,8 +415,9 @@ namespace WinFormsUI
                 LiveViewGroupBox.Enabled = true;
                 LiveViewButton.Enabled = true;
                 cameraConnectFlag = true;
-                if (recordReadyFlag)
-                    TakePhotoButton.Enabled = true;
+                updateRecordReadyControls();
+                //if (recordReadyFlag) 
+                //    TakePhotoButton.Enabled = true;
                 //added to initialize save-to options at session opening
                 CameraHandler.SetSetting(EDSDK.PropID_SaveTo, (uint)EDSDK.EdsSaveTo.Both);
                 CameraHandler.SetCapacity();
@@ -434,24 +438,29 @@ namespace WinFormsUI
 
         private bool moveImageToFinishedFolder() {
             System.IO.DirectoryInfo imageTempFolderInfo = new DirectoryInfo(taskImageTempFolder);
-            //if (taskListBox.SelectedIndex < 0)
-            //{
-                //MessageBox.Show("Please select a task first!");
-            //    CleanupImageTempFolder();
-            //    return false;
-            //} 
-            //string task_file = taskListBox.SelectedItem.ToString();
-            //string base_name = Path.GetFileNameWithoutExtension(task_file);
-            //string image_file = base_name + ".jpg";
+           
             string image_file = imageFileNameBox.Text; //
+            string base_name = Path.GetFileNameWithoutExtension(image_file);
             string image_path = Path.Combine(imageOutputFolder, image_file);
             
             foreach (FileInfo file in imageTempFolderInfo.GetFiles())
-            {
-                FileInfo destFile = new FileInfo(image_path);
+            {   
+                FileInfo destFile;
+                if(dataContent.CompareTo("image")==0)
+                    destFile = new FileInfo(image_path);
+                else if (dataContent.CompareTo("video") == 0)
+                {
+                    string ext = Path.GetExtension(file.ToString());
+                    destFile = new FileInfo(Path.Combine(imageOutputFolder, base_name + ext));
+                }
+                else {
+                    MessageBox.Show("unknown output data format:" + dataContent);
+                    return false;
+                }
+
                 if (destFile.Exists)
                 {
-                    DialogResult r = MessageBox.Show("是否覆盖上次照相图片文件？",
+                    DialogResult r = MessageBox.Show("是否覆盖上次照相文件？",
                         "图像保存", MessageBoxButtons.YesNo);
                     if (r == DialogResult.No)
                         return  false;
@@ -465,7 +474,7 @@ namespace WinFormsUI
                 try
                 {
 
-                    File.Copy(file.FullName, image_path, true);
+                    File.Copy(file.FullName, destFile.ToString(), true);
                     //file.CopyTo(image_path, true);
                     
                 }
@@ -673,15 +682,18 @@ namespace WinFormsUI
                 if (cameraConnectFlag)
                 {  //both camera and accession_id record are ready
                     TakePhotoButton.Enabled = true;
+                    RecordVideoButton.Enabled = true;
                 }
                 else {
                     TakePhotoButton.Enabled = false;
+                    RecordVideoButton.Enabled = false;
                 }
                 updateImageFileNameBox();
             }
             else
             {
                 TakePhotoButton.Enabled = false;
+                RecordVideoButton.Enabled = false;
                 imageFileNameBox.Text = "";
             }
             imageFileNameBox.Show();

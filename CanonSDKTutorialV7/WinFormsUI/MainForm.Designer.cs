@@ -102,7 +102,7 @@
             // LiveViewButton
             // 
             this.LiveViewButton.Enabled = false;
-            this.LiveViewButton.Location = new System.Drawing.Point(664, 176);
+            this.LiveViewButton.Location = new System.Drawing.Point(561, 65);
             this.LiveViewButton.Name = "LiveViewButton";
             this.LiveViewButton.Size = new System.Drawing.Size(70, 22);
             this.LiveViewButton.TabIndex = 2;
@@ -117,13 +117,13 @@
             this.CameraListBox.FormattingEnabled = true;
             this.CameraListBox.Location = new System.Drawing.Point(8, 35);
             this.CameraListBox.Name = "CameraListBox";
-            this.CameraListBox.Size = new System.Drawing.Size(121, 82);
+            this.CameraListBox.Size = new System.Drawing.Size(121, 30);
             this.CameraListBox.TabIndex = 6;
             // 
             // SessionButton
             // 
             this.SessionButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.SessionButton.Location = new System.Drawing.Point(6, 127);
+            this.SessionButton.Location = new System.Drawing.Point(6, 79);
             this.SessionButton.Name = "SessionButton";
             this.SessionButton.Size = new System.Drawing.Size(84, 23);
             this.SessionButton.TabIndex = 7;
@@ -149,7 +149,7 @@
             this.InitGroupBox.Controls.Add(this.SessionButton);
             this.InitGroupBox.Location = new System.Drawing.Point(664, 12);
             this.InitGroupBox.Name = "InitGroupBox";
-            this.InitGroupBox.Size = new System.Drawing.Size(135, 158);
+            this.InitGroupBox.Size = new System.Drawing.Size(135, 110);
             this.InitGroupBox.TabIndex = 9;
             this.InitGroupBox.TabStop = false;
             this.InitGroupBox.Text = "初始化";
@@ -158,7 +158,7 @@
             // 
             this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.RefreshButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RefreshButton.Location = new System.Drawing.Point(96, 127);
+            this.RefreshButton.Location = new System.Drawing.Point(96, 79);
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(31, 23);
             this.RefreshButton.TabIndex = 9;
@@ -201,7 +201,7 @@
             this.SettingsGroupBox.Controls.Add(this.ISOCoBox);
             this.SettingsGroupBox.Controls.Add(this.TvCoBox);
             this.SettingsGroupBox.Controls.Add(this.AvCoBox);
-            this.SettingsGroupBox.Location = new System.Drawing.Point(664, 209);
+            this.SettingsGroupBox.Location = new System.Drawing.Point(664, 142);
             this.SettingsGroupBox.MinimumSize = new System.Drawing.Size(300, 100);
             this.SettingsGroupBox.Name = "SettingsGroupBox";
             this.SettingsGroupBox.Size = new System.Drawing.Size(313, 101);
@@ -223,7 +223,7 @@
             "Strobe",
             "White Paper",
             "Shade"});
-            this.WBCoBox.Location = new System.Drawing.Point(142, 19);
+            this.WBCoBox.Location = new System.Drawing.Point(145, 19);
             this.WBCoBox.Name = "WBCoBox";
             this.WBCoBox.Size = new System.Drawing.Size(110, 21);
             this.WBCoBox.TabIndex = 7;
@@ -233,7 +233,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(242, 46);
+            this.label4.Location = new System.Drawing.Point(259, 47);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 16);
             this.label4.TabIndex = 3;
@@ -243,7 +243,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(106, 74);
+            this.label3.Location = new System.Drawing.Point(103, 75);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(30, 16);
             this.label3.TabIndex = 3;
@@ -253,11 +253,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(106, 47);
+            this.label2.Location = new System.Drawing.Point(101, 47);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(24, 16);
+            this.label2.Size = new System.Drawing.Size(68, 16);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Tv";
+            this.label2.Text = "快门模式";
             // 
             // label5
             // 
@@ -265,23 +265,23 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(258, 20);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(30, 16);
+            this.label5.Size = new System.Drawing.Size(53, 16);
             this.label5.TabIndex = 3;
-            this.label5.Text = "WB";
+            this.label5.Text = "白平衡";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(106, 20);
+            this.label1.Location = new System.Drawing.Point(101, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(24, 16);
+            this.label1.Size = new System.Drawing.Size(38, 16);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Av";
+            this.label1.Text = "光圈";
             // 
             // BulbUpDo
             // 
-            this.BulbUpDo.Location = new System.Drawing.Point(142, 46);
+            this.BulbUpDo.Location = new System.Drawing.Point(174, 46);
             this.BulbUpDo.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -293,7 +293,7 @@
             0,
             0});
             this.BulbUpDo.Name = "BulbUpDo";
-            this.BulbUpDo.Size = new System.Drawing.Size(94, 20);
+            this.BulbUpDo.Size = new System.Drawing.Size(81, 20);
             this.BulbUpDo.TabIndex = 1;
             this.BulbUpDo.Value = new decimal(new int[] {
             30,
@@ -334,9 +334,9 @@
             // RecordVideoButton
             // 
             this.RecordVideoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RecordVideoButton.Location = new System.Drawing.Point(663, 534);
+            this.RecordVideoButton.Location = new System.Drawing.Point(750, 452);
             this.RecordVideoButton.Name = "RecordVideoButton";
-            this.RecordVideoButton.Size = new System.Drawing.Size(71, 22);
+            this.RecordVideoButton.Size = new System.Drawing.Size(113, 22);
             this.RecordVideoButton.TabIndex = 2;
             this.RecordVideoButton.Text = "录像";
             this.RecordVideoButton.UseVisualStyleBackColor = true;
@@ -344,21 +344,21 @@
             // 
             // MainProgressBar
             // 
-            this.MainProgressBar.Location = new System.Drawing.Point(740, 502);
+            this.MainProgressBar.Location = new System.Drawing.Point(663, 484);
             this.MainProgressBar.Name = "MainProgressBar";
-            this.MainProgressBar.Size = new System.Drawing.Size(212, 20);
+            this.MainProgressBar.Size = new System.Drawing.Size(233, 20);
             this.MainProgressBar.TabIndex = 8;
             // 
             // SavePathTextBox
             // 
-            this.SavePathTextBox.Location = new System.Drawing.Point(670, 406);
+            this.SavePathTextBox.Location = new System.Drawing.Point(670, 345);
             this.SavePathTextBox.Name = "SavePathTextBox";
             this.SavePathTextBox.Size = new System.Drawing.Size(230, 20);
             this.SavePathTextBox.TabIndex = 6;
             // 
             // BrowseButton
             // 
-            this.BrowseButton.Location = new System.Drawing.Point(905, 404);
+            this.BrowseButton.Location = new System.Drawing.Point(905, 343);
             this.BrowseButton.Name = "BrowseButton";
             this.BrowseButton.Size = new System.Drawing.Size(68, 23);
             this.BrowseButton.TabIndex = 5;
@@ -369,7 +369,7 @@
             // TakePhotoButton
             // 
             this.TakePhotoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TakePhotoButton.Location = new System.Drawing.Point(663, 500);
+            this.TakePhotoButton.Location = new System.Drawing.Point(663, 452);
             this.TakePhotoButton.Name = "TakePhotoButton";
             this.TakePhotoButton.Size = new System.Drawing.Size(71, 24);
             this.TakePhotoButton.TabIndex = 2;
@@ -382,9 +382,9 @@
             this.SaveToGroupBox.Controls.Add(this.STBothButton);
             this.SaveToGroupBox.Controls.Add(this.STComputerButton);
             this.SaveToGroupBox.Controls.Add(this.STCameraButton);
-            this.SaveToGroupBox.Location = new System.Drawing.Point(814, 20);
+            this.SaveToGroupBox.Location = new System.Drawing.Point(814, 13);
             this.SaveToGroupBox.Name = "SaveToGroupBox";
-            this.SaveToGroupBox.Size = new System.Drawing.Size(101, 142);
+            this.SaveToGroupBox.Size = new System.Drawing.Size(101, 109);
             this.SaveToGroupBox.TabIndex = 4;
             this.SaveToGroupBox.TabStop = false;
             this.SaveToGroupBox.Text = "保存到";
@@ -396,10 +396,10 @@
             this.STBothButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.STBothButton.Location = new System.Drawing.Point(6, 71);
             this.STBothButton.Name = "STBothButton";
-            this.STBothButton.Size = new System.Drawing.Size(53, 20);
+            this.STBothButton.Size = new System.Drawing.Size(101, 20);
             this.STBothButton.TabIndex = 0;
             this.STBothButton.TabStop = true;
-            this.STBothButton.Text = "Both";
+            this.STBothButton.Text = "相机和电脑";
             this.STBothButton.UseVisualStyleBackColor = true;
             this.STBothButton.CheckedChanged += new System.EventHandler(this.SaveToButton_CheckedChanged);
             // 
@@ -486,7 +486,7 @@
             // 
             this.labelOperator.AutoSize = true;
             this.labelOperator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelOperator.Location = new System.Drawing.Point(669, 464);
+            this.labelOperator.Location = new System.Drawing.Point(807, 385);
             this.labelOperator.Name = "labelOperator";
             this.labelOperator.Size = new System.Drawing.Size(83, 16);
             this.labelOperator.TabIndex = 21;
@@ -496,7 +496,7 @@
             // 
             this.labelFileName.AutoSize = true;
             this.labelFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelFileName.Location = new System.Drawing.Point(670, 332);
+            this.labelFileName.Location = new System.Drawing.Point(670, 268);
             this.labelFileName.Name = "labelFileName";
             this.labelFileName.Size = new System.Drawing.Size(53, 16);
             this.labelFileName.TabIndex = 23;
@@ -506,7 +506,7 @@
             // 
             this.labelPicDescription.AutoSize = true;
             this.labelPicDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPicDescription.Location = new System.Drawing.Point(670, 363);
+            this.labelPicDescription.Location = new System.Drawing.Point(670, 299);
             this.labelPicDescription.Name = "labelPicDescription";
             this.labelPicDescription.Size = new System.Drawing.Size(68, 16);
             this.labelPicDescription.TabIndex = 24;
@@ -543,14 +543,14 @@
             // 
             // imageFileNameBox
             // 
-            this.imageFileNameBox.Location = new System.Drawing.Point(760, 328);
+            this.imageFileNameBox.Location = new System.Drawing.Point(760, 264);
             this.imageFileNameBox.Name = "imageFileNameBox";
             this.imageFileNameBox.Size = new System.Drawing.Size(210, 20);
             this.imageFileNameBox.TabIndex = 33;
             // 
             // imageDescriptionBox
             // 
-            this.imageDescriptionBox.Location = new System.Drawing.Point(760, 359);
+            this.imageDescriptionBox.Location = new System.Drawing.Point(760, 295);
             this.imageDescriptionBox.Name = "imageDescriptionBox";
             this.imageDescriptionBox.Size = new System.Drawing.Size(210, 20);
             this.imageDescriptionBox.TabIndex = 34;
@@ -558,16 +558,16 @@
             // operatorComboBox
             // 
             this.operatorComboBox.FormattingEnabled = true;
-            this.operatorComboBox.Location = new System.Drawing.Point(761, 463);
+            this.operatorComboBox.Location = new System.Drawing.Point(887, 383);
             this.operatorComboBox.Name = "operatorComboBox";
-            this.operatorComboBox.Size = new System.Drawing.Size(210, 21);
+            this.operatorComboBox.Size = new System.Drawing.Size(83, 21);
             this.operatorComboBox.TabIndex = 37;
             // 
             // labelCaptureDoctor
             // 
             this.labelCaptureDoctor.AutoSize = true;
             this.labelCaptureDoctor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCaptureDoctor.Location = new System.Drawing.Point(669, 438);
+            this.labelCaptureDoctor.Location = new System.Drawing.Point(660, 385);
             this.labelCaptureDoctor.Name = "labelCaptureDoctor";
             this.labelCaptureDoctor.Size = new System.Drawing.Size(68, 16);
             this.labelCaptureDoctor.TabIndex = 38;
@@ -577,9 +577,9 @@
             // captureDoctorComboBox
             // 
             this.captureDoctorComboBox.FormattingEnabled = true;
-            this.captureDoctorComboBox.Location = new System.Drawing.Point(762, 436);
+            this.captureDoctorComboBox.Location = new System.Drawing.Point(727, 383);
             this.captureDoctorComboBox.Name = "captureDoctorComboBox";
-            this.captureDoctorComboBox.Size = new System.Drawing.Size(210, 21);
+            this.captureDoctorComboBox.Size = new System.Drawing.Size(72, 21);
             this.captureDoctorComboBox.TabIndex = 39;
             // 
             // patientGenderListBox
@@ -629,7 +629,7 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(880, 638);
             this.Name = "MainForm";
-            this.Text = "Canon 相机控制软件 － 路漫科技 ";
+            this.Text = "路漫医学相机控制软件";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.LiveViewPicBox)).EndInit();
             this.InitGroupBox.ResumeLayout(false);
