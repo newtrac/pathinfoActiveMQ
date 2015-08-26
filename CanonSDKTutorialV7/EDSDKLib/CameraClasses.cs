@@ -223,7 +223,8 @@ namespace EDSDKLib
                 if (IsLiveViewOn)
                 {
                     StopLiveView();
-                    LVThread.Join(1000);
+                    if(LVThread!=null)
+                        LVThread.Join(1000);
                 }
 
                 lock (LVlock)

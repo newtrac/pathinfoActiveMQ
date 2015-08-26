@@ -163,8 +163,8 @@ namespace WinFormsUI
 
         private void LiveViewButton_Click(object sender, EventArgs e)
         {
-            if (!CameraHandler.IsLiveViewOn) { CameraHandler.StartLiveView(); LiveViewButton.Text = "Stop LV"; }
-            else { CameraHandler.StopLiveView(); LiveViewButton.Text = "Start LV"; }
+            if (!CameraHandler.IsLiveViewOn) { CameraHandler.StartLiveView(); LiveViewButton.Text = "停止实时"; }
+            else { CameraHandler.StopLiveView(); LiveViewButton.Text = "开始实时"; }
         }
 
         private void LiveViewPicBox_MouseDown(object sender, MouseEventArgs e)
@@ -788,10 +788,10 @@ namespace WinFormsUI
             misc_dict["included_in_report"] = "";
             misc_dict["accession_id"] = accessionNumberBox.Text;
             misc_dict["specimen_id"] = accessionNumberBox.Text;
-            if (captureDoctorComboBox.Text.Length > 0)
-                misc_dict["operator"] = captureDoctorComboBox.Text;
-            else
-                misc_dict["operator"] = operatorComboBox.Text;
+            
+            misc_dict["operator_pathologist"] = captureDoctorComboBox.Text;
+            
+            misc_dict["operator_technician"] = operatorComboBox.Text;
             misc_dict["image_description"] = imageDescriptionBox.Text;
             return misc_dict;
         } 

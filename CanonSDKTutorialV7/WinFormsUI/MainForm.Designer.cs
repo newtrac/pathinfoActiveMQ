@@ -75,7 +75,7 @@
             this.operatorComboBox = new System.Windows.Forms.ComboBox();
             this.labelCaptureDoctor = new System.Windows.Forms.Label();
             this.captureDoctorComboBox = new System.Windows.Forms.ComboBox();
-            this.patientGenderListBox = new System.Windows.Forms.ListBox();
+            this.patientGenderListBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.LiveViewPicBox)).BeginInit();
             this.InitGroupBox.SuspendLayout();
             this.LiveViewGroupBox.SuspendLayout();
@@ -117,7 +117,7 @@
             this.CameraListBox.FormattingEnabled = true;
             this.CameraListBox.Location = new System.Drawing.Point(8, 35);
             this.CameraListBox.Name = "CameraListBox";
-            this.CameraListBox.Size = new System.Drawing.Size(121, 30);
+            this.CameraListBox.Size = new System.Drawing.Size(180, 30);
             this.CameraListBox.TabIndex = 6;
             // 
             // SessionButton
@@ -149,7 +149,7 @@
             this.InitGroupBox.Controls.Add(this.SessionButton);
             this.InitGroupBox.Location = new System.Drawing.Point(664, 12);
             this.InitGroupBox.Name = "InitGroupBox";
-            this.InitGroupBox.Size = new System.Drawing.Size(135, 110);
+            this.InitGroupBox.Size = new System.Drawing.Size(206, 110);
             this.InitGroupBox.TabIndex = 9;
             this.InitGroupBox.TabStop = false;
             this.InitGroupBox.Text = "初始化";
@@ -233,17 +233,18 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(259, 47);
+            this.label4.Location = new System.Drawing.Point(93, 71);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 16);
             this.label4.TabIndex = 3;
             this.label4.Text = "Bulb (s)";
+            this.label4.Visible = false;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(103, 75);
+            this.label3.Location = new System.Drawing.Point(258, 49);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(30, 16);
             this.label3.TabIndex = 3;
@@ -281,7 +282,7 @@
             // 
             // BulbUpDo
             // 
-            this.BulbUpDo.Location = new System.Drawing.Point(174, 46);
+            this.BulbUpDo.Location = new System.Drawing.Point(8, 70);
             this.BulbUpDo.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -300,14 +301,15 @@
             0,
             0,
             0});
+            this.BulbUpDo.Visible = false;
             // 
             // ISOCoBox
             // 
             this.ISOCoBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ISOCoBox.FormattingEnabled = true;
-            this.ISOCoBox.Location = new System.Drawing.Point(6, 73);
+            this.ISOCoBox.Location = new System.Drawing.Point(175, 47);
             this.ISOCoBox.Name = "ISOCoBox";
-            this.ISOCoBox.Size = new System.Drawing.Size(94, 21);
+            this.ISOCoBox.Size = new System.Drawing.Size(80, 21);
             this.ISOCoBox.TabIndex = 0;
             this.ISOCoBox.SelectedIndexChanged += new System.EventHandler(this.ISOCoBox_SelectedIndexChanged);
             // 
@@ -336,7 +338,7 @@
             this.RecordVideoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RecordVideoButton.Location = new System.Drawing.Point(750, 452);
             this.RecordVideoButton.Name = "RecordVideoButton";
-            this.RecordVideoButton.Size = new System.Drawing.Size(113, 22);
+            this.RecordVideoButton.Size = new System.Drawing.Size(60, 22);
             this.RecordVideoButton.TabIndex = 2;
             this.RecordVideoButton.Text = "录像";
             this.RecordVideoButton.UseVisualStyleBackColor = true;
@@ -382,12 +384,13 @@
             this.SaveToGroupBox.Controls.Add(this.STBothButton);
             this.SaveToGroupBox.Controls.Add(this.STComputerButton);
             this.SaveToGroupBox.Controls.Add(this.STCameraButton);
-            this.SaveToGroupBox.Location = new System.Drawing.Point(814, 13);
+            this.SaveToGroupBox.Location = new System.Drawing.Point(905, 12);
             this.SaveToGroupBox.Name = "SaveToGroupBox";
-            this.SaveToGroupBox.Size = new System.Drawing.Size(101, 109);
+            this.SaveToGroupBox.Size = new System.Drawing.Size(47, 65);
             this.SaveToGroupBox.TabIndex = 4;
             this.SaveToGroupBox.TabStop = false;
             this.SaveToGroupBox.Text = "保存到";
+            this.SaveToGroupBox.Visible = false;
             // 
             // STBothButton
             // 
@@ -587,7 +590,7 @@
             this.patientGenderListBox.FormattingEnabled = true;
             this.patientGenderListBox.Location = new System.Drawing.Point(331, 17);
             this.patientGenderListBox.Name = "patientGenderListBox";
-            this.patientGenderListBox.Size = new System.Drawing.Size(50, 30);
+            this.patientGenderListBox.Size = new System.Drawing.Size(50, 21);
             this.patientGenderListBox.TabIndex = 40;
             // 
             // MainForm
@@ -693,7 +696,7 @@
         private System.Windows.Forms.ComboBox operatorComboBox;
         private System.Windows.Forms.Label labelCaptureDoctor;
         private System.Windows.Forms.ComboBox captureDoctorComboBox;
-        private System.Windows.Forms.ListBox patientGenderListBox;
+        private System.Windows.Forms.ComboBox patientGenderListBox;
         private System.Windows.Forms.Button RecordVideoButton;
 
     }
