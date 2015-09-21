@@ -35,6 +35,8 @@ namespace WinFormsUI
         string imageDoctorWebService = "";
         string operatorWebService = "";
         string dataContent = "image";
+        Dictionary<string, Dictionary<string, string>> doctor2officeDict = new Dictionary<string, Dictionary<string, string>>();
+        Dictionary<string, Dictionary<string, string>> operator2officeDict = new Dictionary<string, Dictionary<string, string>>();
         bool recordReadyFlag = false;
         bool cameraConnectFlag = false;
         #endregion
@@ -620,30 +622,52 @@ namespace WinFormsUI
             return responseText;
         }
 
-        private List<string> AcquireStringListFromWebService(string webService)
+        private List<Dictionary<string, string>> AcquireDictListFromWebService(string webService)
         {
             List<string> record = new List<string>();
+            List<Dictionary<string, string>> dt = new List<Dictionary<string, string>>();
             string jsonStr = ConnectToWebServiceForText(webService);
             if (jsonStr.Length == 0)
-                return record;
+                return dt;
             try
             {
                 var d = JObject.Parse(jsonStr);
                 if (d["result"].ToObject<bool>())
                 {
-                    List<Dictionary<string, string>> dt = d["data"].ToObject<List<Dictionary<string, string>>>();
-                    foreach (Dictionary<string, string> item in dt)
-                    {
-                        record.Add(item["name"]);
-                    }
+                    dt = d["data"].ToObject<List<Dictionary<string, string>>>();
                 }
 
-                return record;
+                return dt;
             }
-            catch {
-                MessageBox.Show("连接服务器出错:"+webService);
-                return record;
+            catch
+            {
+                MessageBox.Show("连接服务器出错:" + webService);
+                return dt;
             }
+        }
+
+        private List<string> AcquireStringListFromDictionaryList(List<Dictionary<string, string>> dt)
+        {
+            List<string> record = new List<string>();
+           
+            foreach (Dictionary<string, string> item in dt)
+            {
+                        record.Add(item["name"]);
+            }
+
+            return record;   
+        }
+
+        private Dictionary<string, Dictionary<string, string>> AcquireNameOfficeDictFromDictionaryList(List<Dictionary<string, string>> dt)
+        {
+            Dictionary<string, Dictionary<string, string>> record = new Dictionary<string, Dictionary<string, string>>();
+
+            foreach (Dictionary<string, string> item in dt)
+            {   
+                record[item["name"]] = item;
+            }
+
+            return record;
         }
 
         //update control buttons when recordReadyFlag changed
@@ -660,7 +684,9 @@ namespace WinFormsUI
         }
         
         private void updateImageDoctorList(){
-            List<string> doctorList = AcquireStringListFromWebService(imageDoctorWebService);
+            List<Dictionary<string, string>> dt = AcquireDictListFromWebService(imageDoctorWebService);
+            List<string> doctorList = AcquireStringListFromDictionaryList(dt);
+            doctor2officeDict = AcquireNameOfficeDictFromDictionaryList(dt);
             string[] doctorArray = doctorList.ToArray();
             captureDoctorComboBox.DataSource = doctorArray;
             captureDoctorComboBox.SelectedIndex = -1;
@@ -668,7 +694,9 @@ namespace WinFormsUI
         }
 
         private void updateOperatorList() {
-            List<string> operatorList = AcquireStringListFromWebService(operatorWebService);
+            List<Dictionary<string, string>> dt = AcquireDictListFromWebService(imageDoctorWebService);
+            List<string> operatorList = AcquireStringListFromDictionaryList(dt);
+            operator2officeDict = AcquireNameOfficeDictFromDictionaryList(dt);
             string[] operatorArray = operatorList.ToArray();
             operatorComboBox.DataSource = operatorArray;
             operatorComboBox.SelectedIndex = -1;
@@ -790,8 +818,15 @@ namespace WinFormsUI
             misc_dict["specimen_id"] = accessionNumberBox.Text;
             
             misc_dict["operator_pathologist"] = captureDoctorComboBox.Text;
-            
             misc_dict["operator_technician"] = operatorComboBox.Text;
+            if (misc_dict["operator_pathologist"].Length > 0 && doctor2officeDict.ContainsKey((misc_dict["operator_pathologist"]))) { 
+                misc_dict["hospital_name"] = doctor2officeDict[misc_dict["operator_pathologist"]]["hospitalName"];
+                misc_dict["office_name"] = doctor2officeDict[misc_dict["operator_pathologist"]]["officeName"];
+            }
+            else if(misc_dict["operator_technician"].Length > 0 && doctor2officeDict.ContainsKey((misc_dict["operator_technician"]))) { 
+                misc_dict["hospital_name"] = operator2officeDict[misc_dict["operator_technician"]]["hospitalName"];
+                misc_dict["office_name"] = operator2officeDict[misc_dict["operator_technician"]]["officeName"];
+            }
             misc_dict["image_description"] = imageDescriptionBox.Text;
             return misc_dict;
         } 
