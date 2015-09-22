@@ -694,7 +694,7 @@ namespace WinFormsUI
         }
 
         private void updateOperatorList() {
-            List<Dictionary<string, string>> dt = AcquireDictListFromWebService(imageDoctorWebService);
+            List<Dictionary<string, string>> dt = AcquireDictListFromWebService(operatorWebService);
             List<string> operatorList = AcquireStringListFromDictionaryList(dt);
             operator2officeDict = AcquireNameOfficeDictFromDictionaryList(dt);
             string[] operatorArray = operatorList.ToArray();
@@ -819,14 +819,16 @@ namespace WinFormsUI
             
             misc_dict["operator_pathologist"] = captureDoctorComboBox.Text;
             misc_dict["operator_technician"] = operatorComboBox.Text;
-            if (misc_dict["operator_pathologist"].Length > 0 && doctor2officeDict.ContainsKey((misc_dict["operator_pathologist"]))) { 
-                misc_dict["hospital_name"] = doctor2officeDict[misc_dict["operator_pathologist"]]["hospitalName"];
-                misc_dict["office_name"] = doctor2officeDict[misc_dict["operator_pathologist"]]["officeName"];
-            }
-            else if(misc_dict["operator_technician"].Length > 0 && doctor2officeDict.ContainsKey((misc_dict["operator_technician"]))) { 
-                misc_dict["hospital_name"] = operator2officeDict[misc_dict["operator_technician"]]["hospitalName"];
-                misc_dict["office_name"] = operator2officeDict[misc_dict["operator_technician"]]["officeName"];
-            }
+            misc_dict["hospital_name"] = hospitalNameTextBox.Text;
+            misc_dict["office_name"] = OfficeNameTextBox.Text;
+            //if (misc_dict["operator_pathologist"].Length > 0 && doctor2officeDict.ContainsKey((misc_dict["operator_pathologist"]))) { 
+            //    misc_dict["hospital_name"] = doctor2officeDict[misc_dict["operator_pathologist"]]["hospitalName"];
+            //    misc_dict["office_name"] = doctor2officeDict[misc_dict["operator_pathologist"]]["officeName"];
+            //}
+            //else if(misc_dict["operator_technician"].Length > 0 && doctor2officeDict.ContainsKey((misc_dict["operator_technician"]))) { 
+            //    misc_dict["hospital_name"] = operator2officeDict[misc_dict["operator_technician"]]["hospitalName"];
+            //    misc_dict["office_name"] = operator2officeDict[misc_dict["operator_technician"]]["officeName"];
+            //}
             misc_dict["image_description"] = imageDescriptionBox.Text;
             return misc_dict;
         } 
@@ -900,6 +902,7 @@ namespace WinFormsUI
                 genderString = "";
                 patientAgeBox.Text = "";
                 inPatientNumberBox.Text = "";
+                outPatientNumberBox.Text = "";
                 //accessionNumberBox.Text = "";
                 recordReadyFlag = false;
             }
@@ -909,13 +912,15 @@ namespace WinFormsUI
                 genderString = record["gender"];
                 patientNameBox.Text = record["name"];
                 patientAgeBox.Text = record["age"];
-                inPatientNumberBox.Text = record["inPatientNo"]+"-"+record["outPatientNo"];
+                inPatientNumberBox.Text = record["inPatientNo"];
+                outPatientNumberBox.Text = record["outPatientNo"];
                 recordReadyFlag = true;
             }
             updateGenderBoxWithString(genderString);
             patientGenderListBox.Show();
             patientNameBox.Show();
             inPatientNumberBox.Show();
+            outPatientNumberBox.Show();
             patientAgeBox.Show();
             updateRecordReadyControls();
         }
@@ -946,6 +951,31 @@ namespace WinFormsUI
         private void label6_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void captureDoctorComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (captureDoctorComboBox.SelectedIndex >= 0) {
+                string doctorName = captureDoctorComboBox.SelectedValue.ToString();
+                if (doctor2officeDict.ContainsKey(doctorName))
+                {
+                    hospitalNameTextBox.Text = doctor2officeDict[doctorName]["hospitalName"];
+                    OfficeNameTextBox.Text = doctor2officeDict[doctorName]["officeName"];
+                }
+            }
+        }
+
+        private void operatorComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (operatorComboBox.SelectedIndex >= 0)
+            {
+                string doctorName = operatorComboBox.SelectedValue.ToString();
+                if (operator2officeDict.ContainsKey(doctorName))
+                {
+                    hospitalNameTextBox.Text = operator2officeDict[doctorName]["hospitalName"];
+                    OfficeNameTextBox.Text = operator2officeDict[doctorName]["officeName"];
+                }
+            }
         }
     }
 }

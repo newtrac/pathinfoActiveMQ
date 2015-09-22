@@ -76,6 +76,12 @@
             this.labelCaptureDoctor = new System.Windows.Forms.Label();
             this.captureDoctorComboBox = new System.Windows.Forms.ComboBox();
             this.patientGenderListBox = new System.Windows.Forms.ComboBox();
+            this.outPatientNumberBox = new System.Windows.Forms.TextBox();
+            this.labelOutPatientNumber = new System.Windows.Forms.Label();
+            this.labelHospitalName = new System.Windows.Forms.Label();
+            this.labelOfficeName = new System.Windows.Forms.Label();
+            this.hospitalNameTextBox = new System.Windows.Forms.TextBox();
+            this.OfficeNameTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.LiveViewPicBox)).BeginInit();
             this.InitGroupBox.SuspendLayout();
             this.LiveViewGroupBox.SuspendLayout();
@@ -102,9 +108,10 @@
             // LiveViewButton
             // 
             this.LiveViewButton.Enabled = false;
-            this.LiveViewButton.Location = new System.Drawing.Point(561, 65);
+            this.LiveViewButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LiveViewButton.Location = new System.Drawing.Point(108, 47);
             this.LiveViewButton.Name = "LiveViewButton";
-            this.LiveViewButton.Size = new System.Drawing.Size(70, 22);
+            this.LiveViewButton.Size = new System.Drawing.Size(70, 27);
             this.LiveViewButton.TabIndex = 2;
             this.LiveViewButton.Text = "开始实时取景";
             this.LiveViewButton.UseVisualStyleBackColor = true;
@@ -481,9 +488,9 @@
             this.labelRegisterNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelRegisterNum.Location = new System.Drawing.Point(453, 16);
             this.labelRegisterNum.Name = "labelRegisterNum";
-            this.labelRegisterNum.Size = new System.Drawing.Size(102, 16);
+            this.labelRegisterNum.Size = new System.Drawing.Size(53, 16);
             this.labelRegisterNum.TabIndex = 20;
-            this.labelRegisterNum.Text = "门诊号/住院号";
+            this.labelRegisterNum.Text = "门诊号";
             // 
             // labelOperator
             // 
@@ -539,7 +546,7 @@
             // 
             // inPatientNumberBox
             // 
-            this.inPatientNumberBox.Location = new System.Drawing.Point(559, 15);
+            this.inPatientNumberBox.Location = new System.Drawing.Point(502, 16);
             this.inPatientNumberBox.Name = "inPatientNumberBox";
             this.inPatientNumberBox.Size = new System.Drawing.Size(72, 20);
             this.inPatientNumberBox.TabIndex = 32;
@@ -565,6 +572,7 @@
             this.operatorComboBox.Name = "operatorComboBox";
             this.operatorComboBox.Size = new System.Drawing.Size(83, 21);
             this.operatorComboBox.TabIndex = 37;
+            this.operatorComboBox.SelectedIndexChanged += new System.EventHandler(this.operatorComboBox_SelectedIndexChanged);
             // 
             // labelCaptureDoctor
             // 
@@ -584,6 +592,7 @@
             this.captureDoctorComboBox.Name = "captureDoctorComboBox";
             this.captureDoctorComboBox.Size = new System.Drawing.Size(72, 21);
             this.captureDoctorComboBox.TabIndex = 39;
+            this.captureDoctorComboBox.SelectedIndexChanged += new System.EventHandler(this.captureDoctorComboBox_SelectedIndexChanged);
             // 
             // patientGenderListBox
             // 
@@ -593,11 +602,68 @@
             this.patientGenderListBox.Size = new System.Drawing.Size(50, 21);
             this.patientGenderListBox.TabIndex = 40;
             // 
+            // outPatientNumberBox
+            // 
+            this.outPatientNumberBox.Location = new System.Drawing.Point(504, 43);
+            this.outPatientNumberBox.Name = "outPatientNumberBox";
+            this.outPatientNumberBox.Size = new System.Drawing.Size(72, 20);
+            this.outPatientNumberBox.TabIndex = 41;
+            // 
+            // labelOutPatientNumber
+            // 
+            this.labelOutPatientNumber.AutoSize = true;
+            this.labelOutPatientNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelOutPatientNumber.Location = new System.Drawing.Point(451, 45);
+            this.labelOutPatientNumber.Name = "labelOutPatientNumber";
+            this.labelOutPatientNumber.Size = new System.Drawing.Size(53, 16);
+            this.labelOutPatientNumber.TabIndex = 42;
+            this.labelOutPatientNumber.Text = "住院号";
+            // 
+            // labelHospitalName
+            // 
+            this.labelHospitalName.AutoSize = true;
+            this.labelHospitalName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelHospitalName.Location = new System.Drawing.Point(660, 413);
+            this.labelHospitalName.Name = "labelHospitalName";
+            this.labelHospitalName.Size = new System.Drawing.Size(38, 16);
+            this.labelHospitalName.TabIndex = 43;
+            this.labelHospitalName.Text = "医院";
+            // 
+            // labelOfficeName
+            // 
+            this.labelOfficeName.AutoSize = true;
+            this.labelOfficeName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelOfficeName.Location = new System.Drawing.Point(807, 413);
+            this.labelOfficeName.Name = "labelOfficeName";
+            this.labelOfficeName.Size = new System.Drawing.Size(38, 16);
+            this.labelOfficeName.TabIndex = 44;
+            this.labelOfficeName.Text = "科室";
+            // 
+            // hospitalNameTextBox
+            // 
+            this.hospitalNameTextBox.Location = new System.Drawing.Point(726, 412);
+            this.hospitalNameTextBox.Name = "hospitalNameTextBox";
+            this.hospitalNameTextBox.Size = new System.Drawing.Size(73, 20);
+            this.hospitalNameTextBox.TabIndex = 45;
+            // 
+            // OfficeNameTextBox
+            // 
+            this.OfficeNameTextBox.Location = new System.Drawing.Point(887, 413);
+            this.OfficeNameTextBox.Name = "OfficeNameTextBox";
+            this.OfficeNameTextBox.Size = new System.Drawing.Size(83, 20);
+            this.OfficeNameTextBox.TabIndex = 46;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1020, 600);
+            this.Controls.Add(this.OfficeNameTextBox);
+            this.Controls.Add(this.hospitalNameTextBox);
+            this.Controls.Add(this.labelOfficeName);
+            this.Controls.Add(this.labelHospitalName);
+            this.Controls.Add(this.labelOutPatientNumber);
+            this.Controls.Add(this.outPatientNumberBox);
             this.Controls.Add(this.RecordVideoButton);
             this.Controls.Add(this.patientGenderListBox);
             this.Controls.Add(this.captureDoctorComboBox);
@@ -698,6 +764,12 @@
         private System.Windows.Forms.ComboBox captureDoctorComboBox;
         private System.Windows.Forms.ComboBox patientGenderListBox;
         private System.Windows.Forms.Button RecordVideoButton;
+        private System.Windows.Forms.TextBox outPatientNumberBox;
+        private System.Windows.Forms.Label labelOutPatientNumber;
+        private System.Windows.Forms.Label labelHospitalName;
+        private System.Windows.Forms.Label labelOfficeName;
+        private System.Windows.Forms.TextBox hospitalNameTextBox;
+        private System.Windows.Forms.TextBox OfficeNameTextBox;
 
     }
 }

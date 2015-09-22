@@ -1080,7 +1080,7 @@ namespace EDSDKLib
                 if (k != 3)// EDSDK.AEMode_Movie
                 {
                    // throw new InvalidOperationException("Camera is not in film mode");
-                    MessageBox.Show("相机不在摄像档位上!");
+                    MessageBox.Show("相机不在manual档位上!");
                     return;
                 }
                 //to restore the current setting after recording
