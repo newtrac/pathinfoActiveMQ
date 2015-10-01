@@ -754,17 +754,24 @@ namespace WinFormsUI
                 destFile.Delete();
             }
             string taskJsonFile = loadTaskFile();
-            try
+            if (taskJsonFile.Length == 0)
             {
-
-                File.Copy(taskJsonFile, taskPath, true);
-                //file.CopyTo(image_path, true);
-
+                MessageBox.Show(" 任务文件移动未找到！请检查任务目录 " + this.taskFolder);
             }
-            catch (Exception e)
+            else
             {
-                MessageBox.Show(e.ToString() + " 任务文件移动失败！"+taskJsonFile);
-                
+                try
+                {
+
+                    File.Copy(taskJsonFile, taskPath, true);
+                    //file.CopyTo(image_path, true);
+
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.ToString() + " 任务文件移动失败！" + taskJsonFile);
+
+                }
             }
         }
 
@@ -976,6 +983,15 @@ namespace WinFormsUI
                     OfficeNameTextBox.Text = operator2officeDict[doctorName]["officeName"];
                 }
             }
+        }
+
+        private void buttonCloseForm_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确定关闭相机软件？", "关闭相机软件", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                this.Close();
+            }
+            
         }
     }
 }

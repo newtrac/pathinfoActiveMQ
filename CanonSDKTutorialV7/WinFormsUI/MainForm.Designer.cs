@@ -82,6 +82,7 @@
             this.labelOfficeName = new System.Windows.Forms.Label();
             this.hospitalNameTextBox = new System.Windows.Forms.TextBox();
             this.OfficeNameTextBox = new System.Windows.Forms.TextBox();
+            this.buttonCloseForm = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.LiveViewPicBox)).BeginInit();
             this.InitGroupBox.SuspendLayout();
             this.LiveViewGroupBox.SuspendLayout();
@@ -653,11 +654,23 @@
             this.OfficeNameTextBox.Size = new System.Drawing.Size(83, 20);
             this.OfficeNameTextBox.TabIndex = 46;
             // 
+            // buttonCloseForm
+            // 
+            this.buttonCloseForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonCloseForm.Location = new System.Drawing.Point(663, 531);
+            this.buttonCloseForm.Name = "buttonCloseForm";
+            this.buttonCloseForm.Size = new System.Drawing.Size(60, 22);
+            this.buttonCloseForm.TabIndex = 47;
+            this.buttonCloseForm.Text = "关闭";
+            this.buttonCloseForm.UseVisualStyleBackColor = true;
+            this.buttonCloseForm.Click += new System.EventHandler(this.buttonCloseForm_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1020, 600);
+            this.Controls.Add(this.buttonCloseForm);
             this.Controls.Add(this.OfficeNameTextBox);
             this.Controls.Add(this.hospitalNameTextBox);
             this.Controls.Add(this.labelOfficeName);
@@ -770,6 +783,7 @@
         private System.Windows.Forms.Label labelOfficeName;
         private System.Windows.Forms.TextBox hospitalNameTextBox;
         private System.Windows.Forms.TextBox OfficeNameTextBox;
+        private System.Windows.Forms.Button buttonCloseForm;
 
     }
 }
