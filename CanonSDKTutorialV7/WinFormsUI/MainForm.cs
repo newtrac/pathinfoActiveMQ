@@ -828,14 +828,7 @@ namespace WinFormsUI
             misc_dict["operator_technician"] = operatorComboBox.Text;
             misc_dict["hospital_name"] = hospitalNameTextBox.Text;
             misc_dict["office_name"] = OfficeNameTextBox.Text;
-            //if (misc_dict["operator_pathologist"].Length > 0 && doctor2officeDict.ContainsKey((misc_dict["operator_pathologist"]))) { 
-            //    misc_dict["hospital_name"] = doctor2officeDict[misc_dict["operator_pathologist"]]["hospitalName"];
-            //    misc_dict["office_name"] = doctor2officeDict[misc_dict["operator_pathologist"]]["officeName"];
-            //}
-            //else if(misc_dict["operator_technician"].Length > 0 && doctor2officeDict.ContainsKey((misc_dict["operator_technician"]))) { 
-            //    misc_dict["hospital_name"] = operator2officeDict[misc_dict["operator_technician"]]["hospitalName"];
-            //    misc_dict["office_name"] = operator2officeDict[misc_dict["operator_technician"]]["officeName"];
-            //}
+           
             misc_dict["image_description"] = imageDescriptionBox.Text;
             return misc_dict;
         } 
