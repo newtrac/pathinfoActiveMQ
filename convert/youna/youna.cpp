@@ -13,6 +13,11 @@
 #include <stdio.h>
 #include <getopt.h>
 #include <string.h>
+#include <vector>
+#include <WinSock2.h>
+#include <Iphlpapi.h>
+using namespace std;
+#pragma comment(lib,"Iphlpapi.lib") //add lib
 
 typedef struct IMAGE_INFO_STRUCT
 {
@@ -91,9 +96,74 @@ void write2BMP3(const uint8_t* data, int width, int height, const char* bmpFile)
     
 }
 
+std::vector<std::string> getMacAddressAsUUID(){
+//PIP_ADAPTER_INFO store info
+    PIP_ADAPTER_INFO pIpAdapterInfo = new IP_ADAPTER_INFO();
+//get structure size
+    unsigned long stSize = sizeof(IP_ADAPTER_INFO);
+//call GetAdaptersInfo,stSize pass in and out
+    int nRel = GetAdaptersInfo(pIpAdapterInfo,&stSize);
+//number of adapter
+    int netCardNum = 0;
+//number of IP on each adapter
+    int IPnumPerNetCard = 0;
 
+    std::vector< std::string > macUUIDs;
+
+    if (ERROR_BUFFER_OVERFLOW == nRel)
+    {
+//if returns ERROR_BUFFER_OVERFLOW
+//GetAdaptersInfo does not get enough memory,send stSize,meaning the space needed
+
+//释放原来的内存空间
+        delete pIpAdapterInfo;
+//re-allocate memory of adapters
+        pIpAdapterInfo = (PIP_ADAPTER_INFO)new BYTE[stSize];
+//call again
+        nRel=GetAdaptersInfo(pIpAdapterInfo,&stSize);    
+    }
+    if (ERROR_SUCCESS == nRel)
+    {
+//output info of cards
+//may have multiple cards
+        while (pIpAdapterInfo)
+        {
+            //cout<<"number of network cards:"<<++netCardNum<<endl;
+            //cout<<"name of network cards:"<<pIpAdapterInfo->AdapterName<<endl;
+            //cout<<"Description of network cards"<<pIpAdapterInfo->Description<<endl;
+            macUUIDs.push_back(std::string(pIpAdapterInfo->AdapterName));
+            pIpAdapterInfo = pIpAdapterInfo->Next;
+            //cout<<"--------------------------------------------------------------------"<<endl;
+        }
+
+    }
+//release
+    if (pIpAdapterInfo)
+    {
+        delete pIpAdapterInfo;
+    }
+
+    return macUUIDs;
+}
 
 int main(int argc, const char* argv[]){
+    std::vector<std::string> macAddresses = getMacAddressAsUUID();
+    const std::string targetMAC = "{B70737F4-D7D7-4617-97F5-7EBC42E31CE6}";
+    bool matchTarget = false;
+    for(size_t i=0;i<macAddresses.size();i++){
+        //cout<<"mac address:"<<macAddresses[i]<<std::endl;
+        //cout<<"target address"<<targetMAC<<std::endl;
+        if(macAddresses[i].compare(targetMAC) == 0){
+            matchTarget = true;
+            break;
+        }
+    }
+    if(matchTarget==false){
+        cout<<"This program is binded with Luman server only."<<std::endl;
+        return -1;
+    }
+
+
     int nextOption;
     // A string listing valid short options letters.
     const char *const shortOptions = "i:m";
@@ -107,7 +177,6 @@ int main(int argc, const char* argv[]){
         std::cout<<"need input file path!"<<std::endl;
         return 0;
     }
-    
     
     HINSTANCE hDLL = LoadLibrary("iViewerC41.dll");               // Handle to DLL
     
