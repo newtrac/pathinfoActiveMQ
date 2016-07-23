@@ -147,7 +147,7 @@ std::vector<std::string> getMacAddressAsUUID(){
 
 int main(int argc, const char* argv[]){
 	std::vector<std::string> macAddresses = getMacAddressAsUUID();
-    const std::string targetMAC = "{B70737F4-D7D7-4617-97F5-7EBC42E31CE6}";
+    const std::string targetMAC = "{65032085-2E37-493F-BEC6-AA8F468BE713}";
     bool matchTarget = false;
     for(size_t i=0;i<macAddresses.size();i++){
         //cout<<"mac address:"<<macAddresses[i]<<std::endl;
@@ -158,7 +158,7 @@ int main(int argc, const char* argv[]){
         }
     }
     if(matchTarget==false){
-        cout<<"This program is binded with Luman server only."<<std::endl;
+        cout<<"This program is bound with Anhui AWK server only."<<std::endl;
         return -1;
     }
 
