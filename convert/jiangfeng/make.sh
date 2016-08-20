@@ -1,1 +1,0 @@
-g++ jiangfeng.cpp -lIphlpapi -o jiangfeng.exe

@@ -1,0 +1,1 @@
+C:\\Users\\Administrator\\Documents\\GitHub\\convert\\mingw64\\bin\\g++.exe -g jiangfeng.cpp -o jiangfeng64.exe
