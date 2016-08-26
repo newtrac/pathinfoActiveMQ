@@ -148,16 +148,24 @@ std::vector<std::string> getMacAddressAsUUID(){
 
 int main(int argc, const char* argv[]){
 	std::vector<std::string> macAddresses = getMacAddressAsUUID();
-	//std::vector<std::string> macAddresses;
-    const std::string targetMAC = "{65032085-2E37-493F-BEC6-AA8F468BE713}";
-    bool matchTarget = false;
+    const std::vector<std::string> targetMACs = {"{65032085-2E37-493F-BEC6-AA8F468BE713}", 
+												"{45756D51-98A8-42BB-8F47-9B53A7A8C89B}",
+												"{7437785D-B6D9-478B-89B0-6E153FF9A640}",
+												"{25643C52-FB59-4B70-8BC5-840E3242935F}"
+												}; // {45756D51-98A8-42BB-8F47-9B53A7A8C89B} //awk ={65032085-2E37-493F-BEC6-AA8F468BE713}
+	bool matchTarget = false;
     for(size_t i=0;i<macAddresses.size();i++){
         //cout<<"mac address:"<<macAddresses[i]<<std::endl;
         //cout<<"target address"<<targetMAC<<std::endl;
-        if(macAddresses[i].compare(targetMAC) == 0){
-            matchTarget = true;
-            break;
-        }
+		for(size_t j=0;j<targetMACs.size();j++){
+			if(macAddresses[i].compare(targetMACs[j]) == 0){
+				matchTarget = true;
+				break;
+			}
+		}
+		if(matchTarget){
+			break;
+		}
     }
     if(matchTarget==false){
         cout<<"This program is bound with Anhui AWK server only."<<std::endl;
