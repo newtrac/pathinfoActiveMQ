@@ -271,24 +271,29 @@ int main(int argc, const char* argv[]){
              fwrite(imageData, macroDataLength, 1, fp);
              fclose(fp);
             
-            int dataLength;
-            double r = 8000.0/std::min(imageHeader.khiImageWidth,imageHeader.khiImageHeight );
-			double zoom = imageHeader.khiScanScale*r;
+            int dataLength, r=1;
+            double zoom = imageHeader.khiScanScale;
             //image roi
             //GetImageDataRoiFunc( ImageInfoStruct sImageInfo, float fScale, int sp_x, int sp_y, int nWidth, int nHeight,BYTE** pBuffer, int&DataLength, bool flag);
             try{
-				std::cout<<"r = "<<r<<std::endl;
+				std::cout<<"load image roi. "<<std::endl;
                 dataLength =  GetRoiImage( input_file_name.c_str(), 
-                                        zoom, 0, 0,
-                                                         (int)(imageHeader.khiImageWidth*r),
-                                                         (int)(imageHeader.khiImageHeight*r),
+                                        zoom/r, 0, 0,
+                                                         (int)(2560),
+                                                         (int)(2560),
                                                          imageData);
-				 
-                std::cout<<"load image data length: "<<dataLength<<std::endl;
-				
-                fp = fopen(output_file_name.c_str(), "wb");
+				fp = fopen("0.jpg", "wb");
                 fwrite(imageData, dataLength, 1, fp);
-                fclose(fp);
+                fclose(fp); 
+                std::cout<<"load image data length: "<<dataLength<<std::endl;
+				std::string cmd = "jpegtran.exe -maxmemory 5000M -crop "+std::to_string(imageHeader.khiImageWidth) +"x"
+													+std::to_string(imageHeader.khiImageHeight)+"+0+0 -outfile "
+													+output_file_name + " 0.jpg";
+				std::cout<<cmd<<std::endl;
+				system(cmd.c_str());
+               /*  fp = fopen(output_file_name.c_str(), "wb");
+                fwrite(imageData, dataLength, 1, fp);
+                fclose(fp); */
 				delete [] imageData;
                 //lpfnDllFuncDeleteImageDataFunc(imageData);
             }

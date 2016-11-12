@@ -149,13 +149,12 @@ std::vector<std::string> getMacAddressAsUUID(){
 }
 
 int main(int argc, const char* argv[]){
+	std::cout<<"calling getMacAddressAsUUID()"<<std::endl;
     std::vector<std::string> macAddresses = getMacAddressAsUUID();
     const std::vector<std::string> targetMACs = {"{65032085-2E37-493F-BEC6-AA8F468BE713}", 
 												"{45756D51-98A8-42BB-8F47-9B53A7A8C89B}",
 												"{7437785D-B6D9-478B-89B0-6E153FF9A640}",
-												"{25643C52-FB59-4B70-8BC5-840E3242935F}",
-												"{FB9FB65F-CF6A-49D6-B79A-F9C52FF348FE}",
-												"{231FB1DE-B64C-4ADC-839F-67D616866C75}"
+												"{25643C52-FB59-4B70-8BC5-840E3242935F}"
 												}; // {45756D51-98A8-42BB-8F47-9B53A7A8C89B} //awk ={65032085-2E37-493F-BEC6-AA8F468BE713}
 	bool matchTarget = false;
     for(size_t i=0;i<macAddresses.size();i++){
@@ -175,8 +174,7 @@ int main(int argc, const char* argv[]){
         cout<<"This program is bound with the network adaptor of Anhui AWK server only."<<std::endl;
         return -1;
     }
-
-
+	cout<<"Finished MAC check."<<std::endl;
     int nextOption;
     // A string listing valid short options letters.
     const char *const shortOptions = "i:m";
@@ -191,25 +189,6 @@ int main(int argc, const char* argv[]){
         return 0;
     }
     
-    //HINSTANCE hDLL = LoadLibrary("iViewerSDK.dll");               // Handle to DLL
-    
-    // LPFNDLLFUNC0 lpfnDllFuncInitImageFileFunc;
-    // LPFNDLLFUNC1 lpfnDllFuncUnInitImageFileFunc;    // Function pointers
-    // LPFNDLLFUNC2 lpfnDllFuncGetHeaderInfoFunc;
-    // LPFNDLLFUNC3 lpfnDllFuncGetImageStreamFunc;
-    // LPFNDLLFUNC4 lpfnDllFuncGetPriviewInfoPathFunc;
-    // LPFNDLLFUNC5 lpfnDllFuncGetImageDataRoiFunc;
-    // LPFNDLLFUNC6 lpfnDllFuncDeleteImageDataFunc;
-    
-    // lpfnDllFuncInitImageFileFunc = (LPFNDLLFUNC0)GetProcAddress(hDLL, "InitImageFileFunc");
-    // lpfnDllFuncUnInitImageFileFunc = (LPFNDLLFUNC1)GetProcAddress(hDLL, "UnInitImageFileFunc");
-    // lpfnDllFuncGetHeaderInfoFunc = (LPFNDLLFUNC2)GetProcAddress(hDLL, "GetHeaderInfoFunc");
-    // lpfnDllFuncGetImageStreamFunc = (LPFNDLLFUNC3)GetProcAddress(hDLL, "GetImageStreamFunc");
-    // lpfnDllFuncGetPriviewInfoPathFunc = (LPFNDLLFUNC4)GetProcAddress(hDLL, "GetPriviewInfoPathFunc");
-    // lpfnDllFuncGetImageDataRoiFunc = (LPFNDLLFUNC5)GetProcAddress(hDLL, "GetImageDataRoiFunc");
-    // lpfnDllFuncDeleteImageDataFunc = (LPFNDLLFUNC6)GetProcAddress(hDLL, "DeleteImageDataFunc");
-    
-    
     ImageInfoStruct imageInfo;
     ImageHeaderInfo imageHeader;
     std::string input_file_name(argv[1]);
@@ -222,7 +201,8 @@ int main(int argc, const char* argv[]){
         labelJpgFile = input_file_name+"_label.jpg";
 		macroJpgFile = input_file_name+"_macro.jpg";
     }
-    
+	
+	std::cout<<"Calling GetTMAPImageInfo()..."<<std::endl;
     if(GetTMAPImageInfo(input_file_name.c_str(),imageHeader.khiImageWidth, 
                         imageHeader.khiImageHeight,imageHeader.khiScanScale,imageHeader.khiImageCapRes)){
         // bool b0 = lpfnDllFuncGetHeaderInfoFunc(imageInfo, imageHeader.khiImageHeight,
@@ -240,11 +220,9 @@ int main(int argc, const char* argv[]){
             <<"image scan scale: "<<imageHeader.khiScanScale<<std::endl
             <<"image capture pixel size: "<<imageHeader.khiImageCapRes<<std::endl;
             //assume jpeg data length <= full data length / 10
-			//size_t jpegDataSize = (long long)imageHeader.khiImageHeight*(long long)imageHeader.khiImageWidth*2;
-			size_t jpegDataSize =40960000;
-			std::cout<<"allocate size="<<jpegDataSize<<std::endl;
+			std::cout<<"allocate size="<<(long long)imageHeader.khiImageHeight*(long long)imageHeader.khiImageWidth/10<<std::endl;
             //unsigned char* imageData=new unsigned char[(long long)imageHeader.khiImageHeight*(long long)imageHeader.khiImageWidth/10];
-            unsigned char* imageData=new unsigned char[jpegDataSize];
+            unsigned char* imageData=new unsigned char[2147483647];
             
             //label image
             int labelDataLength=0, labelWidth, labelHeight;
@@ -264,28 +242,26 @@ int main(int argc, const char* argv[]){
 			//Macro image
              int macroDataLength, macroWidth, macroHeight;
              //bool b1 = lpfnDllFuncGetPriviewInfoPathFunc( input_file_name.c_str(), &imageData, macroDataLength, macroWidth, macroHeight );
-             macroDataLength = GetMacroImgData(input_file_name.c_str(), imageData);
+             std::cout<<"calling GetMacroImageData()..."<<std::endl;
+			 macroDataLength = GetMacroImgData(input_file_name.c_str(), imageData);
 			 std::cout<<"macro image data length: "<<macroDataLength<<std::endl;
              //write2BMP(imageData,macroWidth,macroHeight, macroBmpFile.c_str());
              fp = fopen(macroJpgFile.c_str(), "wb");
              fwrite(imageData, macroDataLength, 1, fp);
              fclose(fp);
             
-            int dataLength;
-            double r = 8000.0/std::min(imageHeader.khiImageWidth,imageHeader.khiImageHeight );
-			double zoom = imageHeader.khiScanScale*r;
+            int dataLength, r=4;
+            double zoom = 20.0;
             //image roi
             //GetImageDataRoiFunc( ImageInfoStruct sImageInfo, float fScale, int sp_x, int sp_y, int nWidth, int nHeight,BYTE** pBuffer, int&DataLength, bool flag);
             try{
-				std::cout<<"r = "<<r<<std::endl;
+				std::cout<<"load image roi. "<<std::endl;
                 dataLength =  GetRoiImage( input_file_name.c_str(), 
-                                        zoom, 0, 0,
-                                                         (int)(imageHeader.khiImageWidth*r),
-                                                         (int)(imageHeader.khiImageHeight*r),
+                                        zoom/r, 0, 0,
+                                                         (int)(imageHeader.khiImageWidth/r),
+                                                         (int)(imageHeader.khiImageHeight/r),
                                                          imageData);
-				 
                 std::cout<<"load image data length: "<<dataLength<<std::endl;
-				
                 fp = fopen(output_file_name.c_str(), "wb");
                 fwrite(imageData, dataLength, 1, fp);
                 fclose(fp);
