@@ -9,14 +9,16 @@
 
 
 #include <iostream>
+#include <fstream>
 #include <WinSock2.h>
 #include <windows.h>
 #include <stdio.h>
 #include <getopt.h>
 #include <string.h>
 #include <vector>
-
+#include <dirent.h>
 #include <Iphlpapi.h>
+#include <math.h>
 #include "TMAPConvert.h"
 using namespace std;
 #pragma comment(lib,"Iphlpapi.lib") //add lib
@@ -37,7 +39,7 @@ typedef struct IMAGE_HEADER
     int khiImageBlockSize;
 }ImageHeaderInfo;
 
-typedef bool (CALLBACK* LPFNDLLFUNC0)(ImageInfoStruct&, const char*);
+/* typedef bool (CALLBACK* LPFNDLLFUNC0)(ImageInfoStruct&, const char*);
 typedef bool (CALLBACK* LPFNDLLFUNC1)(ImageInfoStruct&);
 typedef bool (CALLBACK* LPFNDLLFUNC2)(ImageInfoStruct, int&, int&, int&, float&, double&, float&, int&);
 typedef char* (__stdcall* LPFNDLLFUNC3)(ImageInfoStruct&, float, int, int, int&, unsigned char**);
@@ -45,7 +47,23 @@ typedef char* (__stdcall* LPFNDLLFUNC3)(ImageInfoStruct&, float, int, int, int&,
 typedef bool (__stdcall* LPFNDLLFUNC4)(const char*, unsigned char**, int&, int&, int& );
 //boolGetImageDataRoiFunc( ImageInfoStruct sImageInfo, float fScale, int sp_x, int sp_y, int nWidth, int nHeight,BYTE** pBuffer, int&DataLength, bool flag);
 typedef bool (__stdcall* LPFNDLLFUNC5)( ImageInfoStruct, float, int, int, int, int,BYTE** , int&, bool);
-typedef bool (__stdcall* LPFNDLLFUNC6)(LPVOID);
+typedef bool (__stdcall* LPFNDLLFUNC6)(LPVOID); */
+inline bool is_file_exist (const std::string& name) {
+    ifstream f(name.c_str());
+    return f.good();
+}
+
+bool dirExists(const std::string& dirName_in)
+{
+  DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
+  if (ftyp == INVALID_FILE_ATTRIBUTES)
+    return false;  //something is wrong with your path!
+
+  if (ftyp & FILE_ATTRIBUTE_DIRECTORY)
+    return true;   // this is a directory!
+
+  return false;    // this is not a directory!
+}
 
 int write2BMP(const uint8_t* data,int w,int h, const char* bmpFileName){
     
@@ -191,49 +209,30 @@ int main(int argc, const char* argv[]){
         return 0;
     }
     
-    //HINSTANCE hDLL = LoadLibrary("iViewerSDK.dll");               // Handle to DLL
-    
-    // LPFNDLLFUNC0 lpfnDllFuncInitImageFileFunc;
-    // LPFNDLLFUNC1 lpfnDllFuncUnInitImageFileFunc;    // Function pointers
-    // LPFNDLLFUNC2 lpfnDllFuncGetHeaderInfoFunc;
-    // LPFNDLLFUNC3 lpfnDllFuncGetImageStreamFunc;
-    // LPFNDLLFUNC4 lpfnDllFuncGetPriviewInfoPathFunc;
-    // LPFNDLLFUNC5 lpfnDllFuncGetImageDataRoiFunc;
-    // LPFNDLLFUNC6 lpfnDllFuncDeleteImageDataFunc;
-    
-    // lpfnDllFuncInitImageFileFunc = (LPFNDLLFUNC0)GetProcAddress(hDLL, "InitImageFileFunc");
-    // lpfnDllFuncUnInitImageFileFunc = (LPFNDLLFUNC1)GetProcAddress(hDLL, "UnInitImageFileFunc");
-    // lpfnDllFuncGetHeaderInfoFunc = (LPFNDLLFUNC2)GetProcAddress(hDLL, "GetHeaderInfoFunc");
-    // lpfnDllFuncGetImageStreamFunc = (LPFNDLLFUNC3)GetProcAddress(hDLL, "GetImageStreamFunc");
-    // lpfnDllFuncGetPriviewInfoPathFunc = (LPFNDLLFUNC4)GetProcAddress(hDLL, "GetPriviewInfoPathFunc");
-    // lpfnDllFuncGetImageDataRoiFunc = (LPFNDLLFUNC5)GetProcAddress(hDLL, "GetImageDataRoiFunc");
-    // lpfnDllFuncDeleteImageDataFunc = (LPFNDLLFUNC6)GetProcAddress(hDLL, "DeleteImageDataFunc");
-    
     
     ImageInfoStruct imageInfo;
     ImageHeaderInfo imageHeader;
     std::string input_file_name(argv[1]);
-    std::string output_file_name, labelJpgFile, macroJpgFile;
+    std::string output_folder, output_base_name, output_file_name, labelJpgFile, macroJpgFile;
     if(argc==3){
-        output_file_name = std::string(argv[2]);
+        output_base_name = std::string(argv[2]);
+		if(dirExists( output_base_name)){
+			std::cout<<"to delete existing "<<output_base_name<<std::endl;
+			RemoveDirectory( output_base_name.c_str());
+        }
+		CreateDirectory( output_base_name.c_str(), NULL );
     }
     else{
-        output_file_name = input_file_name+".jpg";
+		std::cout<<"need an output path."<<std::endl;
+		return -1;
+        /* output_base_name = input_file_name+".jpg";
         labelJpgFile = input_file_name+"_label.jpg";
-		macroJpgFile = input_file_name+"_macro.jpg";
+		macroJpgFile = input_file_name+"_macro.jpg"; */
     }
     
     if(GetTMAPImageInfo(input_file_name.c_str(),imageHeader.khiImageWidth, 
                         imageHeader.khiImageHeight,imageHeader.khiScanScale,imageHeader.khiImageCapRes)){
-        // bool b0 = lpfnDllFuncGetHeaderInfoFunc(imageInfo, imageHeader.khiImageHeight,
-        //                                        imageHeader.khiImageWidth,
-        //                                        imageHeader.khiScanScale,
-        //                                        imageHeader.khiSpendTime,
-        //                                        imageHeader.khiScanTime,
-        //                                        imageHeader.khiImageCapRes,
-        //                                        imageHeader.khiImageBlockSize);
-        bool b0 = true;
-        if(b0){
+        
             std::cout<<"image height: "<<imageHeader.khiImageHeight<<std::endl
             <<"image width: "<<imageHeader.khiImageWidth<<std::endl
             //<<"block size: "<<imageHeader.khiImageBlockSize<<std::endl
@@ -241,84 +240,73 @@ int main(int argc, const char* argv[]){
             <<"image capture pixel size: "<<imageHeader.khiImageCapRes<<std::endl;
             //assume jpeg data length <= full data length / 10
 			//size_t jpegDataSize = (long long)imageHeader.khiImageHeight*(long long)imageHeader.khiImageWidth*2;
-			size_t jpegDataSize =40960000;
+			size_t jpegDataSize =81920;
 			std::cout<<"allocate size="<<jpegDataSize<<std::endl;
             //unsigned char* imageData=new unsigned char[(long long)imageHeader.khiImageHeight*(long long)imageHeader.khiImageWidth/10];
             unsigned char* imageData=new unsigned char[jpegDataSize];
-            
-            //label image
-            int labelDataLength=0, labelWidth, labelHeight;
-            labelDataLength = GetLabelImgData( input_file_name.c_str(), imageData);
-            if(labelDataLength>0){
-              std::cout<<"label image loaded length "<<labelDataLength<<std::endl;   
-            }
-            // std::cout<<"label image height: "<<labelHeight<<std::endl
-            // <<"label image width: "<<labelWidth<<std::endl
-            // <<"label image data length: "<<labelDataLength<<std::endl;
-            //write2BMP(imageData,labelWidth,labelHeight, labelBmpFile.c_str());
-            FILE * fp = fopen(labelJpgFile.c_str(), "wb");
-            fwrite(imageData, labelDataLength, 1, fp);
-            fclose(fp);
-            //lpfnDllFuncDeleteImageDataFunc(imageData);
-            
-			//Macro image
-             int macroDataLength, macroWidth, macroHeight;
-             //bool b1 = lpfnDllFuncGetPriviewInfoPathFunc( input_file_name.c_str(), &imageData, macroDataLength, macroWidth, macroHeight );
-             macroDataLength = GetMacroImgData(input_file_name.c_str(), imageData);
-			 std::cout<<"macro image data length: "<<macroDataLength<<std::endl;
-             //write2BMP(imageData,macroWidth,macroHeight, macroBmpFile.c_str());
-             fp = fopen(macroJpgFile.c_str(), "wb");
-             fwrite(imageData, macroDataLength, 1, fp);
-             fclose(fp);
-            
+
             int dataLength;
-            double r = 8000.0/std::min(imageHeader.khiImageWidth,imageHeader.khiImageHeight );
-			double zoom = imageHeader.khiScanScale*r;
-            //image roi
-            //GetImageDataRoiFunc( ImageInfoStruct sImageInfo, float fScale, int sp_x, int sp_y, int nWidth, int nHeight,BYTE** pBuffer, int&DataLength, bool flag);
-            try{
-				std::cout<<"r = "<<r<<std::endl;
-                dataLength =  GetRoiImage( input_file_name.c_str(), 
-                                        zoom, 0, 0,
-                                                         (int)(imageHeader.khiImageWidth*r),
-                                                         (int)(imageHeader.khiImageHeight*r),
-                                                         imageData);
-				 
-                std::cout<<"load image data length: "<<dataLength<<std::endl;
-				
-                fp = fopen(output_file_name.c_str(), "wb");
-                fwrite(imageData, dataLength, 1, fp);
-                fclose(fp);
-				delete [] imageData;
-                //lpfnDllFuncDeleteImageDataFunc(imageData);
+            const float tileSize = 256.0f;
+            float r = std::min(imageHeader.khiImageWidth,imageHeader.khiImageHeight)/1.0f;
+            int levels = (int)ceil(log2f(r));
+			int minLevels = 1;
+            int downScale = pow(2, minLevels);
+			int numTilesAll = 1,currentProcessedTiles=0;
+			int outputImageWidth = imageHeader.khiImageWidth/downScale;
+			int outputImageHeight = imageHeader.khiImageHeight/downScale;
+			FILE * fp;
+			int startLevel = levels - minLevels;
+			std::cout<<"total levels="<<startLevel+1<<std::endl;
+            for(int li=startLevel;li>=0;li--){
+                
+                std::string levelFolder = output_base_name+"\\"+std::to_string(li);
+                CreateDirectory( levelFolder.c_str(), NULL );
+                int nx = (int)ceil(imageHeader.khiImageWidth/downScale/tileSize);
+                int ny = (int)ceil(imageHeader.khiImageHeight/downScale/tileSize);
+				if(li==startLevel){
+					numTilesAll = nx*ny*2;
+					currentProcessedTiles=0;
+				}
+				//std::cout<<"nx="<<nx<<", ny="<<ny<<std::endl;
+                double scale = imageHeader.khiScanScale/(double)downScale;
+				//std::cout<<"scale="<<scale<<std::endl;
+                //int tileXAdd, tileYAdd;
+                for(size_t xi=0;xi<nx;xi++){
+					std::cout<<currentProcessedTiles<<"/"<<numTilesAll<<std::endl;
+                    for(size_t yi=0;yi<ny;yi++){
+                        
+                        std::string output_tile_name = levelFolder +"\\"+std::to_string(xi)
+                        +"_"+std::to_string(yi)+".jpeg";
+						
+                        dataLength =  GetRoiImage( input_file_name.c_str(),
+                                                  scale, xi*tileSize, yi*tileSize,
+                                                  tileSize,
+                                                  tileSize,
+                                                  imageData);
+						if(dataLength>0){
+							fp = fopen(output_tile_name.c_str(), "wb");
+							fwrite(imageData, dataLength, 1, fp);
+							fclose(fp);
+							++currentProcessedTiles;
+						}
+                    }
+                }
+                downScale*=2;
             }
-            catch(std::exception e){
-                std::cout<<input_file_name<<": failed to read slide at scan scale "<<imageHeader.khiScanScale/r<<std::endl;
-            }
-            
-             
-             
-            /* // jpeg stream
-             unsigned char** jpegStream;
-             int jpegDataLength;
-             lpfnDllFuncGetImageStreamFunc(imageInfo, (float)imageHeader.khiScanScale, imageHeader.khiImageWidth/2,
-             imageHeader.khiImageHeight/2, jpegDataLength, jpegStream);
-             FILE * fp = fopen(output_file_name.c_str(), "wb");
-             fwrite(jpegStream, jpegDataLength, 1, fp);
-             fclose(fp);
-             */
-        }
-        else{
-            std::cout<<"failed to load image header. quit."<<std::endl;
-            //lpfnDllFuncUnInitImageFileFunc( imageInfo);
-            return -1;
-        }
-       // lpfnDllFuncUnInitImageFileFunc( imageInfo);
+            std::string dziFile = output_base_name+".dzi";
+			if(is_file_exist(dziFile)){
+				std::remove(dziFile.c_str());
+			}
+            std::string dziStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Image xmlns=\"http://schemas.microsoft.com/deepzoom/2008\" Format=\"jpeg\" \n Overlap=\"0\"\n TileSize=\""+std::to_string(int(tileSize))+"\" >\n<Size Height=\""+std::to_string(outputImageHeight)+"\" \n Width=\""+std::to_string(outputImageWidth)+"\"/>\n</Image>";
+            std::ofstream out(dziFile);
+            out << dziStr;
+            out.close();
+
     }
     else{
         std::cout<<"cannot open file:"<<input_file_name<<std::endl;
     }
-    
+    std::cout<<"100/100"<<std::endl;
     return 0;
 }
 
