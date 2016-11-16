@@ -170,7 +170,9 @@ int main(int argc, const char* argv[]){
     const std::vector<std::string> targetMACs = {"{65032085-2E37-493F-BEC6-AA8F468BE713}", 
 												"{45756D51-98A8-42BB-8F47-9B53A7A8C89B}",
 												"{7437785D-B6D9-478B-89B0-6E153FF9A640}",
-												"{25643C52-FB59-4B70-8BC5-840E3242935F}"
+												"{25643C52-FB59-4B70-8BC5-840E3242935F}",
+												"{FB9FB65F-CF6A-49D6-B79A-F9C52FF348FE}",
+												"{231FB1DE-B64C-4ADC-839F-67D616866C75}"
 												}; // {45756D51-98A8-42BB-8F47-9B53A7A8C89B} //awk ={65032085-2E37-493F-BEC6-AA8F468BE713}
 	bool matchTarget = false;
     for(size_t i=0;i<macAddresses.size();i++){
@@ -327,7 +329,9 @@ int main(int argc, const char* argv[]){
             if(is_file_exist(dziFile)){
                 std::remove(dziFile.c_str());
             }
-            std::string dziStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Image xmlns=\"http://schemas.microsoft.com/deepzoom/2008\" Format=\"jpeg\" \n Overlap=\"0\"\n TileSize=\""+std::to_string(int(tileSize))+"\" >\n<Size Height=\""+std::to_string(outputImageHeight)+"\" \n Width=\""+std::to_string(outputImageWidth)+"\"/>\n</Image>";
+			std::string dziStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Image xmlns=\"http://schemas.microsoft.com/deepzoom/2008\" Format=\"jpeg\" \n Scan resolution=\""+std::to_string(imageHeader.khiScanScale)+"\"\n Overlap=\""+std::to_string(overlap)+"\"\n TileSize=\""+std::to_string(int(tileSize))+"\" >\n<Size Height=\""+std::to_string(outputImageHeight)+"\" \n Width=\""+std::to_string(outputImageWidth)+"\"/>\n</Image>";
+    
+            //std::string dziStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Image xmlns=\"http://schemas.microsoft.com/deepzoom/2008\" Format=\"jpeg\" \n Overlap=\"0\"\n TileSize=\""+std::to_string(int(tileSize))+"\" >\n<Size Height=\""+std::to_string(outputImageHeight)+"\" \n Width=\""+std::to_string(outputImageWidth)+"\"/>\n</Image>";
             std::ofstream out(dziFile);
             out << dziStr;
             out.close();

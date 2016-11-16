@@ -246,6 +246,7 @@ int main(int argc, const char* argv[]){
             unsigned char* imageData=new unsigned char[jpegDataSize];
 
             int dataLength;
+			const int overlap = 2;
             const float tileSize = 256.0f;
             float r = std::min(imageHeader.khiImageWidth,imageHeader.khiImageHeight)/1.0f;
             int levels = (int)ceil(log2f(r));
@@ -261,8 +262,8 @@ int main(int argc, const char* argv[]){
                 
                 std::string levelFolder = output_base_name+"\\"+std::to_string(li);
                 CreateDirectory( levelFolder.c_str(), NULL );
-                int nx = (int)ceil(imageHeader.khiImageWidth/downScale/tileSize);
-                int ny = (int)ceil(imageHeader.khiImageHeight/downScale/tileSize);
+                int nx = (int)ceil(imageHeader.khiImageWidth/(float)downScale/tileSize);
+                int ny = (int)ceil(imageHeader.khiImageHeight/(float)downScale/tileSize);
 				if(li==startLevel){
 					numTilesAll = nx*ny*2;
 					currentProcessedTiles=0;
@@ -270,18 +271,22 @@ int main(int argc, const char* argv[]){
 				//std::cout<<"nx="<<nx<<", ny="<<ny<<std::endl;
                 double scale = imageHeader.khiScanScale/(double)downScale;
 				//std::cout<<"scale="<<scale<<std::endl;
-                //int tileXAdd, tileYAdd;
-                for(size_t xi=0;xi<nx;xi++){
-					std::cout<<currentProcessedTiles<<"/"<<numTilesAll<<std::endl;
-                    for(size_t yi=0;yi<ny;yi++){
-                        
+                float scaledImageWidth = std::min(tileSize,round(imageHeader.khiImageWidth/(float)downScale));
+                float scaledImageHeight = std::min(tileSize,round(imageHeader.khiImageHeight/(float)downScale));
+                
+                for(size_t yi=0;yi<ny;yi++){
+                    std::cout<<currentProcessedTiles<<"/"<<numTilesAll<<std::endl;
+                    for(size_t xi=0;xi<nx;xi++){
                         std::string output_tile_name = levelFolder +"\\"+std::to_string(xi)
                         +"_"+std::to_string(yi)+".jpeg";
-						
+						float startX = std::max(0.0f, xi*scaledImageWidth-overlap);
+						float startY = std::max(0.0f, yi*scaledImageHeight-overlap);
+						float w = (xi+1)*scaledImageWidth+overlap - startX;
+						float h = (yi+1)*scaledImageHeight+overlap - startY;
                         dataLength =  GetRoiImage( input_file_name.c_str(),
-                                                  scale, xi*tileSize, yi*tileSize,
-                                                  tileSize,
-                                                  tileSize,
+                                                  scale,startX, startY,
+                                                  w,
+                                                  h,
                                                   imageData);
 						if(dataLength>0){
 							fp = fopen(output_tile_name.c_str(), "wb");
@@ -297,7 +302,7 @@ int main(int argc, const char* argv[]){
 			if(is_file_exist(dziFile)){
 				std::remove(dziFile.c_str());
 			}
-            std::string dziStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Image xmlns=\"http://schemas.microsoft.com/deepzoom/2008\" Format=\"jpeg\" \n Overlap=\"0\"\n TileSize=\""+std::to_string(int(tileSize))+"\" >\n<Size Height=\""+std::to_string(outputImageHeight)+"\" \n Width=\""+std::to_string(outputImageWidth)+"\"/>\n</Image>";
+            std::string dziStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Image xmlns=\"http://schemas.microsoft.com/deepzoom/2008\" Format=\"jpeg\" \n Scan resolution=\""+std::to_string(imageHeader.khiScanScale)+"\"\n Overlap=\""+std::to_string(overlap)+"\"\n TileSize=\""+std::to_string(int(tileSize))+"\" >\n<Size Height=\""+std::to_string(outputImageHeight)+"\" \n Width=\""+std::to_string(outputImageWidth)+"\"/>\n</Image>";
             std::ofstream out(dziFile);
             out << dziStr;
             out.close();
