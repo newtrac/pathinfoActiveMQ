@@ -1,1 +1,0 @@
-g++ -o3 youna32.cpp -lIphlpapi -o youna32.exe

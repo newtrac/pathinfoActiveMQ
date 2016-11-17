@@ -173,7 +173,7 @@ int main(int argc, const char* argv[]){
 												"{25643C52-FB59-4B70-8BC5-840E3242935F}",
 												"{FB9FB65F-CF6A-49D6-B79A-F9C52FF348FE}",
 												"{231FB1DE-B64C-4ADC-839F-67D616866C75}"
-												}; // {45756D51-98A8-42BB-8F47-9B53A7A8C89B} //awk ={65032085-2E37-493F-BEC6-AA8F468BE713}
+												};
 	bool matchTarget = false;
     for(size_t i=0;i<macAddresses.size();i++){
         //cout<<"mac address:"<<macAddresses[i]<<std::endl;
@@ -273,7 +273,8 @@ int main(int argc, const char* argv[]){
 //             fclose(fp);
 //             lpfnDllFuncDeleteImageDataFunc(imageData);
             int dataLength;
-            const float tileSize = 256.0f;
+			const int overlap = 1;
+            const float tileSize = 254.0f;
             float r = std::min(imageHeader.khiImageWidth,imageHeader.khiImageHeight)/1.0f;
             int levels = (int)ceil(log2f(r));
             int minLevels = 1;
@@ -297,22 +298,23 @@ int main(int argc, const char* argv[]){
                 //std::cout<<"nx="<<nx<<", ny="<<ny<<std::endl;
                 double scale = imageHeader.khiScanScale/(double)downScale;
                 //std::cout<<"scale="<<scale<<std::endl;
+                float scaledImageWidth = std::min(tileSize,round(imageHeader.khiImageWidth/(float)downScale));
+                float scaledImageHeight = std::min(tileSize,round(imageHeader.khiImageHeight/(float)downScale));
+                
                 for(size_t xi=0;xi<nx;xi++){
                     std::cout<<currentProcessedTiles<<"/"<<numTilesAll<<std::endl;
                     for(size_t yi=0;yi<ny;yi++){
                         
                         std::string output_tile_name = levelFolder +"\\"+std::to_string(xi)
                         +"_"+std::to_string(yi)+".jpeg";
-                        
-//                        dataLength =  GetRoiImage( input_file_name.c_str(),
-//                                                  scale, xi*tileSize, yi*tileSize,
-//                                                  tileSize,
-//                                                  tileSize,
-//                                                  imageData);
+                        float startX = std::max(0.0f, xi*scaledImageWidth-overlap);
+                        float startY = std::max(0.0f, yi*scaledImageHeight-overlap);
+                        float w = (xi+1)*scaledImageWidth+overlap - startX;
+                        float h = (yi+1)*scaledImageHeight+overlap - startY;
                         //image roi
-                        bool b2 = lpfnDllFuncGetImageDataRoiFunc( imageInfo, scale,  xi*tileSize, yi*tileSize,
-                                                                 tileSize,
-                                                                 tileSize,
+                        bool b2 = lpfnDllFuncGetImageDataRoiFunc( imageInfo, scale,  startX, startY,
+                                                                 w,
+                                                                 h,
                                                                  &imageData, dataLength, true);
                         if(b2){
                             fp = fopen(output_tile_name.c_str(), "wb");

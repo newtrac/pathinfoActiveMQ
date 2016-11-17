@@ -1,1 +1,1 @@
-C:\\Users\\Administrator\\Documents\\GitHub\\convert\\mingw64\\bin\\g++.exe jiangfeng.cpp -lIphlpapi -o "C:\\Users\\Administrator\\Documents\\GitHub\\convert\\jiangfeng\\64\\build\\jiangfeng64.exe"
+C:\\Users\\Administrator\\Documents\\GitHub\\convert\\mingw64\\bin\\g++.exe -o3 jiangfeng.cpp -lIphlpapi -o "C:\\Users\\Administrator\\Documents\\GitHub\\convert\\jiangfeng\\64\\build\\jiangfeng64.exe"

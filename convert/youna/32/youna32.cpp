@@ -7,14 +7,16 @@
 //
 //
 
-
+#include <WinSock2.h>
 #include <iostream>
 #include <windows.h>
 #include <stdio.h>
 #include <getopt.h>
 #include <string.h>
 #include <vector>
-#include <WinSock2.h>
+#include <dirent.h>
+#include <fstream>
+#include <math.h>
 #include <Iphlpapi.h>
 using namespace std;
 #pragma comment(lib,"Iphlpapi.lib") //add lib
@@ -44,6 +46,23 @@ typedef bool (__stdcall* LPFNDLLFUNC4)(const char*, unsigned char**, int&, int&,
 //boolGetImageDataRoiFunc( ImageInfoStruct sImageInfo, float fScale, int sp_x, int sp_y, int nWidth, int nHeight,BYTE** pBuffer, int&DataLength, bool flag);
 typedef bool (__stdcall* LPFNDLLFUNC5)( ImageInfoStruct, float, int, int, int, int,BYTE** , int&, bool);
 typedef bool (__stdcall* LPFNDLLFUNC6)(LPVOID);
+
+bool dirExists(const std::string& dirName_in)
+{
+    DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
+    if (ftyp == INVALID_FILE_ATTRIBUTES)
+        return false;  //something is wrong with your path!
+    
+    if (ftyp & FILE_ATTRIBUTE_DIRECTORY)
+        return true;   // this is a directory!
+    
+    return false;    // this is not a directory!
+}
+
+inline bool is_file_exist (const std::string& name) {
+    ifstream f(name.c_str());
+    return f.good();
+}
 
 int write2BMP(const uint8_t* data,int w,int h, const char* bmpFileName){
     
@@ -148,22 +167,33 @@ std::vector<std::string> getMacAddressAsUUID(){
 
 int main(int argc, const char* argv[]){
     std::vector<std::string> macAddresses = getMacAddressAsUUID();
-    const std::string targetMAC = "{45756D51-98A8-42BB-8F47-9B53A7A8C89B}"; // {45756D51-98A8-42BB-8F47-9B53A7A8C89B} //awk ={65032085-2E37-493F-BEC6-AA8F468BE713}
+    const std::vector<std::string> targetMACs = {"{65032085-2E37-493F-BEC6-AA8F468BE713}",
+        "{45756D51-98A8-42BB-8F47-9B53A7A8C89B}",
+        "{7437785D-B6D9-478B-89B0-6E153FF9A640}",
+        "{25643C52-FB59-4B70-8BC5-840E3242935F}",
+        "{FB9FB65F-CF6A-49D6-B79A-F9C52FF348FE}",
+        "{231FB1DE-B64C-4ADC-839F-67D616866C75}"
+    }; // {45756D51-98A8-42BB-8F47-9B53A7A8C89B} //awk ={65032085-2E37-493F-BEC6-AA8F468BE713}
     bool matchTarget = false;
     for(size_t i=0;i<macAddresses.size();i++){
         //cout<<"mac address:"<<macAddresses[i]<<std::endl;
         //cout<<"target address"<<targetMAC<<std::endl;
-        if(macAddresses[i].compare(targetMAC) == 0){
-            matchTarget = true;
+        for(size_t j=0;j<targetMACs.size();j++){
+            if(macAddresses[i].compare(targetMACs[j]) == 0){
+                matchTarget = true;
+                break;
+            }
+        }
+        if(matchTarget){
             break;
         }
     }
     if(matchTarget==false){
-        cout<<"This program is bound with the network adaptor of Anhui AWK server only."<<std::endl;
+        cout<<"This program is bound with Anhui AWK server only."<<std::endl;
         return -1;
     }
-
-
+    
+    
     int nextOption;
     // A string listing valid short options letters.
     const char *const shortOptions = "i:m";
@@ -200,13 +230,18 @@ int main(int argc, const char* argv[]){
     ImageInfoStruct imageInfo;
     ImageHeaderInfo imageHeader;
     std::string input_file_name(argv[1]);
-    std::string output_file_name, previewJpgFile;
+    std::string output_folder, output_base_name, output_file_name, previewJpgFile;
     if(argc==3){
-        output_file_name = std::string(argv[2]);
+        output_base_name = std::string(argv[2]);
+        if(dirExists( output_base_name)){
+            std::cout<<"to delete existing "<<output_base_name<<std::endl;
+            RemoveDirectory( output_base_name.c_str());
+        }
+        CreateDirectory( output_base_name.c_str(), NULL );
     }
     else{
-        output_file_name = input_file_name+".jpg";
-        previewJpgFile = input_file_name+"_preview.jpg";
+        std::cout<<"need an output path."<<std::endl;
+        return -1;
     }
     
     if(lpfnDllFuncInitImageFileFunc( imageInfo, input_file_name.c_str() )){
@@ -226,56 +261,81 @@ int main(int argc, const char* argv[]){
             unsigned char* imageData;
             
             //preview image
-            int previewDataLength, previewWidth, previewHeight;
-            bool b1 = lpfnDllFuncGetPriviewInfoPathFunc( input_file_name.c_str(), &imageData, previewDataLength, previewWidth, previewHeight );
-            std::cout<<"preview image height: "<<previewHeight<<std::endl
-            <<"preview image width: "<<previewWidth<<std::endl
-            <<"preview image data length: "<<previewDataLength<<std::endl;
-            //write2BMP(imageData,previewWidth,previewHeight, previewBmpFile.c_str());
-            FILE * fp = fopen(previewJpgFile.c_str(), "wb");
-            fwrite(imageData, previewDataLength, 1, fp);
-            fclose(fp);
-            lpfnDllFuncDeleteImageDataFunc(imageData);
+//            int previewDataLength, previewWidth, previewHeight;
+//            bool b1 = lpfnDllFuncGetPriviewInfoPathFunc( input_file_name.c_str(), &imageData, previewDataLength, previewWidth, previewHeight );
+//            std::cout<<"preview image height: "<<previewHeight<<std::endl
+//            <<"preview image width: "<<previewWidth<<std::endl
+//            <<"preview image data length: "<<previewDataLength<<std::endl;
+//            //write2BMP(imageData,previewWidth,previewHeight, previewBmpFile.c_str());
+//            FILE * fp = fopen(previewJpgFile.c_str(), "wb");
+//            fwrite(imageData, previewDataLength, 1, fp);
+//            fclose(fp);
+//            lpfnDllFuncDeleteImageDataFunc(imageData);
             
             
-            int dataLength, r=8;
-            //image roi
-            //GetImageDataRoiFunc( ImageInfoStruct sImageInfo, float fScale, int sp_x, int sp_y, int nWidth, int nHeight,BYTE** pBuffer, int&DataLength, bool flag);
-            try{
-                bool b2 = lpfnDllFuncGetImageDataRoiFunc( imageInfo, (float)imageHeader.khiScanScale/r, 0, 0,
-                                                         (int)(imageHeader.khiImageWidth/r),
-                                                         (int)(imageHeader.khiImageHeight/r),
-                                                         &imageData, dataLength, true);
-                std::cout<<"load image data length: "<<dataLength<<std::endl;
-                fp = fopen(output_file_name.c_str(), "wb");
-                fwrite(imageData, dataLength, 1, fp);
-                fclose(fp);
-                lpfnDllFuncDeleteImageDataFunc(imageData);
+            int dataLength;
+            const int overlap = 2;
+            const float tileSize = 256.0f;
+            float r = std::min(imageHeader.khiImageWidth,imageHeader.khiImageHeight)/1.0f;
+            int levels = (int)ceil(log2f(r));
+            int minLevels = 1;
+            int downScale = pow(2, minLevels);
+            int numTilesAll = 1,currentProcessedTiles=0;
+            int outputImageWidth = imageHeader.khiImageWidth/downScale;
+            int outputImageHeight = imageHeader.khiImageHeight/downScale;
+            FILE * fp;
+            int startLevel = levels - minLevels;
+            std::cout<<"total levels="<<startLevel+1<<std::endl;
+            for(int li=startLevel;li>=0;li--){
+                
+                std::string levelFolder = output_base_name+"\\"+std::to_string(li);
+                CreateDirectory( levelFolder.c_str(), NULL );
+                int nx = (int)ceil(imageHeader.khiImageWidth/downScale/tileSize);
+                int ny = (int)ceil(imageHeader.khiImageHeight/downScale/tileSize);
+                if(li==startLevel){
+                    numTilesAll = nx*ny*2;
+                    currentProcessedTiles=0;
+                }
+                //std::cout<<"nx="<<nx<<", ny="<<ny<<std::endl;
+                double scale = imageHeader.khiScanScale/(double)downScale;
+                //std::cout<<"scale="<<scale<<std::endl;
+                float scaledImageWidth = std::min(tileSize,roundf(imageHeader.khiImageWidth/(float)downScale));
+                float scaledImageHeight = std::min(tileSize,roundf(imageHeader.khiImageHeight/(float)downScale));
+                //std::cout<<"scaledImageWidth="<<scaledImageWidth<<std::endl;
+                for(size_t xi=0;xi<nx;xi++){
+                    std::cout<<currentProcessedTiles<<"/"<<numTilesAll<<std::endl;
+                    for(size_t yi=0;yi<ny;yi++){
+                        
+                        std::string output_tile_name = levelFolder +"\\"+std::to_string(xi)
+                        +"_"+std::to_string(yi)+".jpeg";
+                        float startX = std::max(0.0f, xi*scaledImageWidth-overlap);
+                        float startY = std::max(0.0f, yi*scaledImageHeight-overlap);
+                        float w = (xi+1)*scaledImageWidth+overlap - startX;
+                        float h = (yi+1)*scaledImageHeight+overlap - startY;
+                        //image roi
+                        bool b2 = lpfnDllFuncGetImageDataRoiFunc( imageInfo, scale,  startX, startY,
+                                                                 w,
+                                                                 h,
+                                                                 &imageData, dataLength, true);
+                        if(b2){
+                            fp = fopen(output_tile_name.c_str(), "wb");
+                            fwrite(imageData, dataLength, 1, fp);
+                            fclose(fp);
+                            ++currentProcessedTiles;
+                            lpfnDllFuncDeleteImageDataFunc(imageData);
+                        }
+                    }
+                }
+                downScale*=2;
             }
-            catch(std::exception e){
-                std::cout<<input_file_name<<": failed to read slide at scan scale "<<imageHeader.khiScanScale/r<<std::endl;
+            std::string dziFile = output_base_name+".dzi";
+            if(is_file_exist(dziFile)){
+                std::remove(dziFile.c_str());
             }
-            /*
-             //preview image
-             int previewDataLength, previewWidth, previewHeight;
-             bool b1 = lpfnDllFuncGetPriviewInfoPathFunc( input_file_name.c_str(), &imageData, previewDataLength, previewWidth, previewHeight );
-             std::cout<<"preview image height: "<<previewHeight<<std::endl
-             <<"preview image width: "<<previewWidth<<std::endl
-             <<"preview image data length: "<<previewDataLength<<std::endl;
-             //write2BMP(imageData,previewWidth,previewHeight, previewBmpFile.c_str());
-             FILE * fp = fopen(output_file_name.c_str(), "wb");
-             fwrite(imageData, previewDataLength, 1, fp);
-             fclose(fp);
-             */
-            /* // jpeg stream
-             unsigned char** jpegStream;
-             int jpegDataLength;
-             lpfnDllFuncGetImageStreamFunc(imageInfo, (float)imageHeader.khiScanScale, imageHeader.khiImageWidth/2,
-             imageHeader.khiImageHeight/2, jpegDataLength, jpegStream);
-             FILE * fp = fopen(output_file_name.c_str(), "wb");
-             fwrite(jpegStream, jpegDataLength, 1, fp);
-             fclose(fp);
-             */
+            std::string dziStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Image xmlns=\"http://schemas.microsoft.com/deepzoom/2008\" Format=\"jpeg\" \n Scan resolution=\""+std::to_string(imageHeader.khiScanScale)+"\"\n Overlap=\""+std::to_string(overlap)+"\"\n TileSize=\""+std::to_string(int(tileSize))+"\" >\n<Size Height=\""+std::to_string(outputImageHeight)+"\" \n Width=\""+std::to_string(outputImageWidth)+"\"/>\n</Image>";
+            std::ofstream out(dziFile);
+            out << dziStr;
+            out.close();
         }
         else{
             std::cout<<"failed to load image header. quit."<<std::endl;
@@ -287,7 +347,7 @@ int main(int argc, const char* argv[]){
     else{
         std::cout<<"cannot open file:"<<input_file_name<<std::endl;
     }
-    
+    std::cout<<"100/100"<<std::endl;
     return 0;
 }
 
