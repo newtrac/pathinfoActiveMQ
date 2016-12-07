@@ -133,6 +133,8 @@ class DeepZoomStaticTiler(object):
             # Check extra dependency before doing a bunch of work
             import jinja2
         self._slide = open_slide(slidepath)
+        print (self._slide.properties['openslide.objective-power'])
+        self._objective_power = int(self._slide.properties['openslide.objective-power'])
         self._basename = basename
         self._format = format
         self._tile_size = tile_size
@@ -167,7 +169,7 @@ class DeepZoomStaticTiler(object):
             image = ImageSlide(self._slide.associated_images[associated])
             basename = os.path.join(self._basename, self._slugify(associated))
         dz = DeepZoomGenerator(image, self._tile_size, self._overlap,
-                    limit_bounds=self._limit_bounds)
+                    limit_bounds=self._limit_bounds, objective_power=self._objective_power)
         tiler = DeepZoomImageTiler(dz, basename, self._format, associated,
                     self._queue)
         tiler.run()

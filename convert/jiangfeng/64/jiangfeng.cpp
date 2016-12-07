@@ -172,7 +172,8 @@ int main(int argc, const char* argv[]){
 												"{7437785D-B6D9-478B-89B0-6E153FF9A640}",
 												"{25643C52-FB59-4B70-8BC5-840E3242935F}",
 												"{FB9FB65F-CF6A-49D6-B79A-F9C52FF348FE}",
-												"{231FB1DE-B64C-4ADC-839F-67D616866C75}"
+												"{231FB1DE-B64C-4ADC-839F-67D616866C75}",
+												"{8B4CCF71-D7BF-42F4-9D2A-3DC5F3734ECC}"
 												};
 	bool matchTarget = false;
     for(size_t i=0;i<macAddresses.size();i++){
@@ -331,7 +332,7 @@ int main(int argc, const char* argv[]){
             if(is_file_exist(dziFile)){
                 std::remove(dziFile.c_str());
             }
-			std::string dziStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Image xmlns=\"http://schemas.microsoft.com/deepzoom/2008\" Format=\"jpeg\" \n Scan resolution=\""+std::to_string(imageHeader.khiScanScale)+"\"\n Overlap=\""+std::to_string(overlap)+"\"\n TileSize=\""+std::to_string(int(tileSize))+"\" >\n<Size Height=\""+std::to_string(outputImageHeight)+"\" \n Width=\""+std::to_string(outputImageWidth)+"\"/>\n</Image>";
+			std::string dziStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Image xmlns=\"http://schemas.microsoft.com/deepzoom/2008\" Format=\"jpeg\" \n scanResolution=\""+std::to_string(imageHeader.khiScanScale)+"\"\n Overlap=\""+std::to_string(overlap)+"\"\n TileSize=\""+std::to_string(int(tileSize))+"\" >\n<Size Height=\""+std::to_string(outputImageHeight)+"\" \n Width=\""+std::to_string(outputImageWidth)+"\"/>\n</Image>";
     
             //std::string dziStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Image xmlns=\"http://schemas.microsoft.com/deepzoom/2008\" Format=\"jpeg\" \n Overlap=\"0\"\n TileSize=\""+std::to_string(int(tileSize))+"\" >\n<Size Height=\""+std::to_string(outputImageHeight)+"\" \n Width=\""+std::to_string(outputImageWidth)+"\"/>\n</Image>";
             std::ofstream out(dziFile);
@@ -348,6 +349,7 @@ int main(int argc, const char* argv[]){
     }
     else{
         std::cout<<"cannot open file:"<<input_file_name<<std::endl;
+		return -1;
     }
      std::cout<<"100/100"<<std::endl;
     return 0;
