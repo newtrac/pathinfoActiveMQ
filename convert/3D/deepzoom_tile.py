@@ -133,7 +133,7 @@ class DeepZoomStaticTiler(object):
             # Check extra dependency before doing a bunch of work
             import jinja2
         self._slide = open_slide(slidepath)
-        print (self._slide.properties['openslide.objective-power'])
+        # print (self._slide.properties['openslide.objective-power'])
         self._objective_power = int(self._slide.properties['openslide.objective-power'])
         self._basename = basename
         self._format = format

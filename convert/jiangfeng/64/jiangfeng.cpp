@@ -274,11 +274,11 @@ int main(int argc, const char* argv[]){
 //             fclose(fp);
 //             lpfnDllFuncDeleteImageDataFunc(imageData);
             int dataLength;
-			const int overlap = 1;
-            const float tileSize = 254.0f;
-            float r = std::min(imageHeader.khiImageWidth,imageHeader.khiImageHeight)/1.0f;
+			const int overlap = 0;
+            const float tileSize = 256.0f;
+            float r = std::max(imageHeader.khiImageWidth,imageHeader.khiImageHeight)/1.0f;
             int levels = (int)ceil(log2f(r));
-            int minLevels = 1;
+            int minLevels = 0;
             int downScale = pow(2, minLevels);
             int numTilesAll = 1,currentProcessedTiles=0;
             int outputImageWidth = imageHeader.khiImageWidth/downScale;
@@ -299,19 +299,23 @@ int main(int argc, const char* argv[]){
                 //std::cout<<"nx="<<nx<<", ny="<<ny<<std::endl;
                 double scale = imageHeader.khiScanScale/(double)downScale;
                 //std::cout<<"scale="<<scale<<std::endl;
-                float scaledImageWidth = std::min(tileSize,round(imageHeader.khiImageWidth/(float)downScale));
-                float scaledImageHeight = std::min(tileSize,round(imageHeader.khiImageHeight/(float)downScale));
-                
+                float scaledImageWidth = floorf(imageHeader.khiImageWidth/(float)downScale);
+				float scaledImageHeight = floorf(imageHeader.khiImageHeight/(float)downScale);
+                //std::cout<<"scale="<<scale<<std::endl;
+                float scaledTileWidth = std::min(tileSize,scaledImageWidth);
+                float scaledTileHeight = std::min(tileSize,scaledImageHeight);
+                //std::cout<<"scaledImageWidth="<<scaledImageWidth<<std::endl;
                 for(size_t xi=0;xi<nx;xi++){
                     std::cout<<currentProcessedTiles<<"/"<<numTilesAll<<std::endl;
                     for(size_t yi=0;yi<ny;yi++){
                         
                         std::string output_tile_name = levelFolder +"\\"+std::to_string(xi)
                         +"_"+std::to_string(yi)+".jpeg";
-                        float startX = std::max(0.0f, xi*scaledImageWidth-overlap);
-                        float startY = std::max(0.0f, yi*scaledImageHeight-overlap);
-                        float w = (xi+1)*scaledImageWidth+overlap - startX;
-                        float h = (yi+1)*scaledImageHeight+overlap - startY;
+                        float startX = std::max(0.0f, xi*scaledTileWidth-overlap);
+                        float startY = std::max(0.0f, yi*scaledTileHeight-overlap);
+                        float w = std::min((xi+1)*scaledTileWidth+overlap, scaledImageWidth) - startX;
+                        float h = std::min((yi+1)*scaledTileHeight+overlap, scaledImageHeight) - startY;
+						//std::cout<<"startX="<<startX<<" startY="<<startY<<" w="<<w<<" h="<<h<<std::endl;
                         //image roi
                         bool b2 = lpfnDllFuncGetImageDataRoiFunc( imageInfo, scale,  startX, startY,
                                                                  w,

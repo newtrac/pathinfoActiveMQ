@@ -275,12 +275,12 @@ int main(int argc, const char* argv[]){
             
             
             int dataLength;
-            const int overlap = 2;
+            const int overlap = 0;
             const float tileSize = 256.0f;
 			const float minSize = 256.0f;
-            float r = std::min(imageHeader.khiImageWidth,imageHeader.khiImageHeight)/1.0f;
+            float r = std::max(imageHeader.khiImageWidth,imageHeader.khiImageHeight)/1.0f;
             int levels = (int)ceil(log2f(r));
-            int minLevels = 1;
+            int minLevels = 0; //only if you want to skip some high levels, also need to change scanResolution
             int downScale = pow(2, minLevels);
             int numTilesAll = 1,currentProcessedTiles=0;
             int outputImageWidth = imageHeader.khiImageWidth/downScale;
@@ -300,9 +300,11 @@ int main(int argc, const char* argv[]){
                 }
                 //std::cout<<"nx="<<nx<<", ny="<<ny<<std::endl;
                 double scale = imageHeader.khiScanScale/(double)downScale;
+				float scaledImageWidth = floorf(imageHeader.khiImageWidth/(float)downScale);
+				float scaledImageHeight = floorf(imageHeader.khiImageHeight/(float)downScale);
                 //std::cout<<"scale="<<scale<<std::endl;
-                float scaledImageWidth = std::min(tileSize,roundf(imageHeader.khiImageWidth/(float)downScale));
-                float scaledImageHeight = std::min(tileSize,roundf(imageHeader.khiImageHeight/(float)downScale));
+                float scaledTileWidth = std::min(tileSize,scaledImageWidth);
+                float scaledTileHeight = std::min(tileSize,scaledImageHeight);
                 //std::cout<<"scaledImageWidth="<<scaledImageWidth<<std::endl;
                 for(size_t xi=0;xi<nx;xi++){
                     std::cout<<currentProcessedTiles<<"/"<<numTilesAll<<std::endl;
@@ -310,10 +312,11 @@ int main(int argc, const char* argv[]){
                         
                         std::string output_tile_name = levelFolder +"\\"+std::to_string(xi)
                         +"_"+std::to_string(yi)+".jpeg";
-                        float startX = std::max(0.0f, xi*scaledImageWidth-overlap);
-                        float startY = std::max(0.0f, yi*scaledImageHeight-overlap);
-                        float w = (xi+1)*scaledImageWidth+overlap - startX;
-                        float h = (yi+1)*scaledImageHeight+overlap - startY;
+                        float startX = std::max(0.0f, xi*scaledTileWidth-overlap);
+                        float startY = std::max(0.0f, yi*scaledTileHeight-overlap);
+                        float w = std::min((xi+1)*scaledTileWidth+overlap, scaledImageWidth) - startX;
+                        float h = std::min((yi+1)*scaledTileHeight+overlap, scaledImageHeight) - startY;
+						
                         //image roi
                         bool b2 = lpfnDllFuncGetImageDataRoiFunc( imageInfo, scale,  startX, startY,
                                                                  w,
@@ -328,9 +331,12 @@ int main(int argc, const char* argv[]){
                         }
                     }
                 }
-				if(roundf(imageHeader.khiImageWidth/(float)downScale/2)>=minSize &&roundf(imageHeader.khiImageHeight/(float)downScale/2)>=minSize  ){
+				if(nx>1 || ny>1){
 					downScale*=2;
 				}
+				//if(roundf(imageHeader.khiImageWidth/(float)downScale/2)>=minSize &&roundf(imageHeader.khiImageHeight/(float)downScale/2)>=minSize  ){
+				//	downScale*=2;
+				//}
             }
             std::string dziFile = output_base_name+".dzi";
             if(is_file_exist(dziFile)){
